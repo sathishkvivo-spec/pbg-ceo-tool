@@ -2353,12 +2353,21 @@
     renderResults();
     renderPriority();
 
-    /* Clone priority into S4 present tab slot */
+    /* S4 present-mode Priority tab: mirror S5 table without duplicating IDs */
     (function wireS4PriorityClone() {
       const slot = document.querySelector('[data-s4-block="priority"]');
-      const src = document.getElementById("s5");
-      if (!slot || !src) return;
-      slot.innerHTML = src.querySelector(".section__frame")?.innerHTML || "";
+      if (!slot) return;
+      slot.innerHTML =
+        '<div class="results-table-wrap" style="margin-top:0.5rem;">' +
+        '<table class="results-table priority-table"><thead><tr>' +
+        '<th>Store</th><th>D1</th><th>D2</th><th>D3</th><th>Total</th><th>Prescribed Upgrade</th><th>Space Reality</th>' +
+        '</tr></thead><tbody id="priority-tbody-s4"></tbody></table></div>' +
+        '<div class="reality-cards">' +
+        document.querySelector("#s5 .reality-cards")?.innerHTML +
+        '</div>';
+      const dest = document.getElementById("priority-tbody-s4");
+      const src = document.getElementById("priority-tbody");
+      if (dest && src) dest.innerHTML = src.innerHTML;
     })();
 
     /* ----- S6 accordion ----- */
