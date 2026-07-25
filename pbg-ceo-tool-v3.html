@@ -119,36 +119,66 @@ body.modal-open { overflow: hidden; }
 .store-mix__list strong { color: var(--text); font-weight: 600; }
 .store-mix__total { margin: 0.65rem 0 0; font-size: 0.85rem; color: var(--gold); }
 
-/* S2 */
-.s2-statement { margin: 0 0 1.25rem; font-size: clamp(1.75rem, 3.6vw, 2.7rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.12; }
+/* S2 — single screen (no tabs) */
+#s2 .section__frame { justify-content: flex-start; padding-top: 0.35rem; min-height: 0; }
+.s2-body {
+  flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;
+  padding-right: 0.25rem; display: flex; flex-direction: column; gap: 0.65rem;
+}
+.s2-headline {
+  margin: 0; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1.35;
+}
+.s2-statements {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  background: var(--gold-line); border: 1px solid var(--gold-line);
+}
+.s2-statements article {
+  background: var(--bg); padding: 0.75rem 0.85rem;
+}
+.s2-statements p {
+  margin: 0; font-size: 0.88rem; color: var(--text); line-height: 1.4;
+}
+.s2-statement { margin: 0; font-size: clamp(1.15rem, 2.2vw, 1.55rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.15; }
 .s2-statement span { color: var(--gold); }
 .s2-dims {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
-  background: var(--gold-line); border: 1px solid var(--gold-line); margin-bottom: 1.15rem;
+  background: var(--gold-line); border: 1px solid var(--gold-line);
 }
-.s2-dim { background: var(--bg); padding: 1.1rem 1rem; }
-.s2-dim__code { display: block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.55rem; }
-.s2-dim__name { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 600; }
-.s2-dim__max { margin: 0 0 0.65rem; font-size: 12px; color: var(--gold); }
-.s2-dim__purpose { margin: 0; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4; }
-.s2-test__label { margin: 0 0 0.55rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.s2-dim { background: var(--bg); padding: 0.7rem 0.75rem; }
+.s2-dim__code { display: block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+.s2-dim__name { margin: 0 0 0.2rem; font-size: 0.95rem; font-weight: 600; }
+.s2-dim__max { margin: 0 0 0.35rem; font-size: 11px; color: var(--gold); }
+.s2-dim__purpose { margin: 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.35; }
+.s2-test__label { margin: 0; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
 .s2-test { width: 100%; border-collapse: collapse; border: 1px solid var(--gold-line); }
-.s2-test th, .s2-test td { padding: 0.7rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--gold-line); font-size: 0.88rem; }
-.s2-test th { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500; background: #0d0d0d; }
+.s2-test th, .s2-test td { padding: 0.45rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--gold-line); font-size: 0.8rem; }
+.s2-test th { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500; background: #0d0d0d; }
 .s2-test tr:last-child td { border-bottom: none; }
 .s2-test td:first-child { color: var(--gold); font-weight: 600; width: 32%; }
 .s2-test td:nth-child(2) { color: var(--text); width: 28%; }
 .s2-test td:last-child { color: var(--text-secondary); }
-
-.ideo-cards {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
-  background: var(--gold-line); border: 1px solid var(--gold-line); margin: 0.75rem 0 1rem;
+.s2-method__title {
+  margin: 0; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold);
 }
-.ideo-card { background: var(--bg); padding: 1.15rem 1.05rem; }
-.ideo-card__n { display: block; color: var(--gold); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.55rem; }
-.ideo-card p { margin: 0; font-size: 0.95rem; color: var(--text); line-height: 1.45; }
-.ideo-bench { margin: 0; font-size: 0.95rem; color: var(--text-secondary); }
-.ideo-bench strong { color: var(--gold); font-weight: 600; }
+.s2-method {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border: 1px solid var(--gold-line);
+}
+.s2-method__col { padding: 0.65rem 0.85rem; }
+.s2-method__col + .s2-method__col { border-left: 1px solid var(--gold-line); }
+.s2-method__brand {
+  margin: 0 0 0.4rem; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+}
+.s2-method__brand--apple { color: #E0E0E0; }
+.s2-method__brand--samsung { color: #4A90D9; }
+.s2-method__list {
+  margin: 0; padding: 0 0 0 1rem; display: grid; gap: 0.22rem;
+  font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;
+}
+.s2-method__list li::marker { color: var(--gold); }
+.s2-method__note {
+  margin: 0; font-size: 0.82rem; color: var(--gold); line-height: 1.4;
+}
 
 /* S3 */
 #s3 .section__frame { justify-content: flex-start; padding-top: 0.25rem; }
@@ -203,12 +233,35 @@ body.modal-open { overflow: hidden; }
 
 /* S4 */
 .s4-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem; }
-.s4-downloads { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.s4-downloads { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 0.85rem; }
 .dl-btn {
-  background: transparent; border: none; color: var(--gold); font: inherit; font-size: 13px;
-  letter-spacing: 0.04em; cursor: pointer; padding: 0.35rem 0; text-decoration: none;
+  background: transparent; border: 1px solid var(--gold-line); color: var(--gold); font: inherit; font-size: 13px;
+  letter-spacing: 0.04em; cursor: pointer; padding: 0.45rem 0.85rem; text-decoration: none;
 }
-.dl-btn:hover { text-decoration: underline; }
+.dl-btn:hover { border-color: var(--gold); text-decoration: none; }
+.s4-overview {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;
+}
+.s4-overview__block { min-width: 0; }
+.s4-overview__label {
+  margin: 0 0 0.45rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
+}
+.s4-inline-table { width: 100%; border-collapse: collapse; border: 1px solid var(--gold-line); }
+.s4-inline-table th, .s4-inline-table td {
+  padding: 0.5rem 0.7rem; text-align: left; vertical-align: top;
+  border-bottom: 1px solid var(--gold-line); font-size: 0.82rem;
+}
+.s4-inline-table th {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-secondary); font-weight: 500; background: #0d0d0d;
+}
+.s4-inline-table tr:last-child td { border-bottom: none; }
+.s4-inline-table td:first-child { color: var(--text); font-weight: 600; width: 42%; }
+.s4-inline-table td:last-child { color: var(--text-secondary); }
+.s4-inline-table .tier-A { color: #22c55e; font-weight: 600; }
+.s4-inline-table .tier-B { color: #eab308; font-weight: 600; }
+.s4-inline-table .tier-C { color: #f97316; font-weight: 600; }
+.s4-inline-table .tier-D { color: #ef4444; font-weight: 600; }
 .summary-cards {
   display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px;
   background: var(--gold-line); border: 1px solid var(--gold-line); margin-bottom: 1rem;
@@ -272,61 +325,87 @@ body.modal-open { overflow: hidden; }
 }
 .reality-card { background: var(--bg); padding: 0.85rem 0.9rem; }
 .reality-card h3 { margin: 0 0 0.35rem; font-size: 0.85rem; color: var(--gold); font-weight: 600; }
-.reality-card p { margin: 0; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; }
+.reality-card p { margin: 0; font-size: 0.7rem; color: var(--text-secondary); line-height: 1.35; }
 
-/* Modal fullscreen */
+/* Modal fullscreen — 95vw × 90vh, no scroll */
 .store-modal {
   position: fixed; inset: 0; z-index: 400; background: rgba(0,0,0,0.92);
-  display: none; padding: 1.25rem; overflow: auto;
+  display: none; padding: 0; overflow: hidden;
+  align-items: center; justify-content: center;
 }
-.store-modal[data-open="true"] { display: block; }
+.store-modal[data-open="true"] { display: flex; }
 .store-modal__sheet {
-  max-width: 920px; margin: 0 auto; background: var(--bg-elevated);
-  border: 1px solid var(--gold-line); padding: 1.5rem 1.5rem 1.75rem; position: relative;
+  width: 95vw; height: 90vh; max-width: 95vw; max-height: 90vh;
+  background: var(--bg-elevated); border: 1px solid var(--gold-line);
+  position: relative; display: flex; flex-direction: column; overflow: hidden;
+  padding: 0;
 }
 .store-modal__close {
-  position: absolute; top: 0.85rem; right: 0.85rem; background: transparent;
+  position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(10,10,10,0.75);
   border: 1px solid var(--gold-line); color: var(--gold); width: 2.25rem; height: 2.25rem;
-  cursor: pointer; font-size: 1.2rem; line-height: 1; z-index: 2;
+  cursor: pointer; font-size: 1.2rem; line-height: 1; z-index: 5;
 }
-.panel-name { margin: 0 0 0.45rem; font-size: 1.45rem; font-weight: 650; letter-spacing: -0.02em; }
+.store-modal__layout {
+  display: grid; grid-template-columns: 55% 45%; flex: 1; min-height: 0; height: 100%;
+}
+.store-modal__photo {
+  position: relative; min-width: 0; min-height: 0; background: #070707;
+  border-right: 1px solid var(--gold-line); display: flex; flex-direction: column;
+}
+.store-modal__scores {
+  min-width: 0; min-height: 0; overflow: hidden;
+  padding: 1.35rem 1.5rem 1.25rem; display: flex; flex-direction: column; justify-content: center;
+  font-size: 13px;
+}
+.panel-name { margin: 0 0 0.4rem; font-size: 1.25rem; font-weight: 650; letter-spacing: -0.02em; line-height: 1.2; }
 .panel-tier {
   display: inline-block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 0.25rem 0.55rem; border: 1px solid currentColor; margin-bottom: 0.55rem;
+  padding: 0.25rem 0.55rem; border: 1px solid currentColor; margin-bottom: 0.45rem;
 }
-.panel-total { margin: 0 0 1rem; font-size: 2rem; font-weight: 650; color: var(--gold); letter-spacing: -0.03em; }
-.panel-total span { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.2rem; }
-.score-bar { margin-bottom: 0.7rem; }
-.score-bar__meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 0.25rem; }
+.panel-total { margin: 0 0 0.85rem; font-size: 1.75rem; font-weight: 650; color: var(--gold); letter-spacing: -0.03em; }
+.panel-total span { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.15rem; }
+.score-bar { margin-bottom: 0.55rem; }
+.score-bar__meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 0.2rem; }
 .score-bar__track { height: 3px; background: rgba(201,168,76,0.15); }
 .score-bar__fill { height: 100%; width: 0; background: var(--gold); transition: width 0.55s var(--ease); }
-.panel-upgrade { margin: 1rem 0 0.55rem; font-size: 0.95rem; }
-.panel-upgrade strong { color: var(--gold); font-weight: 600; display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
-.panel-code { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.04em; margin: 0 0 0.75rem; }
+.panel-upgrade { margin: 0.75rem 0 0; font-size: 13px; line-height: 1.4; }
+.panel-upgrade strong { color: var(--gold); font-weight: 600; display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+.panel-code { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.04em; margin: 0 0 0.65rem; }
 
-.photo-slider { margin-top: 1.15rem; }
+.photo-slider { flex: 1; min-height: 0; display: flex; flex-direction: column; position: relative; }
 .photo-slider__label {
-  margin: 0 0 0.45rem; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); text-align: center;
+  position: absolute; top: 0.85rem; left: 0.95rem; z-index: 3; margin: 0;
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold);
+  background: rgba(10,10,10,0.7); padding: 0.3rem 0.55rem; pointer-events: none;
 }
 .photo-slider__stage {
-  position: relative; width: 100%; aspect-ratio: 16 / 9; background: #070707;
-  border: 1px solid var(--gold-line); overflow: hidden; display: grid; place-items: center;
+  position: relative; flex: 1; min-height: 0; width: 100%;
+  background: #070707; overflow: hidden; display: grid; place-items: center;
+  aspect-ratio: auto;
 }
-.photo-slider__stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-slider__stage img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
 .photo-slider__empty { color: var(--text-secondary); font-size: 13px; }
 .photo-nav {
-  position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px;
-  border-radius: 50%; border: 1px solid var(--gold); background: rgba(10,10,10,0.55);
-  color: var(--gold); cursor: pointer; font-size: 1.1rem; display: grid; place-items: center;
+  position: absolute; top: 50%; transform: translateY(-50%); width: 48px; height: 48px;
+  border-radius: 50%; border: 1px solid var(--gold); background: rgba(10,10,10,0.7);
+  color: var(--gold); cursor: pointer; font-size: 1.35rem; display: grid; place-items: center; z-index: 3;
 }
-.photo-nav.prev { left: 0.65rem; }
-.photo-nav.next { right: 0.65rem; }
-.photo-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.65rem; }
+.photo-nav.prev { left: 0.85rem; }
+.photo-nav.next { right: 0.85rem; }
+.photo-dots { display: none; }
 .photo-dot {
   width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--gold);
   background: transparent; padding: 0; cursor: pointer;
 }
 .photo-dot.is-active { background: var(--gold); }
+
+@media (max-width: 900px) {
+  .store-modal__layout { grid-template-columns: 1fr; grid-template-rows: 55% 45%; }
+  .store-modal__photo { border-right: none; border-bottom: 1px solid var(--gold-line); }
+}
 
 /* Present controls */
 .present-btn {
@@ -372,7 +451,7 @@ body.is-presenting .section {
 body.is-presenting .section.is-present-slide { display: flex; }
 
 @media (max-width: 980px) {
-  .s3-layout, .store-mix, .ideo-cards, .s2-dims, .summary-cards, .method-steps, .reality-cards {
+  .s3-layout, .store-mix, .s2-statements, .s2-dims, .s2-method, .s4-overview, .summary-cards, .method-steps, .reality-cards {
     grid-template-columns: 1fr 1fr;
   }
   .s1-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -380,10 +459,11 @@ body.is-presenting .section.is-present-slide { display: flex; }
 @media (max-width: 720px) {
   :root { --nav-width: 44px; }
   .nav a::after { display: none; }
-  .s3-layout, .store-mix, .ideo-cards, .s2-dims, .summary-cards, .method-steps, .reality-cards, .s1-stats {
+  .s3-layout, .store-mix, .s2-statements, .s2-dims, .s2-method, .s4-overview, .summary-cards, .method-steps, .reality-cards, .s1-stats {
     grid-template-columns: 1fr;
   }
   .store-mix__col + .store-mix__col { border-left: none; border-top: 1px solid var(--gold-line); }
+  .s2-method__col + .s2-method__col { border-left: none; border-top: 1px solid var(--gold-line); }
   body.is-presenting .section { padding: 3rem 1.25rem 1.25rem; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -452,36 +532,20 @@ body.is-presenting .section.is-present-slide { display: flex; }
       </div>
     </section>
 
-    <!-- S2 — Framework (tabs: Ideology | Framework) -->
+    <!-- S2 — Framework (single screen) -->
     <section class="section" id="s2" aria-labelledby="s2-title">
       <div class="section__frame reveal">
         <p class="section__eyebrow">Section 02</p>
         <h2 class="section__title" id="s2-title">The Framework</h2>
-        <div class="inner-tabs s2-tabs" role="tablist" aria-label="Framework sections">
-          <button type="button" data-tab="ideology" aria-pressed="true">Core Ideology</button>
-          <button type="button" data-tab="framework" aria-pressed="false">The Framework</button>
-        </div>
+        <div class="s2-body">
+          <p class="s2-headline">Past reports showed Vivo present in store. That was not enough.</p>
 
-        <div class="tab-panel is-active" data-panel="ideology">
-          <h3 class="s2-statement" style="font-size:clamp(1.45rem,3vw,2.1rem);margin-bottom:0.35rem;">Why This Assessment Exists</h3>
-          <div class="ideo-cards">
-            <article class="ideo-card">
-              <span class="ideo-card__n">01</span>
-              <p>Past reports showed Vivo present in store. That was not enough information.</p>
-            </article>
-            <article class="ideo-card">
-              <span class="ideo-card__n">02</span>
-              <p>This framework measures dominance — not just presence. These are not the same thing.</p>
-            </article>
-            <article class="ideo-card">
-              <span class="ideo-card__n">03</span>
-              <p>The result: a score every upgrade decision can be traced back to. No opinion. No assumption.</p>
-            </article>
+          <div class="s2-statements">
+            <article><p>Presence is being on the shelf. Dominance is being chosen.</p></article>
+            <article><p>This framework measures dominance — not presence. These are not the same thing.</p></article>
+            <article><p>Every upgrade decision traces back to a score. No opinion. No assumption.</p></article>
           </div>
-          <p class="ideo-bench">Benchmark: <strong>60/100</strong>. Today’s average: <strong>43/100</strong>.</p>
-        </div>
 
-        <div class="tab-panel" data-panel="framework" hidden>
           <p class="s2-statement">Presence <span>≠</span> Dominance</p>
           <div class="s2-dims">
             <article class="s2-dim">
@@ -503,6 +567,7 @@ body.is-presenting .section.is-present-slide { display: flex; }
               <p class="s2-dim__purpose">Measures whether the store can drive premium Vivo sellout.</p>
             </article>
           </div>
+
           <p class="s2-test__label">3-question test — remove any one dimension and the decision breaks</p>
           <table class="s2-test">
             <thead>
@@ -530,6 +595,33 @@ body.is-presenting .section.is-present-slide { display: flex; }
               </tr>
             </tbody>
           </table>
+
+          <p class="s2-method__title">How Apple and Samsung Engineer Retail Dominance</p>
+          <div class="s2-method">
+            <div class="s2-method__col">
+              <h3 class="s2-method__brand s2-method__brand--apple">Apple</h3>
+              <ul class="s2-method__list">
+                <li>Mandatory Experience Zone at entry — first brand every customer sees</li>
+                <li>Minimum 6 live handsets on dedicated Apple-only table</li>
+                <li>Proprietary Apple furniture — retailer cannot modify</li>
+                <li>Contractual first-right-of-refusal on entry wall space</li>
+                <li>Apple-certified staff, trained and paid by Apple</li>
+                <li>Premium lighting at Apple's cost</li>
+              </ul>
+            </div>
+            <div class="s2-method__col">
+              <h3 class="s2-method__brand s2-method__brand--samsung">Samsung</h3>
+              <ul class="s2-method__list">
+                <li>Space rental paid as percentage of store sellout — not fixed</li>
+                <li>Retailer earns more as Samsung sells more — financial alignment</li>
+                <li>Dedicated Samsung Experience Zone, branded furniture mandatory</li>
+                <li>Co-branded presence on Main Signage Board in MT stores</li>
+                <li>No competitor products within Samsung exclusion zone</li>
+                <li>Regular Samsung merchandising team visits</li>
+              </ul>
+            </div>
+          </div>
+          <p class="s2-method__note">This is why D2 exists — to measure competitive reality honestly, not just Vivo's presence.</p>
         </div>
       </div>
     </section>
@@ -701,10 +793,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
             <p class="section__eyebrow">Section 04</p>
             <h2 class="section__title" id="s4-title">30 Store Results</h2>
           </div>
-          <div class="s4-downloads">
-            <button type="button" class="dl-btn" id="dl-assessment" data-excel="assessmentForm">↓ Assessment Form</button>
-            <button type="button" class="dl-btn" id="dl-scored" data-excel="scoredResults">↓ Scored Results</button>
-          </div>
         </div>
 
         <div class="inner-tabs s4-tabs" role="tablist" aria-label="Results views">
@@ -714,29 +802,36 @@ body.is-presenting .section.is-present-slide { display: flex; }
         </div>
 
         <div class="tab-panel is-active" data-panel="overview">
-          <div class="summary-cards" role="list">
-            <div class="summary-card" role="listitem"><span class="summary-card__value">0</span><span class="summary-card__label">Dominant</span></div>
-            <div class="summary-card" role="listitem"><span class="summary-card__value">1</span><span class="summary-card__label">Competitive</span></div>
-            <div class="summary-card" role="listitem"><span class="summary-card__value">17</span><span class="summary-card__label">Vulnerable</span></div>
-            <div class="summary-card" role="listitem"><span class="summary-card__value">12</span><span class="summary-card__label">Critical</span></div>
-            <div class="summary-card" role="listitem"><span class="summary-card__value">43</span><span class="summary-card__label">Avg Score</span></div>
+          <div class="s4-overview">
+            <div class="s4-overview__block">
+              <p class="s4-overview__label">Assessment Form — structure</p>
+              <table class="s4-inline-table">
+                <thead><tr><th>Sheet</th><th>What Was Assessed</th></tr></thead>
+                <tbody>
+                  <tr><td>Store Information</td><td>Name, code, area, channel, auditor</td></tr>
+                  <tr><td>D1 — Vivo Brand Strength</td><td>Signage, table, cabinet, visibility, hygiene</td></tr>
+                  <tr><td>D2 — Competitive Pressure</td><td>Apple, Samsung, other brand dominance per zone</td></tr>
+                  <tr><td>D3 — Premium Potential</td><td>Sellout history, location, store quality</td></tr>
+                  <tr><td>Scoring Output</td><td>D1+D2+D3 total, tier classification, upgrade action</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="s4-overview__block">
+              <p class="s4-overview__label">Scored Results — summary</p>
+              <table class="s4-inline-table">
+                <thead><tr><th>Tier</th><th>Count</th><th>Stores</th></tr></thead>
+                <tbody>
+                  <tr><td class="tier-A">A — Dominant</td><td>0</td><td>—</td></tr>
+                  <tr><td class="tier-B">B — Competitive</td><td>1</td><td>Pothys Hyper Chrompet</td></tr>
+                  <tr><td class="tier-C">C — Vulnerable</td><td>17</td><td>Mayur Mobiles, Sun Mobiles Tiruttani, Poorvika Appliances Thiruvallur +14 more</td></tr>
+                  <tr><td class="tier-D">D — Critical</td><td>12</td><td>Supreme Mobiles Tambaram 2, Poorvika Appliances Mogappair, Poorvika Parrys3 +9 more</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="method-steps">
-            <div class="method-step">
-              <span class="method-step__n">Step 1</span>
-              <p class="method-step__t">Field Audit</p>
-              <p class="method-step__d">AM Branding + Branding Executives visited each store</p>
-            </div>
-            <div class="method-step">
-              <span class="method-step__n">Step 2</span>
-              <p class="method-step__t">Structured Form</p>
-              <p class="method-step__d">6-sheet Excel form, 3 dimensions assessed per store</p>
-            </div>
-            <div class="method-step">
-              <span class="method-step__n">Step 3</span>
-              <p class="method-step__t">Scoring Engine</p>
-              <p class="method-step__d">Scores calculated against locked parameters, tiers assigned</p>
-            </div>
+          <div class="s4-downloads">
+            <button type="button" class="dl-btn" id="dl-assessment" data-excel="assessmentForm">↓ Assessment Form</button>
+            <button type="button" class="dl-btn" id="dl-scored" data-excel="scoredResults">↓ Scored Results</button>
           </div>
         </div>
 
@@ -805,7 +900,7 @@ body.is-presenting .section.is-present-slide { display: flex; }
             </article>
             <article class="reality-card">
               <h3>Reality C — Financially Locked</h3>
-              <p>Samsung/Apple pay 1.5–3% of store revenue as space rental. Vivo pays fixed ₹10,000–15,000. Do not fight for wall space — fight for the RIGHT space.</p>
+              <p>Samsung and Apple pay retailer space rental as a percentage of their store sellout — not a fixed fee. This creates financial alignment: the retailer earns more as those brands sell more. Vivo operates on a fixed rental model. Direct space competition in financially locked stores is not viable. Strategy: position quality over quantity, OOH compensation, and a long-term commercial argument.</p>
             </article>
           </div>
         </div>
@@ -816,16 +911,20 @@ body.is-presenting .section.is-present-slide { display: flex; }
   <div class="store-modal" id="store-modal" data-open="false" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Store detail">
     <div class="store-modal__sheet">
       <button type="button" class="store-modal__close" id="store-modal-close" aria-label="Close">×</button>
-      <div id="store-modal-body"></div>
-      <div class="photo-slider">
-        <p class="photo-slider__label" id="modal-photo-label">Entrance</p>
-        <div class="photo-slider__stage">
-          <button type="button" class="photo-nav prev" id="modal-photo-prev" aria-label="Previous photo">‹</button>
-          <img id="modal-photo-img" alt="" hidden />
-          <div class="photo-slider__empty" id="modal-photo-empty" hidden>Photo unavailable</div>
-          <button type="button" class="photo-nav next" id="modal-photo-next" aria-label="Next photo">›</button>
+      <div class="store-modal__layout">
+        <div class="store-modal__photo">
+          <div class="photo-slider">
+            <p class="photo-slider__label" id="modal-photo-label">1 of 6 — Entrance</p>
+            <div class="photo-slider__stage">
+              <button type="button" class="photo-nav prev" id="modal-photo-prev" aria-label="Previous photo">‹</button>
+              <img id="modal-photo-img" alt="" hidden />
+              <div class="photo-slider__empty" id="modal-photo-empty" hidden>Photo unavailable</div>
+              <button type="button" class="photo-nav next" id="modal-photo-next" aria-label="Next photo">›</button>
+            </div>
+            <div class="photo-dots" id="modal-photo-dots" hidden></div>
+          </div>
         </div>
-        <div class="photo-dots" id="modal-photo-dots"></div>
+        <div class="store-modal__scores" id="store-modal-body"></div>
       </div>
     </div>
   </div>
@@ -1602,7 +1701,8 @@ body.is-presenting .section.is-present-slide { display: flex; }
     }
     modalPhotoIdx = clamp(modalPhotoIdx, 0, photos.length - 1);
     const p = photos[modalPhotoIdx];
-    if (labelEl) labelEl.textContent = p.display || p.label || "Photo";
+    const label = p.display || p.label || "Photo";
+    if (labelEl) labelEl.textContent = (modalPhotoIdx + 1) + " of " + photos.length + " — " + label;
     if (empty) empty.hidden = true;
     if (img) {
       img.hidden = false;
@@ -1769,7 +1869,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
   let presentIndex = 0;
   let s3Tab = "d1";
   let s4Tab = "overview";
-  let s2Tab = "ideology";
 
   function setS3Tab(id) {
     s3Tab = id;
@@ -1805,18 +1904,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
     if (id === "priority") hydratePriorityPhotos();
   }
 
-  function setS2Tab(id) {
-    s2Tab = id;
-    document.querySelectorAll("#s2 .s2-tabs [data-tab]").forEach((b) => {
-      b.setAttribute("aria-pressed", b.getAttribute("data-tab") === id ? "true" : "false");
-    });
-    document.querySelectorAll("#s2 [data-panel]").forEach((p) => {
-      const on = p.getAttribute("data-panel") === id;
-      p.classList.toggle("is-active", on);
-      p.hidden = !on;
-    });
-  }
-
   function updatePresentCounter() {
     const el = document.getElementById("present-counter");
     if (el) el.textContent = presentIndex + 1 + " / " + SLIDE_IDS.length;
@@ -1830,7 +1917,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
     const id = SLIDE_IDS[presentIndex];
     if (id === "s3") setS3Tab(s3Tab);
     if (id === "s4") setS4Tab(s4Tab);
-    if (id === "s2") setS2Tab(s2Tab);
   }
 
   function enterPresent() {
@@ -1852,7 +1938,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
     );
     s3Tab = "d1";
     s4Tab = "overview";
-    s2Tab = "ideology";
     showPresentSlide();
   }
 
@@ -1868,12 +1953,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
 
   function presentNext() {
     const id = SLIDE_IDS[presentIndex];
-    if (id === "s2") {
-      if (s2Tab === "ideology") {
-        setS2Tab("framework");
-        return;
-      }
-    }
     if (id === "s3") {
       if (s3Tab === "d1") {
         setS3Tab("d2");
@@ -1896,7 +1975,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
     }
     if (presentIndex < SLIDE_IDS.length - 1) {
       presentIndex += 1;
-      if (SLIDE_IDS[presentIndex] === "s2") s2Tab = "ideology";
       if (SLIDE_IDS[presentIndex] === "s3") s3Tab = "d1";
       if (SLIDE_IDS[presentIndex] === "s4") s4Tab = "overview";
       showPresentSlide();
@@ -1905,12 +1983,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
 
   function presentPrev() {
     const id = SLIDE_IDS[presentIndex];
-    if (id === "s2") {
-      if (s2Tab === "framework") {
-        setS2Tab("ideology");
-        return;
-      }
-    }
     if (id === "s3") {
       if (s3Tab === "d3") {
         setS3Tab("d2");
@@ -1933,7 +2005,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
     }
     if (presentIndex > 0) {
       presentIndex -= 1;
-      if (SLIDE_IDS[presentIndex] === "s2") s2Tab = "framework";
       if (SLIDE_IDS[presentIndex] === "s3") s3Tab = "d3";
       if (SLIDE_IDS[presentIndex] === "s4") s4Tab = "priority";
       showPresentSlide();
@@ -1949,9 +2020,6 @@ body.is-presenting .section.is-present-slide { display: flex; }
       btn.addEventListener("click", () => downloadExcel(btn.getAttribute("data-excel")));
     });
 
-    wireSectionTabs("#s2", ".s2-tabs [data-tab]", "[data-panel]", (id) => {
-      s2Tab = id;
-    });
     wireSectionTabs("#s3", ".s3-tabs [data-tab]", "[data-panel]", (id) => {
       setS3Tab(id);
     });
