@@ -3192,7 +3192,947 @@ body.is-presenting #s4.section.is-present-slide {
   font-size: 14px;
 }
 
-  </style>
+  
+/* ========== LAYOUT REBUILD — content-sized zones, fr fixes, typography ========== */
+:root {
+  --layout-gap: 1.5rem;
+  --heading-size: clamp(36px, 3.2vw, 40px);
+}
+
+/* Shared section chrome */
+#s1.section,
+#s2.section,
+#s3.section,
+#s4.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 2rem clamp(1.25rem, 2.5vw, 2.5rem) 1.5rem;
+}
+
+#s1 .section__frame,
+#s2 .section__frame,
+#s3 .section__frame,
+#s4 .section__frame {
+  display: grid;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  justify-content: stretch;
+  align-content: stretch;
+}
+
+#s1 .section__eyebrow,
+#s1 .section-label,
+#s2 .section__eyebrow,
+#s2 .section-label,
+#s3 .section__eyebrow,
+#s3 .section-label,
+#s4 .section__eyebrow,
+#s4 .section-label {
+  position: static;
+  top: auto; left: auto; right: auto;
+  margin: 0;
+  pointer-events: auto;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #C9A84C;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+#s1 .s1-heading,
+#s2 .section__title,
+#s3 .section__title,
+#s4 .section__title {
+  margin: 0.35rem 0 0;
+  font-size: var(--heading-size);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #fff;
+}
+
+body.is-presenting #s1.section,
+body.is-presenting #s2.section,
+body.is-presenting #s3.section,
+body.is-presenting #s4.section {
+  display: none;
+  padding: 2rem clamp(1.25rem, 2.5vw, 2.5rem) 1.5rem;
+}
+body.is-presenting #s1.section.is-present-slide,
+body.is-presenting #s2.section.is-present-slide,
+body.is-presenting #s3.section.is-present-slide,
+body.is-presenting #s4.section.is-present-slide {
+  display: flex;
+}
+
+/* ---- S1 ---- */
+#s1 .section__frame {
+  grid-template-rows: auto auto auto;
+  align-content: space-between;
+  gap: var(--layout-gap);
+}
+
+#s1 .s1-lines {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+#s1 .s1-lines li {
+  margin: 0;
+  font-size: 14px;
+  color: #cccccc;
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+#s1 .s1-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-gap);
+  width: 100%;
+  margin: 0;
+  background: transparent;
+  border: none;
+  align-items: stretch;
+}
+
+#s1 .s1-stat,
+#s1 .stat-card {
+  flex: unset;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+#s1 .s1-stat__value,
+#s1 .stat-number {
+  font-size: 60px;
+  font-weight: 700;
+  color: #C9A84C;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+#s1 .s1-stat__label,
+#s1 .stat-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0;
+  font-weight: 500;
+}
+
+#s1 .store-mix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--layout-gap);
+  width: 100%;
+  margin: 0;
+  border: none;
+  background: transparent;
+  align-items: stretch;
+}
+
+#s1 .store-mix__col {
+  flex: unset;
+  min-height: 0;
+  height: auto;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+#s1 .store-mix__col + .store-mix__col {
+  border-left: 1px solid rgba(201,168,76,0.12);
+}
+
+#s1 .store-mix__label {
+  margin: 0 0 0.75rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  font-weight: 600;
+}
+
+#s1 .store-mix__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0;
+}
+#s1 .store-mix__list li {
+  font-size: 14px;
+  color: #cccccc;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.35;
+}
+#s1 .store-mix__list strong { color: #fff; font-weight: 600; }
+#s1 .store-mix__total {
+  margin: 0.75rem 0 0;
+  font-size: 13px;
+  color: #C9A84C;
+  font-weight: 600;
+}
+
+#s1 .section__frame {
+  grid-template-rows: auto auto auto;
+  align-content: space-between;
+  gap: var(--layout-gap);
+}
+#s1 .s1-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 0;
+  max-height: 12vh;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+#s1 .section-label { margin: 0; }
+#s1 .s1-heading { margin: 0; }
+#s1 .s1-lines { margin: 0.15rem 0 0; }
+#s1 .s1-stats { margin: 0; align-self: stretch; }
+#s1 .store-mix {
+  margin: 0;
+  height: auto;
+  min-height: 0;
+  align-self: stretch;
+  align-items: start;
+}
+#s1 .store-mix__col {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 0;
+  box-sizing: border-box;
+}
+#s1 .store-mix__list {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+}
+#s1 .store-mix__total {
+  margin-top: 0.75rem;
+  padding-top: 0;
+}
+
+/* ---- S2 ---- */
+#s2 .section__frame {
+  grid-template-rows: minmax(0, 1fr);
+}
+#s2 .s2-body {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: space-between;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  gap: 1.25rem;
+  padding: 0;
+  justify-content: stretch;
+}
+
+#s2 .s2-chrome {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+#s2 .s2-headline {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #cccccc;
+  line-height: 1.4;
+}
+
+#s2 .s2-statements {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--layout-gap);
+  margin: 0;
+  background: transparent;
+  border: none;
+  align-items: stretch;
+}
+#s2 .s2-statements article {
+  flex: unset;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
+  padding: 1rem 1.15rem;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.09);
+}
+#s2 .s2-statements p {
+  margin: 0;
+  font-size: 14px;
+  color: #cccccc;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+#s2 .s2-statement {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #C9A84C;
+}
+
+#s2 .s2-dims {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--layout-gap);
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  margin: 0;
+  background: transparent;
+  border: none;
+  align-items: stretch;
+  align-content: start;
+}
+
+#s2 .s2-dim,
+#s2 .dimension-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  box-sizing: border-box;
+  padding: 1.25rem 1.25rem;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 12px;
+  flex: unset;
+  min-width: 0;
+}
+
+#s2 .s2-dim__code {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #C9A84C;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0;
+}
+#s2 .s2-dim__name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.25;
+}
+#s2 .s2-dim__max {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(201,168,76,0.7);
+  font-weight: 400;
+}
+#s2 .s2-dim__purpose {
+  margin: 0.25rem 0 0;
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #cccccc;
+}
+
+#s2 .s2-bottom {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--layout-gap);
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+  margin: 0;
+  align-items: start;
+}
+#s2 .s2-bottom-left,
+#s2 .s2-bottom-right {
+  flex: unset;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+#s2 .s2-test__label,
+#s2 .s2-method__title {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  font-weight: 600;
+}
+
+#s2 .s2-test {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 0 0 auto;
+  min-height: 0;
+  height: auto;
+}
+#s2 .s2-test th,
+#s2 .s2-test td {
+  padding: 0.7rem 0.85rem;
+  font-size: 13px;
+  line-height: 1.35;
+  height: auto;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+#s2 .s2-test th {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  background: rgba(255,255,255,0.02);
+}
+#s2 .s2-test tbody tr { height: auto; }
+#s2 .s2-test td:first-child { color: #C9A84C; font-weight: 600; }
+#s2 .s2-test td:nth-child(2) { color: #fff; font-weight: 500; }
+#s2 .s2-test td:last-child { color: #cccccc; font-weight: 400; }
+
+#s2 .s2-method,
+#s2 .s2-method.competitor-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--layout-gap);
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: hidden;
+  margin: 0;
+  background: transparent;
+  border: none;
+  align-items: start;
+}
+#s2 .s2-method__col,
+#s2 .competitor-card {
+  flex: unset;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 1rem 1.1rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 12px;
+}
+#s2 .s2-method__col + .s2-method__col { border-left: 1px solid rgba(201,168,76,0.1); }
+#s2 .s2-method__brand {
+  margin: 0 0 0.5rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+#s2 .s2-method__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-size: 13px;
+  color: #cccccc;
+  line-height: 1.4;
+}
+#s2 .s2-method__list li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  min-height: 0;
+  overflow: visible;
+}
+#s2 .s2-method__note {
+  margin: 0;
+  font-size: 13px;
+  color: #C9A84C;
+  line-height: 1.4;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ---- S3 ---- */
+/* 4 explicit rows: label, title, tabs, content — tabs must NOT sit in 1fr */
+#s3 .section__frame {
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: 1rem;
+  align-content: stretch;
+}
+#s3 .section-label { margin: 0; }
+#s3 .section__title { margin: 0.35rem 0 0; }
+
+#s3 .inner-tabs.s3-tabs,
+#s3 .s3-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0;
+  min-height: 0;
+  align-items: center;
+  flex-shrink: 0;
+  align-self: start;
+}
+
+#s3 .s3-tab-btn {
+  padding: 0.5rem 1.25rem;
+  height: auto;
+  min-height: 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 24px;
+  font-weight: 500;
+}
+
+#s3 .s3-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--layout-gap);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  align-items: stretch;
+  align-self: stretch;
+}
+
+#s3 .s3-layout > div:first-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+#s3 .s3-canvas-slot,
+#s3 .s3-scene-stack,
+#s3 .scene-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+}
+
+#s3 .scene-wrapper,
+#s3 .scene-photo-wrap,
+#s3 .scene-wrapper.scene-photo-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+
+#s3 .s3-side {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding-left: 0;
+  gap: var(--layout-gap);
+  justify-content: flex-start;
+  align-self: start;
+  height: auto;
+  max-height: 100%;
+}
+
+#s3 .s3-side .tab-panel {
+  display: none;
+  min-height: 0;
+  overflow: visible;
+  padding: 0;
+  max-height: none;
+  flex: 0 0 auto;
+  height: auto;
+}
+#s3 .s3-side .tab-panel.is-active {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  gap: 0.65rem;
+}
+#s3 .s3-side .tab-panel.is-active > .param-table {
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+  height: auto;
+}
+
+#s3 .param-block__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  flex: 0 0 auto;
+}
+#s3 .param-block__code {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #C9A84C;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+#s3 .param-block__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.25;
+}
+#s3 .param-block__max {
+  font-size: 13px;
+  color: rgba(201,168,76,0.75);
+  margin: 0;
+  font-weight: 400;
+}
+
+#s3 .param-table,
+#s3 .tier-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgba(201,168,76,0.15);
+  margin: 0;
+  height: auto;
+  min-height: 0;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  overflow: hidden;
+}
+#s3 .param-table th,
+#s3 .param-table td,
+#s3 .tier-table th,
+#s3 .tier-table td {
+  padding: 0.55rem 0.75rem;
+  height: auto;
+  font-size: 13px;
+  line-height: 1.35;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #cccccc;
+}
+#s3 .param-table th,
+#s3 .tier-table th {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  background: rgba(255,255,255,0.02);
+}
+#s3 .param-table td:first-child,
+#s3 .tier-table td:first-child {
+  color: #fff;
+  font-weight: 600;
+  width: 28%;
+}
+#s3 .param-table td:last-child {
+  color: #C9A84C;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 3.25rem;
+}
+
+#s3 .param-note {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.4;
+  flex: 0 0 auto;
+}
+#s3 .param-note--italic,
+#s3 .s3-bench--italic {
+  font-style: italic;
+  color: rgba(255,255,255,0.45);
+  font-size: 12px;
+}
+
+#s3 .tier-strip {
+  margin: 0;
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#s3 .s3-bench {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+}
+
+#s3 .s3-chapters,
+#s3 .s3-progress {
+  /* Redundant with the D1/D2/D3 tabs above the photo per approved ref — hidden so the
+     scene photo fills the remaining column height with no leftover chrome. */
+  display: none;
+}
+
+/* ---- S4 ---- */
+#s4 .section__frame {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 1rem;
+}
+#s4 .s4-header { margin: 0; gap: 0.5rem; }
+#s4 .s4-tabs { margin: 0; gap: 0.65rem; }
+#s4 .s4-tab-btn {
+  padding: 0.5rem 1.25rem;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 24px;
+}
+
+#s4 .tab-panel.is-active[data-panel="results"] {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  gap: var(--layout-gap);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#s4 .s4-controls {
+  margin: 0;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+#s4 .s4-search {
+  margin: 0;
+  padding: 0.65rem 1rem;
+  font-size: 14px;
+}
+
+#s4 [data-panel="results"] .results-table-wrap {
+  display: block;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+  max-height: none;
+  border: none;
+}
+
+#s4 .store-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: var(--layout-gap);
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+  align-content: start;
+  align-items: stretch;
+}
+
+#s4 .store-card,
+#s4 .s4-store-card,
+#s4 .store-row {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  align-self: stretch;
+  overflow: hidden;
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.1);
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+
+#s4 .store-card .priority-thumb {
+  width: 64px !important;
+  height: 64px !important;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#s4 .store-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+#s4 .store-card__channel {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+#s4 .store-card__dims span,
+#s4 .store-d-item {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+#s4 .store-card__dims span strong,
+#s4 .store-d-val {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+#s4 .store-score {
+  font-size: 28px;
+  font-weight: 700;
+  color: #C9A84C;
+  min-width: 2.5rem;
+}
+#s4 .tier-badge {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+}
+
+#s4 .s4-pager {
+  margin: 0;
+  padding: 0.25rem 0;
+  min-height: 0;
+  flex-shrink: 0;
+}
+
+#s4 .tab-panel.is-active[data-panel="priority"] {
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 1rem;
+}
+#s4 .store-cards--priority {
+  grid-template-rows: repeat(3, auto);
+  align-content: space-between;
+  height: 100%;
+}
+#s4 .reality-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--layout-gap);
+  margin: 0;
+  flex-shrink: 0;
+}
+#s4 .reality-card {
+  flex: unset;
+  min-height: 0;
+  height: auto;
+  padding: 0.85rem 1rem;
+}
+
+#s4 .tab-panel.is-active[data-panel="overview"] {
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--layout-gap);
+}
+#s4 .s4-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: var(--layout-gap);
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  align-items: start;
+}
+#s4 .s4-overview__label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C9A84C;
+}
+#s4 .s4-inline-table th,
+#s4 .s4-inline-table td {
+  padding: 0.65rem 0.85rem;
+  font-size: 13px;
+  color: #cccccc;
+}
+#s4 .s4-downloads {
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-height: 720px) {
+  #s1.section, #s2.section, #s3.section, #s4.section {
+    padding: 1.25rem clamp(1rem, 2vw, 1.75rem) 1rem;
+  }
+  :root { --layout-gap: 1rem; }
+  #s1 .s1-stat__value, #s1 .stat-number { font-size: 48px; }
+}
+/* ========== END LAYOUT REBUILD ========== */
+
+</style>
 </head>
 <body>
   <button type="button" class="present-btn" id="present-btn">Present</button>
@@ -3215,12 +4155,14 @@ body.is-presenting #s4.section.is-present-slide {
     <!-- S1 — Opening -->
     <section class="section" id="s1" aria-labelledby="s1-title">
       <div class="section__frame reveal">
-        <p class="section__eyebrow section-label">Section 01</p>
-        <h1 class="s1-heading" id="s1-title">Branding Upgrade — Store Assessment</h1>
-        <ul class="s1-lines">
-          <li>Target: 150 priority WDS stores across Chennai</li>
-          <li>Pilot completed: Top 30 stores assessed and scored</li>
-        </ul>
+        <div class="s1-head">
+          <p class="section__eyebrow section-label">Section 01</p>
+          <h1 class="s1-heading" id="s1-title">Branding Upgrade — Store Assessment</h1>
+          <ul class="s1-lines">
+            <li>Target: 150 priority WDS stores across Chennai</li>
+            <li>Pilot completed: Top 30 stores assessed and scored</li>
+          </ul>
+        </div>
         <div class="s1-stats" role="list">
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">30</span><span class="s1-stat__label stat-label">Stores Assessed</span></div>
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">0</span><span class="s1-stat__label stat-label">Dominant</span></div>
@@ -3277,7 +4219,7 @@ body.is-presenting #s4.section.is-present-slide {
             </article>
             <article class="s2-dim">
               <span class="s2-dim__code">D2</span>
-              <h3 class="s2-dim__name">Competitive Pressure Index</h3>
+              <h3 class="s2-dim__name">Vivo vs Competitor Fighting Score</h3>
               <p class="s2-dim__max">Max 30</p>
               <p class="s2-dim__purpose">Measures competitor branding pressure in the same store.</p>
             </article>
@@ -3307,7 +4249,7 @@ body.is-presenting #s4.section.is-present-slide {
                   <td>Without this, we don't know our current state</td>
                 </tr>
                 <tr>
-                  <td>D2 — Competitive Pressure Index</td>
+                  <td>D2 — Vivo vs Competitor Fighting Score</td>
                   <td>Who are we fighting and how hard?</td>
                   <td>Without this, our score has no competitive context</td>
                 </tr>
@@ -3359,7 +4301,7 @@ body.is-presenting #s4.section.is-present-slide {
         <h2 class="section__title" id="s3-title">Scoring Logic</h2>
         <div class="inner-tabs s3-tabs" role="tablist" aria-label="Scoring dimensions">
           <button type="button" class="s3-tab-btn glass glass-tab-active" data-tab="d1" aria-pressed="true">D1 — Brand Strength</button>
-          <button type="button" class="s3-tab-btn glass" data-tab="d2" aria-pressed="false">D2 — Competitive Pressure</button>
+          <button type="button" class="s3-tab-btn glass" data-tab="d2" aria-pressed="false">D2 — Fighting Score</button>
           <button type="button" class="s3-tab-btn glass" data-tab="d3" aria-pressed="false">D3 — Premium Potential</button>
         </div>
 
@@ -3399,7 +4341,7 @@ body.is-presenting #s4.section.is-present-slide {
             </div>
             <div class="s3-chapters" id="s3-chapters" aria-live="polite">
               <span data-chapter="d1" data-active="true">D1 <small>Vivo Brand Strength</small></span>
-              <span data-chapter="d2">D2 <small>Competitive Pressure Index</small></span>
+              <span data-chapter="d2">D2 <small>Vivo vs Competitor Fighting Score</small></span>
               <span data-chapter="d3">D3 <small>Store Premium Potential</small></span>
             </div>
             <div class="s3-progress" aria-hidden="true"><div class="s3-progress__bar" id="s3-progress-bar"></div></div>
@@ -3413,37 +4355,33 @@ body.is-presenting #s4.section.is-present-slide {
                 <span class="param-block__max">Max 40</span>
               </div>
               <table class="param-table s3-table">
-                <thead><tr><th>Parameter</th><th>What is scored</th><th>Max</th></tr></thead>
+                <thead><tr><th>Parameter</th><th>What is Scored</th><th>Max</th></tr></thead>
                 <tbody>
-                  <tr><td>Exterior / Facade</td><td>Main Signage Board position + condition + Glow Sign</td><td>10</td></tr>
-                  <tr><td>Experience Table</td><td>Position (Entry=8, Centre=6, Side=4, Rear=2) + Condition + Live handsets</td><td>10</td></tr>
-                  <tr><td>Cabinet / Display Unit</td><td>Position (Prime=8, Secondary=6) + Size vs competitors + Condition</td><td>10</td></tr>
-                  <tr><td>Visibility Branding</td><td>Backlit panel + POSM (X Series weighted) + ISB + Counter + SIS</td><td>10</td></tr>
+                  <tr><td>Main Signage Board</td><td>Position on board (Header 1=5, Header 2=3, Header 3+=1, Absent=0) + Condition (lit, intact, clean, no damage, colours accurate)</td><td>10</td></tr>
+                  <tr><td>In-Store Assets</td><td>Tier score (Shop-in-Shop / Zone / Asset / Domestic presence) + Position in customer reach sequence + Condition &amp; hygiene</td><td>20</td></tr>
+                  <tr><td>Visibility Branding</td><td>Outside + inside presence, placement at entry door, eye-level visibility, total branding area, cleanliness</td><td>10</td></tr>
                 </tbody>
               </table>
-              <p class="param-note"><strong>Hygiene bonus:</strong> +2 PREMIUM / −3 POOR / −5 VERY POOR</p>
-              <p class="param-note"><strong>Entry bonus:</strong> +2 if Vivo seen first</p>
             </div>
 
             <div class="tab-panel" data-panel="d2" hidden>
               <div class="param-block__head">
                 <span class="param-block__code">D2</span>
-                <h3 class="param-block__title">Competitive Pressure Index</h3>
-                <span class="param-block__max">Max 30 · inverted</span>
+                <h3 class="param-block__title">Vivo vs Competitor Fighting Score</h3>
+                <span class="param-block__max">Max 30</span>
               </div>
               <table class="param-table s3-table">
-                <thead><tr><th>Pressure source</th><th>Rule</th><th>Pts</th></tr></thead>
+                <thead><tr><th>Parameter</th><th>What is Scored</th><th>Max</th></tr></thead>
                 <tbody>
-                  <tr><td>VERY HIGH dominance</td><td>Per competing brand</td><td>8</td></tr>
-                  <tr><td>HIGH dominance</td><td>Per competing brand</td><td>6</td></tr>
-                  <tr><td>MEDIUM dominance</td><td>Per competing brand</td><td>3</td></tr>
-                  <tr><td>Experience table present</td><td>Per brand</td><td>+2</td></tr>
-                  <tr><td>Cabinet much larger than Vivo</td><td>Per brand</td><td>+3</td></tr>
-                  <tr><td>Cabinet larger than Vivo</td><td>Per brand</td><td>+2</td></tr>
-                  <tr><td>Vivo better than ≥1 competitor</td><td>Pressure reduction</td><td>−3</td></tr>
+                  <tr><td>MSB Position</td><td>Header position per brand — Vivo vs Samsung, Vivo vs Apple</td><td>—</td></tr>
+                  <tr><td>In-Store Asset Space</td><td>Space units per brand (Shop=10, Backwall=6, Table=4, Counter=3, Standee=1)</td><td>—</td></tr>
+                  <tr><td>Asset Position</td><td>Customer reach sequence position — per brand</td><td>—</td></tr>
+                  <tr><td>Visibility Branding Count</td><td>None / 1–2 / 3–5 / 6+ elements — per brand</td><td>—</td></tr>
+                  <tr><td>Branding Space</td><td>Large (wall+floor) / Medium (wall or floor) / Small (standee only) / None</td><td>—</td></tr>
+                  <tr><td>Customisation</td><td>Shop-in-Shop / Custom furniture / Branded lighting / Painted walls / Digital screen</td><td>—</td></tr>
                 </tbody>
               </table>
-              <p class="param-note">Score = <strong>30 minus total pressure</strong>. Financial lock-in flagged separately.</p>
+              <p class="param-note param-note--italic">Vivo wins parameter = +1 · Draw = +0.5 · Competitor wins = 0 · Both absent = Skip · Average of Vivo vs Samsung + Vivo vs Apple</p>
             </div>
 
             <div class="tab-panel" data-panel="d3" hidden>
@@ -3453,26 +4391,27 @@ body.is-presenting #s4.section.is-present-slide {
                 <span class="param-block__max">Max 30</span>
               </div>
               <table class="param-table s3-table">
-                <thead><tr><th>Parameter</th><th>What is scored</th><th>Max</th></tr></thead>
+                <thead><tr><th>Parameter</th><th>What is Scored</th><th>Max</th></tr></thead>
                 <tbody>
-                  <tr><td>Sellout History</td><td>Vivo X Series avg units + Apple/Samsung premium sellout</td><td>15</td></tr>
-                  <tr><td>Location &amp; Footfall</td><td>Location type + catchment + daily footfall + proximity</td><td>10</td></tr>
-                  <tr><td>Store Quality</td><td>Ambiance + lighting + premium destination status + retailer attitude</td><td>5</td></tr>
+                  <tr><td>Sellout Signal</td><td>Vivo X Series + Apple ₹70K+ + Samsung Ultra/Z — average units/month (last 3 months)</td><td>12</td></tr>
+                  <tr><td>Location &amp; Catchment</td><td>Store location type + proximity to IT hub / corporate / premium residential / premium college</td><td>8</td></tr>
+                  <tr><td>Store Access</td><td>Floor level + main road visibility + parking availability</td><td>5</td></tr>
+                  <tr><td>Store Readiness</td><td>Ambience (lighting + cleanliness) + Appearance (exterior + signage) + Attractiveness (window display)</td><td>5</td></tr>
                 </tbody>
               </table>
             </div>
 
             <div class="tier-strip">
               <table class="tier-table s3-table">
-                <thead><tr><th>Tier</th><th>Score</th><th>Label</th><th>Meaning</th></tr></thead>
+                <thead><tr><th>Tier</th><th>Score</th><th>Status</th></tr></thead>
                 <tbody>
-                  <tr><td class="tier-A">A</td><td>80–100</td><td>DOMINANT</td><td>Vivo owns this store — protect and maintain</td></tr>
-                  <tr><td class="tier-B">B</td><td>60–79</td><td>COMPETITIVE</td><td>Present but upgrade priority</td></tr>
-                  <tr><td class="tier-C">C</td><td>40–59</td><td>VULNERABLE</td><td>Structured intervention needed</td></tr>
-                  <tr><td class="tier-D">D</td><td>0–39</td><td>CRITICAL</td><td>Emergency upgrade required</td></tr>
+                  <tr><td class="tier-A">A</td><td>TBD</td><td>Pending re-audit</td></tr>
+                  <tr><td class="tier-B">B</td><td>TBD</td><td>Pending re-audit</td></tr>
+                  <tr><td class="tier-C">C</td><td>TBD</td><td>Pending re-audit</td></tr>
+                  <tr><td class="tier-D">D</td><td>TBD</td><td>Pending re-audit</td></tr>
                 </tbody>
               </table>
-              <p class="s3-bench">Benchmark: <strong>60/100</strong> (D1 ≥ 20 + D2 ≥ 20 + D3 ≥ 20)</p>
+              <p class="s3-bench s3-bench--italic">Tier boundaries and benchmark will be set after all 30 stores are re-audited under the new framework.</p>
             </div>
           </div>
         </div>
@@ -3504,7 +4443,7 @@ body.is-presenting #s4.section.is-present-slide {
                 <tbody>
                   <tr><td>Store Information</td><td>Name, code, area, channel, auditor</td></tr>
                   <tr><td>D1 — Vivo Brand Strength</td><td>Signage, table, cabinet, visibility, hygiene</td></tr>
-                  <tr><td>D2 — Competitive Pressure</td><td>Apple, Samsung, other brand dominance per zone</td></tr>
+                  <tr><td>D2 — Vivo vs Competitor Fighting Score</td><td>Apple, Samsung, other brand dominance per zone</td></tr>
                   <tr><td>D3 — Premium Potential</td><td>Sellout history, location, store quality</td></tr>
                   <tr><td>Scoring Output</td><td>D1+D2+D3 total, tier classification, upgrade action</td></tr>
                 </tbody>
@@ -4038,7 +4977,7 @@ body.is-presenting #s4.section.is-present-slide {
 
   const DIMENSIONS = {
     D1: { name: "Vivo Brand Strength", max: 40 },
-    D2: { name: "Competitive Pressure Index", max: 30 },
+    D2: { name: "Vivo vs Competitor Fighting Score", max: 30 },
     D3: { name: "Store Premium Potential", max: 30 },
     TOTAL_MAX: 100,
     BENCHMARK: 60
@@ -4429,7 +5368,7 @@ body.is-presenting #s4.section.is-present-slide {
         "</div>" +
         '<p class="panel-total modal-total-score-wrap"><span>Total score</span><span class="score-anim modal-total-score" data-score="total" data-target="' + store.total + '">0</span><span class="modal-score-denom"> / 100</span></p>' +
         scoreBarHTML("D1 — Vivo Brand Strength", store.d1, 40, "d1") +
-        scoreBarHTML("D2 — Competitive Pressure Index", store.d2, 30, "d2") +
+        scoreBarHTML("D2 — Vivo vs Competitor Fighting Score", store.d2, 30, "d2") +
         scoreBarHTML("D3 — Store Premium Potential", store.d3, 30, "d3") +
         '<div class="panel-upgrade"><strong>Prescribed upgrade</strong>' + store.upgrade + "</div>";
     }
@@ -4581,10 +5520,11 @@ body.is-presenting #s4.section.is-present-slide {
     resultsPage = clampPage(resultsPage, rows.length);
     const start = (resultsPage - 1) * PAGE_SIZE;
     const pageRows = rows.slice(start, start + PAGE_SIZE);
-    list.innerHTML = pageRows.map((s) => storeCardHtml(s)).join("");
+    list.innerHTML = pageRows.map((s) => storeCardHtml(s, { thumb: true })).join("");
     const filtered = filterTier !== "ALL" || !!searchQ;
     updatePager("results", resultsPage, rows.length, filtered);
     triggerStoreCardStagger(list);
+    PhotoEngine.whenReady(hydrateCardThumbs);
   }
 
   function triggerStoreCardStagger(listEl) {
@@ -4609,13 +5549,11 @@ body.is-presenting #s4.section.is-present-slide {
     list.innerHTML = pageRows.map((s) => storeCardHtml(s, { action: true, thumb: true })).join("");
     updatePager("priority", priorityPage, rows.length, false);
     triggerStoreCardStagger(list);
-    PhotoEngine.whenReady(hydratePriorityPhotos);
+    PhotoEngine.whenReady(hydrateCardThumbs);
   }
 
-  function hydratePriorityPhotos() {
-    const list = document.getElementById("priority-cards");
-    if (!list || typeof STORE_PHOTOS === "undefined") return;
-    list.querySelectorAll(".priority-thumb").forEach((thumb) => {
+  function hydrateCardThumbs() {
+    document.querySelectorAll(".store-cards .priority-thumb").forEach((thumb) => {
       if (thumb.getAttribute("data-hydrated") === "1") return;
       const name = thumb.getAttribute("data-store");
       const photo = PhotoEngine.entrance(name);
@@ -4629,18 +5567,23 @@ body.is-presenting #s4.section.is-present-slide {
       thumb.classList.remove("is-empty");
       thumb.innerHTML = "";
       thumb.appendChild(img);
-      const priorityActive = document.querySelector('#s4 [data-panel="priority"]')?.classList.contains("is-active");
-      if (priorityActive) PhotoEngine.bindNow(img, photo.src, name + ":entrance");
+      const panel = thumb.closest(".tab-panel");
+      const active = panel && panel.classList.contains("is-active");
+      if (active) PhotoEngine.bindNow(img, photo.src, name + ":entrance");
       else PhotoEngine.bindLazy(img, photo.src, name + ":entrance");
       thumb.setAttribute("data-hydrated", "1");
     });
-    if (document.querySelector('#s4 [data-panel="priority"]')?.classList.contains("is-active")) {
-      list.querySelectorAll("img[data-lazy-src]").forEach((img) => {
-        if (!img.getAttribute("src")) {
-          PhotoEngine.bindNow(img, img.getAttribute("data-lazy-src"), img.getAttribute("data-lazy-key"));
-        }
-      });
-    }
+    document.querySelectorAll(".store-cards img[data-lazy-src]").forEach((img) => {
+      const panel = img.closest(".tab-panel");
+      if (panel && panel.classList.contains("is-active") && !img.getAttribute("src")) {
+        const src = img.getAttribute("data-lazy-src");
+        if (src) PhotoEngine.bindNow(img, src, img.alt || "store");
+      }
+    });
+  }
+
+  function hydratePriorityPhotos() {
+    hydrateCardThumbs();
   }
 
   /* ========== Presentation mode (Teams-safe, no fullscreen API) ========== */
