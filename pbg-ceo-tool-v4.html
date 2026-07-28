@@ -4130,7 +4130,143 @@ body.is-presenting #s4.section.is-present-slide {
   :root { --layout-gap: 1rem; }
   #s1 .s1-stat__value, #s1 .stat-number { font-size: 48px; }
 }
-/* ========== END LAYOUT REBUILD ========== */
+/* ========== S1 RETAILER CARD GRID ========== */
+#s1 .section__frame {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  gap: var(--layout-gap);
+  height: 100%;
+  min-height: 0;
+}
+#s1 .s1-head {
+  max-height: none;
+  gap: 0.35rem;
+}
+#s1 .s1-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-gap);
+  margin: 0;
+  width: 100%;
+}
+#s1 .s1-stat,
+#s1 .stat-card {
+  min-height: 0;
+  height: auto;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.45rem;
+}
+#s1 .s1-stat__value,
+#s1 .stat-number {
+  font-size: 60px;
+  line-height: 1;
+}
+
+#s1 .s1-retail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-height: 0;
+  width: 100%;
+}
+#s1 .s1-retail__section-label {
+  margin: 0.15rem 0 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  font-weight: 600;
+}
+#s1 .s1-retail__grid {
+  display: grid;
+  gap: var(--layout-gap);
+  width: 100%;
+  align-items: stretch;
+}
+#s1 .s1-retail__grid--mt {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+#s1 .s1-retail__grid--gt {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+#s1 .s1-retail-card {
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  box-sizing: border-box;
+  padding: 1rem 0.9rem 1.1rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+#s1 .s1-retail-card.is-selected {
+  border-color: #C9A84C;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px rgba(201,168,76,0.35),
+    0 0 18px rgba(201,168,76,0.22);
+}
+#s1 .s1-retail-card__channel {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  font-weight: 600;
+}
+#s1 .s1-retail-card__name {
+  margin: 0.15rem 0 0.35rem;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+#s1 .s1-retail-card__count {
+  font-size: 40px;
+  font-weight: 700;
+  color: #C9A84C;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+#s1 .s1-retail-card__unit {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+}
+#s1 .s1-retail-card__detail {
+  margin-top: 0.35rem;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.35;
+}
+
+/* Hide legacy two-panel list if any remnant remains */
+#s1 .store-mix { display: none !important; }
+
+@media (max-width: 1100px) {
+  #s1 .s1-retail__grid--mt {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-height: 720px) {
+  #s1 .s1-retail-card { padding: 0.75rem 0.7rem 0.85rem; }
+  #s1 .s1-retail-card__name { font-size: 15px; }
+  #s1 .s1-retail-card__count { font-size: 32px; }
+  #s1 .s1-stat__value, #s1 .stat-number { font-size: 48px; }
+}
+/* ========== END S1 RETAILER CARD GRID ========== */
 
 </style>
 </head>
@@ -4169,27 +4305,68 @@ body.is-presenting #s4.section.is-present-slide {
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">43</span><span class="s1-stat__label stat-label">Avg Score</span></div>
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">60</span><span class="s1-stat__label stat-label">Benchmark</span></div>
         </div>
-        <div class="store-mix" aria-label="Store Mix Summary">
-          <div class="store-mix__col">
-            <h2 class="store-mix__label">Modern Trade (MT)</h2>
-            <ul class="store-mix__list">
-              <li><strong>Poorvika</strong> — 17 stores (Mobile: 9 | Appliances: 8)</li>
-              <li><strong>Chennai Mobiles</strong> — 6 stores</li>
-              <li><strong>Sangeetha Mobiles</strong> — 1 store</li>
-              <li><strong>Croma</strong> — 1 store</li>
-              <li><strong>Vasanth &amp; Co</strong> — 1 store</li>
-              <li><strong>Supreme Mobiles</strong> — 1 store</li>
-            </ul>
-            <p class="store-mix__total">Total MT: 27 stores</p>
+        <div class="s1-retail" aria-label="Store Mix Summary">
+          <p class="s1-retail__section-label">Stores Detail Grid</p>
+          <div class="s1-retail__grid s1-retail__grid--mt" role="list">
+            <article class="s1-retail-card is-selected" role="listitem">
+              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
+              <h3 class="s1-retail-card__name">Poorvika</h3>
+              <span class="s1-retail-card__count">17</span>
+              <span class="s1-retail-card__unit">Stores</span>
+              <span class="s1-retail-card__detail">(Mobile: 9 | Appliances: 8)</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
+              <h3 class="s1-retail-card__name">Chennai Mobiles</h3>
+              <span class="s1-retail-card__count">6</span>
+              <span class="s1-retail-card__unit">Stores</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
+              <h3 class="s1-retail-card__name">Sangeetha Mobiles</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
+              <h3 class="s1-retail-card__name">Croma</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
+              <h3 class="s1-retail-card__name">Vasanth &amp; Co</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
+              <h3 class="s1-retail-card__name">Supreme Mobiles</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
           </div>
-          <div class="store-mix__col">
-            <h2 class="store-mix__label">General Trade (GT)</h2>
-            <ul class="store-mix__list">
-              <li><strong>Sun Mobiles</strong> — 1 store</li>
-              <li><strong>Mayur Mobiles</strong> — 1 store</li>
-              <li><strong>Pothys Hyper</strong> — 1 store</li>
-            </ul>
-            <p class="store-mix__total">Total GT: 3 stores</p>
+
+          <p class="s1-retail__section-label">General Trade (GT) Shop Information</p>
+          <div class="s1-retail__grid s1-retail__grid--gt" role="list">
+            <article class="s1-retail-card is-selected" role="listitem">
+              <span class="s1-retail-card__channel">General Trade (GT)</span>
+              <h3 class="s1-retail-card__name">Sun Mobiles</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">General Trade (GT)</span>
+              <h3 class="s1-retail-card__name">Mayur Mobiles</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
+            <article class="s1-retail-card" role="listitem">
+              <span class="s1-retail-card__channel">General Trade (GT)</span>
+              <h3 class="s1-retail-card__name">Pothys Hyper</h3>
+              <span class="s1-retail-card__count">1</span>
+              <span class="s1-retail-card__unit">Store</span>
+            </article>
           </div>
         </div>
       </div>
