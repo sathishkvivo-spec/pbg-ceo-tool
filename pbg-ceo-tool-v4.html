@@ -4181,17 +4181,52 @@ body.is-presenting #s4.section.is-present-slide {
   color: #C9A84C;
   font-weight: 600;
 }
-#s1 .s1-retail__grid {
-  display: grid;
-  gap: var(--layout-gap);
+#s1 .s1-retail__row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   width: 100%;
+  min-width: 0;
+}
+#s1 .s1-retail__viewport {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#s1 .s1-retail__viewport::-webkit-scrollbar { display: none; }
+#s1 .s1-retail__track {
+  display: flex;
+  gap: var(--layout-gap);
   align-items: stretch;
+  width: max-content;
 }
-#s1 .s1-retail__grid--mt {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+#s1 .s1-retail__arrow {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.65);
+  background: rgba(201,168,76,0.18);
+  color: var(--gold, #C9A84C);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
 }
-#s1 .s1-retail__grid--gt {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+#s1 .s1-retail__arrow:hover:not(:disabled) {
+  background: rgba(201,168,76,0.32);
+}
+#s1 .s1-retail__arrow:disabled,
+#s1 .s1-retail__arrow.is-dimmed {
+  opacity: 0.3;
+  cursor: default;
 }
 #s1 .s1-retail-card {
   margin: 0;
@@ -4208,6 +4243,8 @@ body.is-presenting #s4.section.is-present-slide {
   flex-direction: column;
   align-items: flex-start;
   gap: 0.35rem;
+  flex: 0 0 auto;
+  width: var(--s1-card-w, 160px);
 }
 #s1 .s1-retail-card.is-selected {
   border-color: #C9A84C;
@@ -4255,11 +4292,6 @@ body.is-presenting #s4.section.is-present-slide {
 /* Hide legacy two-panel list if any remnant remains */
 #s1 .store-mix { display: none !important; }
 
-@media (max-width: 1100px) {
-  #s1 .s1-retail__grid--mt {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
 @media (max-height: 720px) {
   #s1 .s1-retail-card { padding: 0.75rem 0.7rem 0.85rem; }
   #s1 .s1-retail-card__name { font-size: 15px; }
@@ -4295,78 +4327,33 @@ body.is-presenting #s4.section.is-present-slide {
           <p class="section__eyebrow section-label">Section 01</p>
           <h1 class="s1-heading" id="s1-title">Branding Upgrade — Store Assessment</h1>
           <ul class="s1-lines">
-            <li>Target: 150 priority WDS stores across Chennai</li>
-            <li>Pilot completed: Top 30 stores assessed and scored</li>
+            <li>Target: 150 priority WODs across Chennai</li>
+            <li>Pilot completed: Top <span id="s1-pilot-count">30</span> stores assessed and scored</li>
           </ul>
         </div>
         <div class="s1-stats" role="list">
-          <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">30</span><span class="s1-stat__label stat-label">Stores Assessed</span></div>
+          <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number" id="s1-stores-assessed">30</span><span class="s1-stat__label stat-label">Stores Assessed</span></div>
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">0</span><span class="s1-stat__label stat-label">Dominant</span></div>
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">43</span><span class="s1-stat__label stat-label">Avg Score</span></div>
           <div class="s1-stat stat-card" role="listitem"><span class="s1-stat__value stat-number">60</span><span class="s1-stat__label stat-label">Benchmark</span></div>
         </div>
         <div class="s1-retail" aria-label="Store Mix Summary">
           <p class="s1-retail__section-label">Stores Detail Grid</p>
-          <div class="s1-retail__grid s1-retail__grid--mt" role="list">
-            <article class="s1-retail-card is-selected" role="listitem">
-              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
-              <h3 class="s1-retail-card__name">Poorvika</h3>
-              <span class="s1-retail-card__count">17</span>
-              <span class="s1-retail-card__unit">Stores</span>
-              <span class="s1-retail-card__detail">(Mobile: 9 | Appliances: 8)</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
-              <h3 class="s1-retail-card__name">Chennai Mobiles</h3>
-              <span class="s1-retail-card__count">6</span>
-              <span class="s1-retail-card__unit">Stores</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
-              <h3 class="s1-retail-card__name">Sangeetha Mobiles</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
-              <h3 class="s1-retail-card__name">Croma</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
-              <h3 class="s1-retail-card__name">Vasanth &amp; Co</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">Modern Trade (MT)</span>
-              <h3 class="s1-retail-card__name">Supreme Mobiles</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
+          <div class="s1-retail__row" data-s1-row="mt">
+            <button type="button" class="s1-retail__arrow s1-retail__arrow--prev" id="s1-mt-prev" aria-label="Previous MT chains" disabled>‹</button>
+            <div class="s1-retail__viewport" id="s1-mt-viewport">
+              <div class="s1-retail__track s1-retail__track--mt" id="s1-mt-track" role="list"></div>
+            </div>
+            <button type="button" class="s1-retail__arrow s1-retail__arrow--next" id="s1-mt-next" aria-label="Next MT chains" disabled>›</button>
           </div>
 
           <p class="s1-retail__section-label">General Trade (GT) Shop Information</p>
-          <div class="s1-retail__grid s1-retail__grid--gt" role="list">
-            <article class="s1-retail-card is-selected" role="listitem">
-              <span class="s1-retail-card__channel">General Trade (GT)</span>
-              <h3 class="s1-retail-card__name">Sun Mobiles</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">General Trade (GT)</span>
-              <h3 class="s1-retail-card__name">Mayur Mobiles</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
-            <article class="s1-retail-card" role="listitem">
-              <span class="s1-retail-card__channel">General Trade (GT)</span>
-              <h3 class="s1-retail-card__name">Pothys Hyper</h3>
-              <span class="s1-retail-card__count">1</span>
-              <span class="s1-retail-card__unit">Store</span>
-            </article>
+          <div class="s1-retail__row" data-s1-row="gt">
+            <button type="button" class="s1-retail__arrow s1-retail__arrow--prev" id="s1-gt-prev" aria-label="Previous GT chains" disabled>‹</button>
+            <div class="s1-retail__viewport" id="s1-gt-viewport">
+              <div class="s1-retail__track s1-retail__track--gt" id="s1-gt-track" role="list"></div>
+            </div>
+            <button type="button" class="s1-retail__arrow s1-retail__arrow--next" id="s1-gt-next" aria-label="Next GT chains" disabled>›</button>
           </div>
         </div>
       </div>
@@ -5138,6 +5125,207 @@ body.is-presenting #s4.section.is-present-slide {
   STORES.forEach((s) => {
     s.channel = CHANNEL_BY_STORE[s.name] || "MT";
   });
+
+  const TOTAL_STORES = STORES.length;
+
+  const CHAIN_PREFIXES = [
+    { re: /^Poorvika Appliances\b/i, chain: "Poorvika", subtype: "Appliances" },
+    { re: /^Poorvika\b/i, chain: "Poorvika", subtype: "Mobile" },
+    { re: /^Chennai Mobiles\b/i, chain: "Chennai Mobiles" },
+    { re: /^Sangeetha Mobiles\b/i, chain: "Sangeetha Mobiles" },
+    { re: /^Supreme Mobiles\b/i, chain: "Supreme Mobiles" },
+    { re: /^Sun Mobiles\b/i, chain: "Sun Mobiles" },
+    { re: /^Mayur Mobiles\b/i, chain: "Mayur Mobiles" },
+    { re: /^Pothys Hyper\b/i, chain: "Pothys Hyper" },
+    { re: /^Vasanth\s*&?\s*Co\b/i, chain: "Vasanth & Co" },
+    { re: /^Croma\b/i, chain: "Croma" }
+  ];
+
+  /* Locked display order (ties after store-count sort). Not alphabetical. */
+  const LOCKED_RETAIL_CHAIN_ORDER = [
+    "Poorvika",
+    "Chennai Mobiles",
+    "Sangeetha Mobiles",
+    "Croma",
+    "Vasanth & Co",
+    "Supreme Mobiles",
+    "Sun Mobiles",
+    "Mayur Mobiles",
+    "Pothys Hyper"
+  ];
+
+  function resolveStoreChain(store) {
+    const name = store.name || "";
+    for (let i = 0; i < CHAIN_PREFIXES.length; i++) {
+      const def = CHAIN_PREFIXES[i];
+      if (def.re.test(name)) {
+        return { chain: def.chain, subtype: def.subtype || null, channel: store.channel || "MT" };
+      }
+    }
+    const mobiles = name.match(/^(.+?\bMobiles)\b/i);
+    if (mobiles) return { chain: mobiles[1], subtype: null, channel: store.channel || "MT" };
+    const hyper = name.match(/^(.+?\bHyper)\b/i);
+    if (hyper) return { chain: hyper[1], subtype: null, channel: store.channel || "MT" };
+    const first = name.split(/\s+/)[0] || name;
+    return { chain: first, subtype: null, channel: store.channel || "MT" };
+  }
+
+  function groupRetailChains(channel) {
+    const map = new Map();
+    STORES.forEach((store) => {
+      const info = resolveStoreChain(store);
+      if (info.channel !== channel) return;
+      const key = info.chain + "|" + info.channel;
+      let entry = map.get(key);
+      if (!entry) {
+        entry = {
+          chain: info.chain,
+          channel: info.channel,
+          count: 0,
+          mobile: 0,
+          appliances: 0
+        };
+        map.set(key, entry);
+      }
+      entry.count += 1;
+      if (info.subtype === "Mobile") entry.mobile += 1;
+      if (info.subtype === "Appliances") entry.appliances += 1;
+    });
+    return Array.from(map.values()).sort((a, b) => {
+      const byCount = b.count - a.count;
+      if (byCount) return byCount;
+      const ai = LOCKED_RETAIL_CHAIN_ORDER.indexOf(a.chain);
+      const bi = LOCKED_RETAIL_CHAIN_ORDER.indexOf(b.chain);
+      return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi);
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function retailCardHtml(chain, channelLabel, selected) {
+    const unit = chain.count === 1 ? "Store" : "Stores";
+    let detail = "";
+    if (chain.chain === "Poorvika" && (chain.mobile || chain.appliances)) {
+      detail =
+        '<span class="s1-retail-card__detail">(Mobile: ' +
+        chain.mobile +
+        " | Appliances: " +
+        chain.appliances +
+        ")</span>";
+    }
+    return (
+      '<article class="s1-retail-card' +
+      (selected ? " is-selected" : "") +
+      '" role="listitem">' +
+      '<span class="s1-retail-card__channel">' +
+      channelLabel +
+      "</span>" +
+      '<h3 class="s1-retail-card__name">' +
+      escapeHtml(chain.chain) +
+      "</h3>" +
+      '<span class="s1-retail-card__count">' +
+      chain.count +
+      "</span>" +
+      '<span class="s1-retail-card__unit">' +
+      unit +
+      "</span>" +
+      detail +
+      "</article>"
+    );
+  }
+
+  function getLayoutGapPx(el) {
+    const raw = getComputedStyle(el).gap || getComputedStyle(document.documentElement).getPropertyValue("--layout-gap");
+    const n = parseFloat(raw);
+    return Number.isFinite(n) ? n : 24;
+  }
+
+  function wireRetailRow(opts) {
+    const viewport = document.getElementById(opts.viewportId);
+    const track = document.getElementById(opts.trackId);
+    const prev = document.getElementById(opts.prevId);
+    const next = document.getElementById(opts.nextId);
+    if (!viewport || !track || !prev || !next) return;
+
+    const chains = groupRetailChains(opts.channel);
+    const channelLabel = opts.channel === "GT" ? "General Trade (GT)" : "Modern Trade (MT)";
+    track.innerHTML = chains
+      .map((c, i) => retailCardHtml(c, channelLabel, i === 0))
+      .join("");
+
+    const visible = opts.visible;
+    const syncCardWidth = () => {
+      const gap = getLayoutGapPx(track);
+      const vw = viewport.clientWidth;
+      const cardW = Math.max(120, Math.floor((vw - gap * (visible - 1)) / visible));
+      viewport.style.setProperty("--s1-card-w", cardW + "px");
+      return { gap, cardW };
+    };
+
+    const updateArrows = () => {
+      const maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+      const atStart = viewport.scrollLeft <= 2;
+      const atEnd = viewport.scrollLeft >= maxScroll - 2;
+      prev.disabled = atStart;
+      next.disabled = atEnd;
+      prev.classList.toggle("is-dimmed", atStart);
+      next.classList.toggle("is-dimmed", atEnd);
+    };
+
+    const scrollByCard = (dir) => {
+      const { gap, cardW } = syncCardWidth();
+      viewport.scrollBy({ left: dir * (cardW + gap), behavior: "smooth" });
+    };
+
+    prev.onclick = () => scrollByCard(-1);
+    next.onclick = () => scrollByCard(1);
+    viewport.addEventListener("scroll", updateArrows, { passive: true });
+
+    syncCardWidth();
+    updateArrows();
+    requestAnimationFrame(() => {
+      syncCardWidth();
+      updateArrows();
+    });
+
+    if ("ResizeObserver" in window) {
+      const ro = new ResizeObserver(() => {
+        syncCardWidth();
+        updateArrows();
+      });
+      ro.observe(viewport);
+    }
+  }
+
+  function initS1() {
+    const assessed = document.getElementById("s1-stores-assessed");
+    const pilot = document.getElementById("s1-pilot-count");
+    if (assessed) assessed.textContent = String(TOTAL_STORES);
+    if (pilot) pilot.textContent = String(TOTAL_STORES);
+
+    wireRetailRow({
+      channel: "MT",
+      visible: 6,
+      viewportId: "s1-mt-viewport",
+      trackId: "s1-mt-track",
+      prevId: "s1-mt-prev",
+      nextId: "s1-mt-next"
+    });
+    wireRetailRow({
+      channel: "GT",
+      visible: 3,
+      viewportId: "s1-gt-viewport",
+      trackId: "s1-gt-track",
+      prevId: "s1-gt-prev",
+      nextId: "s1-gt-next"
+    });
+  }
 
   const SPACE_REALITY_LABEL = {
     A: "Reality A: Space available, standard upgrade applies",
@@ -5983,6 +6171,7 @@ body.is-presenting #s4.section.is-present-slide {
   function boot() {
     initNavObserver();
     initReveal();
+    initS1();
 
     document.querySelectorAll("[data-excel]").forEach((btn) => {
       btn.addEventListener("click", () => downloadExcel(btn.getAttribute("data-excel")));
