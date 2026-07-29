@@ -410,6 +410,418 @@
     }
 
     .score-footer-inner span { color: var(--text); }
+
+    /* Section 2 — D1 */
+    .section-subheader {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin: -0.85rem 0 0.75rem;
+    }
+
+    .d1-live-row {
+      margin-bottom: 0.85rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+    }
+
+    .d1-live-score {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+
+    .d1-live-tier {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 0.3rem;
+    }
+
+    .helper-gold {
+      font-size: 0.75rem;
+      color: var(--gold);
+      line-height: 1.4;
+      margin-bottom: 1.15rem;
+      opacity: 0.9;
+    }
+
+    .block {
+      margin-bottom: 1.5rem;
+    }
+
+    .block-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.65rem;
+    }
+
+    .block-helper {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin: -0.35rem 0 0.65rem;
+      line-height: 1.35;
+    }
+
+    .check-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.7rem 0.85rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .check-item:has(input:checked) {
+      border-color: rgba(201, 168, 76, 0.55);
+      background: rgba(201, 168, 76, 0.08);
+    }
+
+    .check-item input {
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .check-item span {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .sub-panel {
+      display: none;
+      margin: 0.55rem 0 0.75rem;
+      padding: 0.85rem 0.9rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: var(--radius);
+    }
+
+    .sub-panel.visible { display: block; }
+
+    .sub-panel-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+      letter-spacing: 0.04em;
+    }
+
+    .radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.7rem 0.85rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .radio-item.selected,
+    .radio-item:has(input:checked) {
+      border-color: rgba(201, 168, 76, 0.65);
+      background: rgba(201, 168, 76, 0.12);
+    }
+
+    .radio-item input {
+      margin-top: 0.15rem;
+      accent-color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .radio-item .radio-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .radio-item .radio-label {
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .radio-item .radio-pts {
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-top: 0.2rem;
+    }
+
+    .inline-radios {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .inline-radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.7rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--text);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .inline-radio:has(input:checked) {
+      border-color: rgba(201, 168, 76, 0.65);
+      background: rgba(201, 168, 76, 0.12);
+      color: var(--gold);
+    }
+
+    .inline-radio input { accent-color: var(--gold); }
+
+    select.select-input {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23C9A84C' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      padding-right: 2rem;
+    }
+
+    select.select-input:focus {
+      border-color: rgba(201, 168, 76, 0.55);
+    }
+
+    select.select-input:disabled,
+    select.select-input[readonly] {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    select.select-input option {
+      background: #12121a;
+      color: var(--text);
+    }
+
+    .warn-box {
+      display: none;
+      margin-top: 0.65rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .warn-box.visible { display: block; }
+
+    .warn-red {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .warn-amber {
+      background: rgba(234, 179, 8, 0.12);
+      border: 1px solid rgba(234, 179, 8, 0.45);
+      color: #fde68a;
+    }
+
+    .ack-box {
+      display: none;
+      margin-top: 0.65rem;
+      padding: 0.75rem 0.8rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: 8px;
+    }
+
+    .ack-box.visible { display: block; }
+
+    .ack-box label.ack-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.8rem;
+      color: var(--text);
+      cursor: pointer;
+      margin-bottom: 0.55rem;
+      line-height: 1.35;
+    }
+
+    .ack-box label.ack-check input {
+      margin-top: 0.15rem;
+      accent-color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .tier-result {
+      margin-top: 0.85rem;
+      padding: 0.7rem 0.85rem;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .ec-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .ec-entry {
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+    }
+
+    .ec-entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.55rem;
+    }
+
+    .ec-entry-head span {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: #fca5a5;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0.2rem 0.35rem;
+    }
+
+    .btn-add {
+      margin-top: 0.65rem;
+      width: 100%;
+      background: transparent;
+      color: var(--gold);
+      border: 1px dashed rgba(201, 168, 76, 0.4);
+      border-radius: var(--radius);
+      padding: 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-add:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .toggle-row:last-of-type { border-bottom: none; }
+
+    .toggle-label {
+      font-size: 0.875rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .toggle-group {
+      display: inline-flex;
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .toggle-btn {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      min-width: 3.2rem;
+    }
+
+    .toggle-btn.active-yes {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--success);
+    }
+
+    .toggle-btn.active-no {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+
+    .visibility-live {
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .sqft-pts-hint {
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-top: 0.35rem;
+    }
+
+    .field-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    #blockPosition { display: none; }
+    #blockPosition.visible { display: block; }
   </style>
 </head>
 <body>
@@ -524,34 +936,370 @@
       </div>
     </section>
 
-    <!-- Gate A end placeholder (Section 2 stub) -->
+    <!-- SECTION 2 — D1: Vivo Brand Strength -->
     <section class="section" id="section2" data-section="2">
-      <h1 class="section-header">SECTION 2 — COMING IN GATE B</h1>
-      <div class="gate-end">
-        <strong>Gate A complete</strong>
-        Scoring sections (D1 / D2) will be added in Gate B.
+      <h1 class="section-header">SECTION 2 — D1: VIVO BRAND STRENGTH</h1>
+      <div class="section-subheader">60 POINTS TOTAL</div>
+
+      <div class="d1-live-row">
+        <div class="d1-live-score" id="d1LiveScore">D1 Score: 0 / 60</div>
+        <div class="d1-live-tier" id="d1LiveTier">Asset Tier: — / —pts</div>
       </div>
+
+      <p class="helper-gold">Score is based on asset type present, not size. Size mismatch is flagged for AM review only — it does not affect your score.</p>
+
+      <!-- BLOCK A — Asset Tier -->
+      <div class="block" id="blockAssetTier">
+        <div class="block-label">ASSET TYPE &amp; PRESENCE</div>
+
+        <div class="check-list" id="assetTypeList">
+          <label class="check-item">
+            <input type="checkbox" name="assetType" value="x-zone" id="assetXZone" />
+            <span>X-Zone</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="assetType" value="shop-in-shop" id="assetSiS" />
+            <span>Shop-in-Shop</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="assetType" value="shop-upgrade" id="assetSU" />
+            <span>Shop Upgrade</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="assetType" value="customized-zone" id="assetCZ" />
+            <span>Customized Zone</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="assetType" value="experience-cabinet" id="assetEC" />
+            <span>Experience Cabinet</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="assetType" value="none" id="assetNone" />
+            <span>None of the above</span>
+          </label>
+        </div>
+
+        <!-- X-Zone sub-fields -->
+        <div class="sub-panel" id="panelXZone">
+          <div class="sub-panel-title">X-Zone details</div>
+          <div class="field">
+            <label>Sub-type <span class="req">*</span></label>
+            <div class="inline-radios">
+              <label class="inline-radio">
+                <input type="radio" name="xzoneSubtype" value="island" id="xzoneIsland" />
+                Island Setup
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="xzoneSubtype" value="backwall" id="xzoneBackwall" />
+                Backwall Setup
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="xzoneSqft">Sq.ft available <span class="req">*</span></label>
+            <input type="number" id="xzoneSqft" name="xzoneSqft" min="0" step="1" inputmode="numeric" />
+          </div>
+          <div class="warn-box" id="xzoneWarn"></div>
+          <div class="ack-box" id="xzoneAck">
+            <label class="ack-check">
+              <input type="checkbox" id="xzoneAckCheck" />
+              <span>I confirm this selection despite size mismatch.</span>
+            </label>
+            <div class="field" style="margin-bottom:0">
+              <label for="xzoneAckReason">Reason <span class="req">*</span></label>
+              <input type="text" id="xzoneAckReason" placeholder="Required when acknowledging mismatch" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop-in-Shop sub-fields -->
+        <div class="sub-panel" id="panelSiS">
+          <div class="sub-panel-title">Shop-in-Shop details</div>
+          <div class="field">
+            <label for="sisSqft">Sq.ft available <span class="req">*</span></label>
+            <input type="number" id="sisSqft" name="sisSqft" min="0" step="1" inputmode="numeric" />
+          </div>
+          <div class="warn-box" id="sisWarn"></div>
+          <div class="ack-box" id="sisAck">
+            <label class="ack-check">
+              <input type="checkbox" id="sisAckCheck" />
+              <span>I confirm this selection despite size mismatch.</span>
+            </label>
+            <div class="field" style="margin-bottom:0">
+              <label for="sisAckReason">Reason <span class="req">*</span></label>
+              <input type="text" id="sisAckReason" placeholder="Required when acknowledging mismatch" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop Upgrade sub-fields -->
+        <div class="sub-panel" id="panelSU">
+          <div class="sub-panel-title">Shop Upgrade details</div>
+          <div class="field">
+            <label for="suSqft">Sq.ft available <span class="req">*</span></label>
+            <input type="number" id="suSqft" name="suSqft" min="0" step="1" inputmode="numeric" />
+          </div>
+          <div class="warn-box" id="suWarn"></div>
+          <div class="ack-box" id="suAck">
+            <label class="ack-check">
+              <input type="checkbox" id="suAckCheck" />
+              <span>I confirm this selection despite size mismatch.</span>
+            </label>
+            <div class="field" style="margin-bottom:0">
+              <label for="suAckReason">Reason <span class="req">*</span></label>
+              <input type="text" id="suAckReason" placeholder="Required when acknowledging mismatch" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Customized Zone sub-fields -->
+        <div class="sub-panel" id="panelCZ">
+          <div class="sub-panel-title">Customized Zone details</div>
+          <div class="field">
+            <label for="czSqft">Sq.ft available <span class="req">*</span></label>
+            <input type="number" id="czSqft" name="czSqft" min="0" step="1" inputmode="numeric" />
+          </div>
+          <div class="warn-box" id="czWarn"></div>
+          <div class="ack-box" id="czAck">
+            <label class="ack-check">
+              <input type="checkbox" id="czAckCheck" />
+              <span>I confirm this selection despite size mismatch.</span>
+            </label>
+            <div class="field" style="margin-bottom:0">
+              <label for="czAckReason">Reason <span class="req">*</span></label>
+              <input type="text" id="czAckReason" placeholder="Required when acknowledging mismatch" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience Cabinet sub-fields -->
+        <div class="sub-panel" id="panelEC">
+          <div class="sub-panel-title">Experience Cabinet details</div>
+          <div class="ec-list" id="ecList"></div>
+          <button type="button" class="btn-add" id="btnAddEC">Add another cabinet type</button>
+        </div>
+
+        <div class="tier-result" id="tierResult">Asset Tier: 0 — 0 pts</div>
+      </div>
+
+      <!-- BLOCK B — Position -->
+      <div class="block" id="blockPosition">
+        <div class="block-label">POSITION OF PRIMARY VIVO ASSET</div>
+        <p class="block-helper">Position 1 = first asset customer sees on entering the store.</p>
+        <div class="radio-list" id="positionList">
+          <label class="radio-item">
+            <input type="radio" name="vivoPosition" value="1" />
+            <div class="radio-body">
+              <div class="radio-label">Position 1 — First seen on entry</div>
+              <div class="radio-pts">10 pts</div>
+            </div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="vivoPosition" value="2" />
+            <div class="radio-body">
+              <div class="radio-label">Position 2 — Second contact point</div>
+              <div class="radio-pts">7 pts</div>
+            </div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="vivoPosition" value="3" />
+            <div class="radio-body">
+              <div class="radio-label">Position 3 — Third contact point</div>
+              <div class="radio-pts">4 pts</div>
+            </div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="vivoPosition" value="4+" />
+            <div class="radio-body">
+              <div class="radio-label">Position 4 or beyond</div>
+              <div class="radio-pts">1 pt</div>
+            </div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="vivoPosition" value="hidden" />
+            <div class="radio-body">
+              <div class="radio-label">Not visible / Hidden</div>
+              <div class="radio-pts">0 pts</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- BLOCK C — Visibility Branding -->
+      <div class="block" id="blockVisibility">
+        <div class="block-label">VISIBILITY BRANDING</div>
+
+        <div class="toggle-row">
+          <span class="toggle-label">In-shop branding present?</span>
+          <div class="toggle-group" role="group" aria-label="In-shop branding">
+            <button type="button" class="toggle-btn" id="inshopYesBtn" data-target="inshop-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="inshopNoBtn" data-target="inshop-yes" data-val="no">No</button>
+          </div>
+          <input type="checkbox" id="inshop-yes" hidden />
+        </div>
+
+        <div class="toggle-row">
+          <span class="toggle-label">Out-shop branding present?</span>
+          <div class="toggle-group" role="group" aria-label="Out-shop branding">
+            <button type="button" class="toggle-btn" id="outshopYesBtn" data-target="outshop-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="outshopNoBtn" data-target="outshop-yes" data-val="no">No</button>
+          </div>
+          <input type="checkbox" id="outshop-yes" hidden />
+        </div>
+
+        <div class="field" style="margin-top:0.75rem">
+          <label for="brandingSqft">Total branding sq.ft (in + out combined)</label>
+          <select class="select-input" id="brandingSqft" name="brandingSqft"></select>
+          <div class="sqft-pts-hint" id="sqftPtsHint">0 pts</div>
+        </div>
+
+        <div class="visibility-live" id="visibilityLive">Visibility: 0 / 20 pts</div>
+      </div>
+
       <div class="nav-row">
         <button type="button" class="btn btn-ghost" id="btnBack2">Back</button>
+        <button type="button" class="btn btn-primary" id="btnNext2" disabled>Next</button>
+      </div>
+    </section>
+
+    <!-- Gate B end placeholder (Section 3 stub) -->
+    <section class="section" id="section3" data-section="3">
+      <h1 class="section-header">SECTION 3 — COMING IN GATE C</h1>
+      <div class="gate-end">
+        <strong>Gate B complete</strong>
+        D2 Competitive Strength will be added in Gate C.
+      </div>
+      <div class="nav-row">
+        <button type="button" class="btn btn-ghost" id="btnBack3">Back</button>
       </div>
     </section>
   </div>
 
   <footer class="score-footer">
-    <div class="score-footer-inner">
-      D1: <span>—</span>/60 · D2: <span>—</span>/40 · Total: <span>—</span>/100
+    <div class="score-footer-inner" id="scoreFooter">
+      D1: <span id="footerD1">—</span>/60 · D2: <span id="footerD2">—</span>/40 · Total: <span id="footerTotal">—</span>/100
     </div>
   </footer>
 
-  <script>
+<script>
 (function () {
   'use strict';
+
+  /* ========== SHARED SCORING ENGINE (define once) ========== */
+  var PBG = {
+    ASSET_WEIGHTS: {
+      project: 3,
+      cabinet: 1
+    },
+
+    PROJECT_SQFT: {
+      'x-zone-island':    { min: 68,  max: null, label: 'X-Zone Island' },
+      'x-zone-backwall':  { min: 80,  max: null, label: 'X-Zone Backwall' },
+      'shop-in-shop':     { min: 200, max: null, label: 'Shop-in-Shop' },
+      'shop-upgrade':     { min: 150, max: null, label: 'Shop Upgrade' },
+      'customized-zone':  { min: 80,  max: 100,  label: 'Customized Zone' }
+    },
+
+    PROJECT_HIERARCHY: [
+      'customized-zone', 'x-zone-island', 'x-zone-backwall',
+      'shop-upgrade', 'shop-in-shop'
+    ],
+
+    calcAssetTier: function (assets) {
+      var hasProject = assets.some(function (a) {
+        return ['x-zone-island', 'x-zone-backwall', 'shop-in-shop',
+          'shop-upgrade', 'customized-zone'].indexOf(a.type) !== -1;
+      });
+      if (hasProject) return { tier: 1, points: 30 };
+      var totalEC = assets
+        .filter(function (a) { return a.type.indexOf('ec-') === 0; })
+        .reduce(function (sum, a) { return sum + (parseInt(a.qty, 10) || 0); }, 0);
+      if (totalEC >= 2) return { tier: 2, points: 20 };
+      if (totalEC === 1) return { tier: 3, points: 12 };
+      return { tier: 0, points: 0 };
+    },
+
+    POSITION_SCORES: { '1': 10, '2': 7, '3': 4, '4+': 1, 'hidden': 0 },
+
+    SQFT_BUCKETS: [
+      { label: 'None (0 sq.ft)',  value: 'none',    pts: 0 },
+      { label: '1–20 sq.ft',      value: '1-20',    pts: 2 },
+      { label: '21–50 sq.ft',     value: '21-50',   pts: 4 },
+      { label: '51–75 sq.ft',     value: '51-75',   pts: 6 },
+      { label: '76–100 sq.ft',    value: '76-100',  pts: 8 },
+      { label: '101–120 sq.ft',   value: '101-120', pts: 9 },
+      { label: '121+ sq.ft',      value: '121+',    pts: 10 }
+    ],
+
+    sqftPts: function (value) {
+      var b = this.SQFT_BUCKETS.find(function (x) { return x.value === value; });
+      return b ? b.pts : 0;
+    },
+
+    calcAssetWeight: function (assets) {
+      var self = this;
+      var weight = 0;
+      assets.forEach(function (a) {
+        if (['x-zone-island', 'x-zone-backwall', 'shop-in-shop',
+          'shop-upgrade', 'customized-zone'].indexOf(a.type) !== -1) {
+          weight += self.ASSET_WEIGHTS.project;
+        } else if (a.type.indexOf('ec-') === 0) {
+          weight += self.ASSET_WEIGHTS.cabinet * (parseInt(a.qty, 10) || 0);
+        }
+      });
+      return weight;
+    },
+
+    calcBattle: function (vivoAssets, vivoPosition, vivoSqft, comp) {
+      if (!comp.present) return 40;
+      var wins = 0, draws = 0;
+      var total = 3;
+
+      var vW = this.calcAssetWeight(vivoAssets);
+      var cW = this.calcAssetWeight(comp.assets);
+      if (vW > cW) wins++; else if (vW === cW) draws++;
+
+      var vP = vivoPosition === 'hidden' ? 99 : parseInt(vivoPosition, 10) || 99;
+      var cP = comp.position === 'absent' ? 99 : parseInt(comp.position, 10) || 99;
+      if (vP < cP) wins++; else if (vP === cP) draws++;
+
+      var vS = this.sqftPts(vivoSqft);
+      var cS = this.sqftPts(comp.sqft);
+      if (vS > cS) wins++; else if (vS === cS) draws++;
+
+      if (wins === 0 && draws === 0 && vW === 0 && cW === 0) return 0;
+
+      return Math.round((wins + 0.5 * draws) / total * 40);
+    },
+
+    calcD2: function (vivoData, samsung, apple) {
+      var battles = [];
+      if (samsung !== null) battles.push(this.calcBattle(
+        vivoData.assets, vivoData.position, vivoData.sqft, samsung
+      ));
+      if (apple !== null) battles.push(this.calcBattle(
+        vivoData.assets, vivoData.position, vivoData.sqft, apple
+      ));
+      if (!battles.length) return 0;
+      return Math.round(battles.reduce(function (a, b) { return a + b; }, 0) / battles.length);
+    },
+
+    getTier: function (score) {
+      if (score >= 75) return { grade: 'A', label: 'Dominant',       color: '#22c55e' };
+      if (score >= 50) return { grade: 'B', label: 'Competitive',    color: '#eab308' };
+      if (score >= 25) return { grade: 'C', label: 'Low Visibility', color: '#f97316' };
+      return             { grade: 'D', label: 'Poor Visibility', color: '#ef4444' };
+    }
+  };
+
+  window.PBG = PBG;
 
   var API_BASE = 'http://72.61.172.149/pbg-api';
   var TOTAL_SECTIONS = 6;
   var DB_NAME = 'pbg_audit_db';
   var STORE_NAME = 'draft';
   var DRAFT_KEY = 'current';
+  var MAX_EC = 3;
 
   var sessionMemory = { employeeId: '', name: '' };
 
@@ -568,16 +1316,26 @@
     duplicateConfirmed: false,
     dirty: false,
     draftTimestamp: null,
-    restoring: false
+    restoring: false,
+    d1Touched: false,
+    ecEntries: [{ id: 1 }]
   };
 
   var SECTION_TITLES = {
     0: 'Auditor Details',
     1: 'Store Information',
-    2: 'Coming in Gate B'
+    2: 'D1: Vivo Brand Strength',
+    3: 'Coming in Gate C'
   };
 
-  /* ---------- DOM ---------- */
+  var PROJECT_KEYS = {
+    'x-zone-island': true,
+    'x-zone-backwall': true,
+    'shop-in-shop': true,
+    'shop-upgrade': true,
+    'customized-zone': true
+  };
+
   var $ = function (id) { return document.getElementById(id); };
 
   var els = {
@@ -613,7 +1371,34 @@
     btnNext0: $('btnNext0'),
     btnBack1: $('btnBack1'),
     btnNext1: $('btnNext1'),
-    btnBack2: $('btnBack2')
+    btnBack2: $('btnBack2'),
+    btnNext2: $('btnNext2'),
+    btnBack3: $('btnBack3'),
+    d1LiveScore: $('d1LiveScore'),
+    d1LiveTier: $('d1LiveTier'),
+    tierResult: $('tierResult'),
+    blockPosition: $('blockPosition'),
+    brandingSqft: $('brandingSqft'),
+    sqftPtsHint: $('sqftPtsHint'),
+    visibilityLive: $('visibilityLive'),
+    footerD1: $('footerD1'),
+    footerD2: $('footerD2'),
+    footerTotal: $('footerTotal'),
+    ecList: $('ecList'),
+    btnAddEC: $('btnAddEC'),
+    assetXZone: $('assetXZone'),
+    assetSiS: $('assetSiS'),
+    assetSU: $('assetSU'),
+    assetCZ: $('assetCZ'),
+    assetEC: $('assetEC'),
+    assetNone: $('assetNone'),
+    panelXZone: $('panelXZone'),
+    panelSiS: $('panelSiS'),
+    panelSU: $('panelSU'),
+    panelCZ: $('panelCZ'),
+    panelEC: $('panelEC'),
+    inshopYes: $('inshop-yes'),
+    outshopYes: $('outshop-yes')
   };
 
   /* ---------- Utils ---------- */
@@ -653,6 +1438,18 @@
     } else {
       input.classList.remove('error-border');
       hideError(errEl);
+    }
+  }
+
+  function setBtnEnabled(btn, enabled) {
+    if (enabled) {
+      btn.disabled = false;
+      btn.removeAttribute('disabled');
+      btn.setAttribute('aria-disabled', 'false');
+    } else {
+      btn.disabled = true;
+      btn.setAttribute('disabled', 'disabled');
+      btn.setAttribute('aria-disabled', 'true');
     }
   }
 
@@ -778,16 +1575,7 @@
     if (state.duplicateNeedsConfirm && !state.duplicateConfirmed) {
       enabled = false;
     }
-    /* Hard disable: HTML disabled attribute (not CSS-only) so Android Chrome cannot tap */
-    if (enabled) {
-      els.btnNext1.disabled = false;
-      els.btnNext1.removeAttribute('disabled');
-      els.btnNext1.setAttribute('aria-disabled', 'false');
-    } else {
-      els.btnNext1.disabled = true;
-      els.btnNext1.setAttribute('disabled', 'disabled');
-      els.btnNext1.setAttribute('aria-disabled', 'true');
-    }
+    setBtnEnabled(els.btnNext1, enabled);
   }
 
   var lookupSeq = 0;
@@ -922,7 +1710,6 @@
 
       updateNext1Enabled();
     } catch (err) {
-      /* audit check failure should not block store auto-fill */
       updateNext1Enabled();
     }
   }
@@ -967,7 +1754,8 @@
       store: state.store,
       lookupOk: state.lookupOk,
       duplicateNeedsConfirm: state.duplicateNeedsConfirm,
-      duplicateConfirmed: state.duplicateConfirmed
+      duplicateConfirmed: state.duplicateConfirmed,
+      d1: captureD1State()
     };
   }
 
@@ -1055,13 +1843,15 @@
     if (state.storeCode && state.lookupOk && state.store) {
       fillStoreCard(state.store);
       els.storeCard.classList.add('visible');
-      /* Re-check audits so banners stay accurate */
       lookupStore(state.storeCode);
     }
+
+    if (draft.d1) applyD1State(draft.d1);
 
     goToSection(typeof draft.section === 'number' ? draft.section : 0);
     state.dirty = false;
     state.restoring = false;
+    updateD1UI();
   }
 
   function blankForm() {
@@ -1078,9 +1868,730 @@
     applyStateToDom();
     clearStoreCard();
     hideError(els.errStoreCode);
+    resetD1Form();
     goToSection(0);
     state.dirty = false;
     state.restoring = false;
+    updateD1UI();
+  }
+
+  /* ========== SECTION 2 — D1 ========== */
+
+  function initBrandingSqftOptions() {
+    els.brandingSqft.innerHTML = '';
+    PBG.SQFT_BUCKETS.forEach(function (b) {
+      var opt = document.createElement('option');
+      opt.value = b.value;
+      opt.textContent = b.label + ' — ' + b.pts + ' pts';
+      els.brandingSqft.appendChild(opt);
+    });
+    els.brandingSqft.value = 'none';
+    els.brandingSqft.disabled = true;
+  }
+
+  function setToggle(targetId, yes) {
+    var cb = $(targetId);
+    cb.checked = !!yes;
+    var yesBtn = document.querySelector('.toggle-btn[data-target="' + targetId + '"][data-val="yes"]');
+    var noBtn = document.querySelector('.toggle-btn[data-target="' + targetId + '"][data-val="no"]');
+    if (yesBtn) {
+      yesBtn.classList.toggle('active-yes', !!yes);
+      yesBtn.classList.remove('active-no');
+    }
+    if (noBtn) {
+      noBtn.classList.toggle('active-no', !yes);
+      noBtn.classList.remove('active-yes');
+    }
+  }
+
+  function syncBrandingSqftLock() {
+    var anyYes = els.inshopYes.checked || els.outshopYes.checked;
+    if (!anyYes) {
+      els.brandingSqft.value = 'none';
+      els.brandingSqft.disabled = true;
+    } else {
+      els.brandingSqft.disabled = false;
+      if (els.brandingSqft.value === 'none') {
+        /* leave editable; user picks a range */
+      }
+    }
+  }
+
+  function renderECEntries() {
+    els.ecList.innerHTML = '';
+    state.ecEntries.forEach(function (entry, idx) {
+      var wrap = document.createElement('div');
+      wrap.className = 'ec-entry';
+      wrap.setAttribute('data-ec-id', entry.id);
+
+      var head = document.createElement('div');
+      head.className = 'ec-entry-head';
+      head.innerHTML = '<span>Cabinet type ' + (idx + 1) + '</span>';
+      if (state.ecEntries.length > 1) {
+        var rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'btn-link';
+        rm.textContent = 'Remove';
+        rm.addEventListener('click', function () {
+          state.ecEntries = state.ecEntries.filter(function (e) { return e.id !== entry.id; });
+          renderECEntries();
+          onD1Change();
+        });
+        head.appendChild(rm);
+      }
+      wrap.appendChild(head);
+
+      var typeField = document.createElement('div');
+      typeField.className = 'field';
+      typeField.innerHTML =
+        '<label>Sub-type <span class="req">*</span></label>' +
+        '<div class="inline-radios">' +
+          '<label class="inline-radio"><input type="radio" name="ecSubtype_' + entry.id + '" value="ec-single-side" /> Single Side</label>' +
+          '<label class="inline-radio"><input type="radio" name="ecSubtype_' + entry.id + '" value="ec-double-side" /> Double Side</label>' +
+          '<label class="inline-radio"><input type="radio" name="ecSubtype_' + entry.id + '" value="ec-island-table" /> Island Table</label>' +
+        '</div>';
+      wrap.appendChild(typeField);
+
+      var sizeQty = document.createElement('div');
+      sizeQty.className = 'field-row-2';
+      sizeQty.innerHTML =
+        '<div class="field" style="margin-bottom:0">' +
+          '<label for="ecSize_' + entry.id + '">Size <span class="req">*</span></label>' +
+          '<select class="select-input" id="ecSize_' + entry.id + '">' +
+            '<option value="">Select</option>' +
+            '<option value="4ft">4ft</option>' +
+            '<option value="6ft">6ft</option>' +
+            '<option value="8ft">8ft</option>' +
+          '</select>' +
+          '<input type="text" id="ecSizeRo_' + entry.id + '" value="2.5ft × 2.5ft" readonly style="display:none" />' +
+        '</div>' +
+        '<div class="field" style="margin-bottom:0">' +
+          '<label for="ecQty_' + entry.id + '">Qty <span class="req">*</span></label>' +
+          '<input type="number" id="ecQty_' + entry.id + '" min="1" step="1" inputmode="numeric" value="" />' +
+        '</div>';
+      wrap.appendChild(sizeQty);
+
+      els.ecList.appendChild(wrap);
+
+      if (entry.subtype) {
+        var r = wrap.querySelector('input[value="' + entry.subtype + '"]');
+        if (r) r.checked = true;
+      }
+      if (entry.size) {
+        var sel = $('ecSize_' + entry.id);
+        if (sel) sel.value = entry.size;
+      }
+      if (entry.qty != null && entry.qty !== '') {
+        var q = $('ecQty_' + entry.id);
+        if (q) q.value = entry.qty;
+      }
+
+      updateECEntryUI(entry.id);
+
+      wrap.querySelectorAll('input[type="radio"]').forEach(function (r) {
+        r.addEventListener('change', function () {
+          entry.subtype = r.value;
+          updateECEntryUI(entry.id);
+          onD1Change();
+        });
+      });
+      var sizeEl = $('ecSize_' + entry.id);
+      if (sizeEl) {
+        sizeEl.addEventListener('change', function () {
+          entry.size = sizeEl.value;
+          onD1Change();
+        });
+      }
+      var qtyEl = $('ecQty_' + entry.id);
+      if (qtyEl) {
+        qtyEl.addEventListener('input', function () {
+          entry.qty = qtyEl.value;
+          onD1Change();
+        });
+      }
+    });
+
+    setBtnEnabled(els.btnAddEC, state.ecEntries.length < MAX_EC);
+    els.btnAddEC.disabled = state.ecEntries.length >= MAX_EC;
+  }
+
+  function updateECEntryUI(id) {
+    var checked = document.querySelector('input[name="ecSubtype_' + id + '"]:checked');
+    var subtype = checked ? checked.value : '';
+    var sizeSel = $('ecSize_' + id);
+    var sizeRo = $('ecSizeRo_' + id);
+    if (!sizeSel || !sizeRo) return;
+    if (subtype === 'ec-island-table') {
+      sizeSel.style.display = 'none';
+      sizeSel.value = '';
+      sizeRo.style.display = 'block';
+    } else {
+      sizeSel.style.display = 'block';
+      sizeRo.style.display = 'none';
+    }
+  }
+
+  function nextEcId() {
+    var max = 0;
+    state.ecEntries.forEach(function (e) {
+      if (e.id > max) max = e.id;
+    });
+    return max + 1;
+  }
+
+  function hasAnyAssetSelected() {
+    return els.assetXZone.checked || els.assetSiS.checked ||
+      els.assetSU.checked || els.assetCZ.checked || els.assetEC.checked;
+  }
+
+  function isNoneSelected() {
+    return els.assetNone.checked;
+  }
+
+  function getXZoneTypeKey() {
+    if ($('xzoneIsland').checked) return 'x-zone-island';
+    if ($('xzoneBackwall').checked) return 'x-zone-backwall';
+    return null;
+  }
+
+  function getSelectedAssets() {
+    var assets = [];
+    if (isNoneSelected()) return assets;
+
+    if (els.assetXZone.checked) {
+      var xz = getXZoneTypeKey();
+      if (xz) {
+        assets.push({
+          type: xz,
+          sqft: parseFloat($('xzoneSqft').value) || 0
+        });
+      } else {
+        assets.push({ type: 'x-zone-island', sqft: 0, incomplete: true });
+      }
+    }
+    if (els.assetSiS.checked) {
+      assets.push({
+        type: 'shop-in-shop',
+        sqft: parseFloat($('sisSqft').value) || 0
+      });
+    }
+    if (els.assetSU.checked) {
+      assets.push({
+        type: 'shop-upgrade',
+        sqft: parseFloat($('suSqft').value) || 0
+      });
+    }
+    if (els.assetCZ.checked) {
+      assets.push({
+        type: 'customized-zone',
+        sqft: parseFloat($('czSqft').value) || 0
+      });
+    }
+    if (els.assetEC.checked) {
+      state.ecEntries.forEach(function (entry) {
+        var checked = document.querySelector('input[name="ecSubtype_' + entry.id + '"]:checked');
+        if (!checked) return;
+        var qty = parseInt(($('ecQty_' + entry.id) || {}).value, 10) || 0;
+        var size = checked.value === 'ec-island-table'
+          ? '2.5x2.5'
+          : (($('ecSize_' + entry.id) || {}).value || '');
+        assets.push({
+          type: checked.value,
+          qty: qty,
+          size: size
+        });
+      });
+    }
+    return assets;
+  }
+
+  function getSelectedPosition() {
+    var r = document.querySelector('input[name="vivoPosition"]:checked');
+    return r ? r.value : null;
+  }
+
+  function getSelectedSqft() {
+    return els.brandingSqft.value || 'none';
+  }
+
+  function calcD1() {
+    var tierPts = PBG.calcAssetTier(getSelectedAssets()).points;
+    var posPts = 0;
+    if (hasAnyAssetSelected() && !isNoneSelected()) {
+      posPts = PBG.POSITION_SCORES[getSelectedPosition()] || 0;
+    }
+    var inShop = els.inshopYes.checked ? 5 : 0;
+    var outShop = els.outshopYes.checked ? 5 : 0;
+    var sqftPts = PBG.sqftPts(getSelectedSqft());
+    return tierPts + posPts + inShop + outShop + sqftPts;
+  }
+
+  /* Size mismatch validation — returns { level, message } or null */
+  function validateProjectSqft(typeKey, sqft) {
+    if (sqft === '' || sqft == null || isNaN(sqft)) return null;
+    var n = Number(sqft);
+    var std = PBG.PROJECT_SQFT[typeKey];
+    if (!std) return null;
+
+    if (typeKey === 'customized-zone') {
+      if (n < std.min) {
+        return {
+          level: 'red',
+          message: 'Space insufficient for Customized Zone. Minimum: ' + std.min + ' sq.ft.'
+        };
+      }
+      if (std.max != null && n > std.max) {
+        return {
+          level: 'amber',
+          message: 'Exceeds Customized Zone standard range (80–100 sq.ft). Verify before submitting.'
+        };
+      }
+      return checkUpwardHierarchy(typeKey, n);
+    }
+
+    if (n < std.min) {
+      return {
+        level: 'red',
+        message: 'Space insufficient for ' + std.label + '. Minimum: ' + std.min + ' sq.ft.'
+      };
+    }
+
+    if (typeKey === 'x-zone-island' || typeKey === 'x-zone-backwall' ||
+        typeKey === 'shop-upgrade' || typeKey === 'shop-in-shop') {
+      /* also flag if >100 and somehow CZ relevant — brief: CZ exceed only for CZ */
+    }
+
+    return checkUpwardHierarchy(typeKey, n);
+  }
+
+  function checkUpwardHierarchy(typeKey, n) {
+    var idx = PBG.PROJECT_HIERARCHY.indexOf(typeKey);
+    if (idx === -1) return null;
+    var larger = null;
+    for (var i = idx + 1; i < PBG.PROJECT_HIERARCHY.length; i++) {
+      var key = PBG.PROJECT_HIERARCHY[i];
+      var std = PBG.PROJECT_SQFT[key];
+      if (std && n >= std.min) {
+        larger = std;
+      }
+    }
+    if (larger) {
+      var cur = PBG.PROJECT_SQFT[typeKey];
+      return {
+        level: 'amber',
+        message: 'Space entered (' + n + ' sq.ft) is adequate for ' + larger.label +
+          '. You have selected ' + cur.label + '. Confirm your selection.'
+      };
+    }
+    return null;
+  }
+
+  function applyWarnAck(warnEl, ackEl, result) {
+    if (!result) {
+      warnEl.classList.remove('visible', 'warn-red', 'warn-amber');
+      warnEl.textContent = '';
+      ackEl.classList.remove('visible');
+      return false;
+    }
+    warnEl.textContent = result.message;
+    warnEl.classList.add('visible');
+    warnEl.classList.toggle('warn-red', result.level === 'red');
+    warnEl.classList.toggle('warn-amber', result.level === 'amber');
+    ackEl.classList.add('visible');
+    return true;
+  }
+
+  function validateXZone(onBlur) {
+    if (!els.assetXZone.checked) {
+      applyWarnAck($('xzoneWarn'), $('xzoneAck'), null);
+      return true;
+    }
+    var typeKey = getXZoneTypeKey();
+    var raw = $('xzoneSqft').value;
+    if (!typeKey || raw === '') {
+      if (onBlur) applyWarnAck($('xzoneWarn'), $('xzoneAck'), null);
+      return !onBlur;
+    }
+    var result = validateProjectSqft(typeKey, parseFloat(raw));
+    applyWarnAck($('xzoneWarn'), $('xzoneAck'), result);
+    return !result || ackComplete('xzone');
+  }
+
+  function validateSiS(onBlur) {
+    if (!els.assetSiS.checked) {
+      applyWarnAck($('sisWarn'), $('sisAck'), null);
+      return true;
+    }
+    var raw = $('sisSqft').value;
+    if (raw === '') {
+      if (onBlur) applyWarnAck($('sisWarn'), $('sisAck'), null);
+      return !onBlur;
+    }
+    var result = validateProjectSqft('shop-in-shop', parseFloat(raw));
+    applyWarnAck($('sisWarn'), $('sisAck'), result);
+    return !result || ackComplete('sis');
+  }
+
+  function validateSU(onBlur) {
+    if (!els.assetSU.checked) {
+      applyWarnAck($('suWarn'), $('suAck'), null);
+      return true;
+    }
+    var raw = $('suSqft').value;
+    if (raw === '') {
+      if (onBlur) applyWarnAck($('suWarn'), $('suAck'), null);
+      return !onBlur;
+    }
+    var result = validateProjectSqft('shop-upgrade', parseFloat(raw));
+    applyWarnAck($('suWarn'), $('suAck'), result);
+    return !result || ackComplete('su');
+  }
+
+  function validateCZ(onBlur) {
+    if (!els.assetCZ.checked) {
+      applyWarnAck($('czWarn'), $('czAck'), null);
+      return true;
+    }
+    var raw = $('czSqft').value;
+    if (raw === '') {
+      if (onBlur) applyWarnAck($('czWarn'), $('czAck'), null);
+      return !onBlur;
+    }
+    var result = validateProjectSqft('customized-zone', parseFloat(raw));
+    applyWarnAck($('czWarn'), $('czAck'), result);
+    return !result || ackComplete('cz');
+  }
+
+  function ackComplete(prefix) {
+    var check = $(prefix + 'AckCheck');
+    var reason = $(prefix + 'AckReason');
+    var ack = $(prefix + 'Ack');
+    if (!ack.classList.contains('visible')) return true;
+    return !!(check && check.checked && reason && reason.value.trim());
+  }
+
+  function allAcksComplete() {
+    return ackComplete('xzone') && ackComplete('sis') &&
+      ackComplete('su') && ackComplete('cz');
+  }
+
+  function syncAssetPanels() {
+    els.panelXZone.classList.toggle('visible', els.assetXZone.checked);
+    els.panelSiS.classList.toggle('visible', els.assetSiS.checked);
+    els.panelSU.classList.toggle('visible', els.assetSU.checked);
+    els.panelCZ.classList.toggle('visible', els.assetCZ.checked);
+    els.panelEC.classList.toggle('visible', els.assetEC.checked);
+
+    if (els.assetEC.checked && state.ecEntries.length === 0) {
+      state.ecEntries = [{ id: 1 }];
+      renderECEntries();
+    }
+
+    var showPos = hasAnyAssetSelected() && !isNoneSelected();
+    els.blockPosition.classList.toggle('visible', showPos);
+  }
+
+  function handleAssetCheckboxChange(changed) {
+    if (changed === els.assetNone && els.assetNone.checked) {
+      els.assetXZone.checked = false;
+      els.assetSiS.checked = false;
+      els.assetSU.checked = false;
+      els.assetCZ.checked = false;
+      els.assetEC.checked = false;
+    } else if (changed !== els.assetNone && changed.checked) {
+      els.assetNone.checked = false;
+    }
+    syncAssetPanels();
+    if (els.assetXZone.checked) validateXZone(!!$('xzoneSqft').value);
+    else applyWarnAck($('xzoneWarn'), $('xzoneAck'), null);
+    if (els.assetSiS.checked) validateSiS(!!$('sisSqft').value);
+    else applyWarnAck($('sisWarn'), $('sisAck'), null);
+    if (els.assetSU.checked) validateSU(!!$('suSqft').value);
+    else applyWarnAck($('suWarn'), $('suAck'), null);
+    if (els.assetCZ.checked) validateCZ(!!$('czSqft').value);
+    else applyWarnAck($('czWarn'), $('czAck'), null);
+    onD1Change();
+  }
+
+  function updateD1UI() {
+    var assets = getSelectedAssets();
+    var tier = PBG.calcAssetTier(assets);
+    var d1 = calcD1();
+
+    els.d1LiveScore.textContent = 'D1 Score: ' + d1 + ' / 60';
+    els.d1LiveTier.textContent = 'Asset Tier: ' + tier.tier + ' / ' + tier.points + 'pts';
+    els.tierResult.textContent = 'Asset Tier: ' + tier.tier + ' — ' + tier.points + ' pts';
+
+    var inShop = els.inshopYes.checked ? 5 : 0;
+    var outShop = els.outshopYes.checked ? 5 : 0;
+    var sqftPts = PBG.sqftPts(getSelectedSqft());
+    els.visibilityLive.textContent = 'Visibility: ' + (inShop + outShop + sqftPts) + ' / 20 pts';
+    els.sqftPtsHint.textContent = sqftPts + ' pts';
+
+    if (state.d1Touched || state.section >= 2) {
+      els.footerD1.textContent = String(d1);
+    } else {
+      els.footerD1.textContent = '—';
+    }
+
+    updateNext2Enabled();
+  }
+
+  function updateNext2Enabled() {
+    var ok = validateSection2(false);
+    setBtnEnabled(els.btnNext2, ok);
+  }
+
+  function validateSection2(showHints) {
+    /* Must pick at least one asset type or None */
+    var anyType = hasAnyAssetSelected() || isNoneSelected();
+    if (!anyType) return false;
+
+    if (els.assetXZone.checked) {
+      if (!getXZoneTypeKey()) return false;
+      if ($('xzoneSqft').value === '') return false;
+      validateXZone(true);
+      if ($('xzoneAck').classList.contains('visible') && !ackComplete('xzone')) return false;
+    }
+    if (els.assetSiS.checked) {
+      if ($('sisSqft').value === '') return false;
+      validateSiS(true);
+      if ($('sisAck').classList.contains('visible') && !ackComplete('sis')) return false;
+    }
+    if (els.assetSU.checked) {
+      if ($('suSqft').value === '') return false;
+      validateSU(true);
+      if ($('suAck').classList.contains('visible') && !ackComplete('su')) return false;
+    }
+    if (els.assetCZ.checked) {
+      if ($('czSqft').value === '') return false;
+      validateCZ(true);
+      if ($('czAck').classList.contains('visible') && !ackComplete('cz')) return false;
+    }
+    if (els.assetEC.checked) {
+      if (state.ecEntries.length === 0) return false;
+      for (var i = 0; i < state.ecEntries.length; i++) {
+        var id = state.ecEntries[i].id;
+        var checked = document.querySelector('input[name="ecSubtype_' + id + '"]:checked');
+        if (!checked) return false;
+        var qty = parseInt(($('ecQty_' + id) || {}).value, 10);
+        if (!qty || qty < 1) return false;
+        if (checked.value !== 'ec-island-table') {
+          var size = ($('ecSize_' + id) || {}).value;
+          if (!size) return false;
+        }
+      }
+    }
+
+    if (hasAnyAssetSelected() && !isNoneSelected()) {
+      if (!getSelectedPosition()) return false;
+    }
+
+    if ((els.inshopYes.checked || els.outshopYes.checked) &&
+        getSelectedSqft() === 'none') {
+      /* Allowed — None is a valid bucket even with presence, but brief says
+         if at least one Yes → dropdown editable. User can still pick None.
+         No block. */
+    }
+
+    if (!allAcksComplete()) return false;
+
+    return true;
+  }
+
+  function onD1Change() {
+    if (!state.restoring) {
+      state.d1Touched = true;
+      markDirty();
+      scheduleAutosave();
+    }
+    updateD1UI();
+  }
+
+  function captureD1State() {
+    var ec = state.ecEntries.map(function (e) {
+      var checked = document.querySelector('input[name="ecSubtype_' + e.id + '"]:checked');
+      return {
+        id: e.id,
+        subtype: checked ? checked.value : (e.subtype || ''),
+        size: ($('ecSize_' + e.id) || {}).value || e.size || '',
+        qty: ($('ecQty_' + e.id) || {}).value || e.qty || ''
+      };
+    });
+    return {
+      xZone: els.assetXZone.checked,
+      sis: els.assetSiS.checked,
+      su: els.assetSU.checked,
+      cz: els.assetCZ.checked,
+      ec: els.assetEC.checked,
+      none: els.assetNone.checked,
+      xzoneSubtype: getXZoneTypeKey(),
+      xzoneSqft: $('xzoneSqft').value,
+      xzoneAckCheck: $('xzoneAckCheck').checked,
+      xzoneAckReason: $('xzoneAckReason').value,
+      sisSqft: $('sisSqft').value,
+      sisAckCheck: $('sisAckCheck').checked,
+      sisAckReason: $('sisAckReason').value,
+      suSqft: $('suSqft').value,
+      suAckCheck: $('suAckCheck').checked,
+      suAckReason: $('suAckReason').value,
+      czSqft: $('czSqft').value,
+      czAckCheck: $('czAckCheck').checked,
+      czAckReason: $('czAckReason').value,
+      ecEntries: ec,
+      position: getSelectedPosition(),
+      inshop: els.inshopYes.checked,
+      outshop: els.outshopYes.checked,
+      brandingSqft: getSelectedSqft(),
+      d1Touched: state.d1Touched
+    };
+  }
+
+  function applyD1State(d) {
+    if (!d) return;
+    state.restoring = true;
+    els.assetXZone.checked = !!d.xZone;
+    els.assetSiS.checked = !!d.sis;
+    els.assetSU.checked = !!d.su;
+    els.assetCZ.checked = !!d.cz;
+    els.assetEC.checked = !!d.ec;
+    els.assetNone.checked = !!d.none;
+
+    if (d.xzoneSubtype === 'x-zone-island') $('xzoneIsland').checked = true;
+    if (d.xzoneSubtype === 'x-zone-backwall') $('xzoneBackwall').checked = true;
+    $('xzoneSqft').value = d.xzoneSqft || '';
+    $('xzoneAckCheck').checked = !!d.xzoneAckCheck;
+    $('xzoneAckReason').value = d.xzoneAckReason || '';
+
+    $('sisSqft').value = d.sisSqft || '';
+    $('sisAckCheck').checked = !!d.sisAckCheck;
+    $('sisAckReason').value = d.sisAckReason || '';
+
+    $('suSqft').value = d.suSqft || '';
+    $('suAckCheck').checked = !!d.suAckCheck;
+    $('suAckReason').value = d.suAckReason || '';
+
+    $('czSqft').value = d.czSqft || '';
+    $('czAckCheck').checked = !!d.czAckCheck;
+    $('czAckReason').value = d.czAckReason || '';
+
+    state.ecEntries = (d.ecEntries && d.ecEntries.length)
+      ? d.ecEntries.map(function (e, i) {
+          return { id: e.id || (i + 1), subtype: e.subtype, size: e.size, qty: e.qty };
+        })
+      : [{ id: 1 }];
+    renderECEntries();
+
+    if (d.position) {
+      var pr = document.querySelector('input[name="vivoPosition"][value="' + d.position + '"]');
+      if (pr) pr.checked = true;
+    }
+
+    setToggle('inshop-yes', !!d.inshop);
+    setToggle('outshop-yes', !!d.outshop);
+    syncBrandingSqftLock();
+    if (d.brandingSqft) els.brandingSqft.value = d.brandingSqft;
+
+    state.d1Touched = !!d.d1Touched;
+    syncAssetPanels();
+    validateXZone(!!$('xzoneSqft').value);
+    validateSiS(!!$('sisSqft').value);
+    validateSU(!!$('suSqft').value);
+    validateCZ(!!$('czSqft').value);
+    state.restoring = false;
+  }
+
+  function resetD1Form() {
+    state.restoring = true;
+    els.assetXZone.checked = false;
+    els.assetSiS.checked = false;
+    els.assetSU.checked = false;
+    els.assetCZ.checked = false;
+    els.assetEC.checked = false;
+    els.assetNone.checked = false;
+    $('xzoneIsland').checked = false;
+    $('xzoneBackwall').checked = false;
+    $('xzoneSqft').value = '';
+    $('xzoneAckCheck').checked = false;
+    $('xzoneAckReason').value = '';
+    $('sisSqft').value = '';
+    $('sisAckCheck').checked = false;
+    $('sisAckReason').value = '';
+    $('suSqft').value = '';
+    $('suAckCheck').checked = false;
+    $('suAckReason').value = '';
+    $('czSqft').value = '';
+    $('czAckCheck').checked = false;
+    $('czAckReason').value = '';
+    state.ecEntries = [{ id: 1 }];
+    renderECEntries();
+    document.querySelectorAll('input[name="vivoPosition"]').forEach(function (r) {
+      r.checked = false;
+    });
+    setToggle('inshop-yes', false);
+    setToggle('outshop-yes', false);
+    els.brandingSqft.value = 'none';
+    els.brandingSqft.disabled = true;
+    state.d1Touched = false;
+    syncAssetPanels();
+    applyWarnAck($('xzoneWarn'), $('xzoneAck'), null);
+    applyWarnAck($('sisWarn'), $('sisAck'), null);
+    applyWarnAck($('suWarn'), $('suAck'), null);
+    applyWarnAck($('czWarn'), $('czAck'), null);
+    state.restoring = false;
+  }
+
+  function bindD1Events() {
+    [els.assetXZone, els.assetSiS, els.assetSU, els.assetCZ, els.assetEC, els.assetNone]
+      .forEach(function (cb) {
+        cb.addEventListener('change', function () {
+          handleAssetCheckboxChange(cb);
+        });
+      });
+
+    document.querySelectorAll('input[name="xzoneSubtype"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        if ($('xzoneSqft').value) validateXZone(true);
+        onD1Change();
+      });
+    });
+
+    $('xzoneSqft').addEventListener('blur', function () { validateXZone(true); updateNext2Enabled(); });
+    $('xzoneSqft').addEventListener('input', function () { onD1Change(); });
+    $('sisSqft').addEventListener('blur', function () { validateSiS(true); updateNext2Enabled(); });
+    $('sisSqft').addEventListener('input', function () { onD1Change(); });
+    $('suSqft').addEventListener('blur', function () { validateSU(true); updateNext2Enabled(); });
+    $('suSqft').addEventListener('input', function () { onD1Change(); });
+    $('czSqft').addEventListener('blur', function () { validateCZ(true); updateNext2Enabled(); });
+    $('czSqft').addEventListener('input', function () { onD1Change(); });
+
+    ['xzone', 'sis', 'su', 'cz'].forEach(function (prefix) {
+      $(prefix + 'AckCheck').addEventListener('change', onD1Change);
+      $(prefix + 'AckReason').addEventListener('input', onD1Change);
+    });
+
+    els.btnAddEC.addEventListener('click', function () {
+      if (state.ecEntries.length >= MAX_EC) return;
+      state.ecEntries.push({ id: nextEcId() });
+      renderECEntries();
+      onD1Change();
+    });
+
+    document.querySelectorAll('input[name="vivoPosition"]').forEach(function (r) {
+      r.addEventListener('change', onD1Change);
+    });
+
+    document.querySelectorAll('.toggle-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.getAttribute('data-target');
+        var val = btn.getAttribute('data-val');
+        setToggle(target, val === 'yes');
+        syncBrandingSqftLock();
+        onD1Change();
+      });
+    });
+
+    els.brandingSqft.addEventListener('change', onD1Change);
   }
 
   /* ---------- Events ---------- */
@@ -1108,10 +2619,30 @@
     syncStateFromDom();
     saveDraft();
     goToSection(2);
+    state.d1Touched = true;
+    updateD1UI();
   });
 
   els.btnBack2.addEventListener('click', function () {
     goToSection(1);
+  });
+
+  els.btnNext2.addEventListener('click', function (e) {
+    if (els.btnNext2.disabled || els.btnNext2.hasAttribute('disabled')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if (!validateSection2(true)) {
+      updateNext2Enabled();
+      return;
+    }
+    saveDraft();
+    goToSection(3);
+  });
+
+  els.btnBack3.addEventListener('click', function () {
+    goToSection(2);
   });
 
   els.btnDupYes.addEventListener('click', function () {
@@ -1171,6 +2702,13 @@
   /* ---------- Init ---------- */
   function init() {
     els.auditDate.value = todayISODate();
+    initBrandingSqftOptions();
+    setToggle('inshop-yes', false);
+    setToggle('outshop-yes', false);
+    renderECEntries();
+    bindD1Events();
+    syncAssetPanels();
+    updateD1UI();
 
     loadDraft().then(function (draft) {
       var hasContent = draft && (
@@ -1178,7 +2716,8 @@
         draft.name ||
         draft.phone ||
         draft.storeCode ||
-        (draft.section && draft.section > 0)
+        (draft.section && draft.section > 0) ||
+        (draft.d1 && draft.d1.d1Touched)
       );
 
       if (hasContent) {
@@ -1200,6 +2739,6 @@
 
   init();
 })();
-  </script>
+</script>
 </body>
 </html>
