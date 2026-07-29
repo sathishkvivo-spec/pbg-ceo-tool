@@ -963,6 +963,291 @@
       width: 5.5rem;
       flex-shrink: 0;
     }
+
+    /* Section 5 — Photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .photo-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .photo-slot-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      line-height: 1.3;
+    }
+
+    .photo-drop {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      background: var(--card-bg);
+      border: 1px dashed rgba(201, 168, 76, 0.35);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-drop.has-photo {
+      border-style: solid;
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+
+    .photo-upload-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 0.75rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: inherit;
+      text-align: center;
+      line-height: 1.35;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .photo-upload-btn:active { opacity: 0.75; }
+
+    .photo-file-input {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .photo-thumb {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-drop.has-photo .photo-thumb { display: block; }
+    .photo-drop.has-photo .photo-upload-btn { display: none; }
+
+    .photo-remove {
+      display: none;
+      position: absolute;
+      top: 0.35rem;
+      right: 0.35rem;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      border: none;
+      background: rgba(10, 10, 15, 0.8);
+      color: #fff;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .photo-drop.has-photo .photo-remove { display: flex; }
+
+    .photo-slot-error {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--error);
+      line-height: 1.3;
+    }
+
+    .photo-slot-error.visible { display: block; }
+
+    .photo-upload-warn {
+      display: none;
+      margin-bottom: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      color: #fdba74;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .photo-upload-warn.visible { display: block; }
+
+    /* Section 6 — Remarks + Submit */
+    textarea.remarks-input {
+      width: 100%;
+      min-height: 8rem;
+      padding: 0.75rem 0.85rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      line-height: 1.45;
+      outline: none;
+      resize: vertical;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    textarea.remarks-input:focus {
+      border-color: rgba(201, 168, 76, 0.55);
+    }
+
+    textarea.remarks-input::placeholder {
+      color: rgba(153, 153, 153, 0.7);
+    }
+
+    .btn-submit {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 1.25rem;
+      padding: 0.9rem 1.1rem;
+      background: var(--gold);
+      color: #0a0a0f;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-submit:disabled,
+    .btn-submit[disabled] {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .submit-error {
+      display: none;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--error);
+      line-height: 1.4;
+    }
+
+    .submit-error.visible { display: block; }
+
+    .offline-banner {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: var(--radius);
+    }
+
+    .offline-banner.visible { display: block; }
+
+    .offline-banner p {
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .pending-banner {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(201, 168, 76, 0.12);
+      border: 1px solid rgba(201, 168, 76, 0.35);
+      border-radius: var(--radius);
+    }
+
+    .pending-banner.visible { display: block; }
+
+    .pending-banner p {
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Success screen */
+    .success-screen {
+      display: none;
+      padding: 2.5rem 0.5rem 2rem;
+      text-align: center;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .success-screen.visible { display: block; }
+
+    .success-icon {
+      font-size: 2.5rem;
+      color: var(--success);
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+
+    .success-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .success-meta {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-meta strong { color: var(--text); font-weight: 600; }
+
+    .success-scores {
+      margin: 1.1rem 0;
+      padding: 0.9rem 1rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .success-tier {
+      font-size: 0.95rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .success-note {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-bottom: 1.5rem;
+    }
+
+    .app.submitted .progress-bar,
+    .app.submitted .draft-banner,
+    .app.submitted .offline-banner,
+    .app.submitted .pending-banner,
+    .app.submitted .section,
+    .app.submitted ~ .score-footer {
+      display: none !important;
+    }
+
+    .app.submitted {
+      padding-bottom: 1.25rem;
+    }
   </style>
 </head>
 <body>
@@ -981,6 +1266,18 @@
       <div class="draft-actions">
         <button type="button" class="btn btn-primary" id="btnResumeDraft">Resume</button>
         <button type="button" class="btn btn-ghost" id="btnFreshDraft">Start fresh</button>
+      </div>
+    </div>
+
+    <div class="offline-banner" id="offlineBanner" role="status">
+      <p id="offlineBannerText">VPS unreachable. Your submission has been saved locally. Reopen this page when connected to submit.</p>
+    </div>
+
+    <div class="pending-banner" id="pendingBanner" role="alert">
+      <p id="pendingBannerText">You have a pending submission. Submit now?</p>
+      <div class="draft-actions">
+        <button type="button" class="btn btn-primary" id="btnSubmitPending">Submit now</button>
+        <button type="button" class="btn btn-ghost" id="btnDiscardPending">Discard</button>
       </div>
     </div>
 
@@ -1288,10 +1585,16 @@
           <input type="checkbox" id="outshop-yes" hidden />
         </div>
 
-        <div class="field" style="margin-top:0.75rem">
-          <label for="brandingSqft">Total branding sq.ft (in + out combined)</label>
-          <select class="select-input" id="brandingSqft" name="brandingSqft"></select>
-          <div class="sqft-pts-hint" id="sqftPtsHint">0 pts</div>
+        <div class="field" id="inshopSqftField" style="margin-top:0.75rem;display:none">
+          <label for="inshopSqft">In-shop branding sq.ft</label>
+          <select class="select-input" id="inshopSqft" name="inshopSqft"></select>
+          <div class="sqft-pts-hint" id="inshopSqftHint">0 pts</div>
+        </div>
+
+        <div class="field" id="outshopSqftField" style="display:none">
+          <label for="outshopSqft">Out-shop branding sq.ft</label>
+          <select class="select-input" id="outshopSqft" name="outshopSqft"></select>
+          <div class="sqft-pts-hint" id="outshopSqftHint">0 pts</div>
         </div>
 
         <div class="visibility-live" id="visibilityLive">Visibility: 0 / 20 pts</div>
@@ -1594,9 +1897,123 @@
         <button type="button" class="btn btn-primary" id="btnNext4" disabled>Next</button>
       </div>
     </section>
+
+    <!-- SECTION 5 — Store Photos -->
+    <section class="section" id="section5" data-section="5">
+      <h1 class="section-header">SECTION 5 — STORE PHOTOS</h1>
+      <div class="section-subheader">Up to 6 photos — all optional</div>
+
+      <div class="photo-upload-warn" id="photoUploadWarn" role="status"></div>
+
+      <div class="photo-grid" id="photoGrid">
+        <div class="photo-slot" data-slot="0">
+          <div class="photo-slot-label">Entrance / Outside</div>
+          <div class="photo-drop" id="photoDrop0">
+            <button type="button" class="photo-upload-btn" id="photoBtn0">Tap to upload photo</button>
+            <img class="photo-thumb" id="photoThumb0" alt="Entrance / Outside preview" />
+            <button type="button" class="photo-remove" id="photoRemove0" aria-label="Remove photo">×</button>
+            <input type="file" class="photo-file-input" id="photoInput0" accept="image/*" />
+          </div>
+          <div class="photo-slot-error" id="photoErr0">File too large. Maximum 8MB per photo.</div>
+        </div>
+        <div class="photo-slot" data-slot="1">
+          <div class="photo-slot-label">Left Side</div>
+          <div class="photo-drop" id="photoDrop1">
+            <button type="button" class="photo-upload-btn" id="photoBtn1">Tap to upload photo</button>
+            <img class="photo-thumb" id="photoThumb1" alt="Left Side preview" />
+            <button type="button" class="photo-remove" id="photoRemove1" aria-label="Remove photo">×</button>
+            <input type="file" class="photo-file-input" id="photoInput1" accept="image/*" />
+          </div>
+          <div class="photo-slot-error" id="photoErr1">File too large. Maximum 8MB per photo.</div>
+        </div>
+        <div class="photo-slot" data-slot="2">
+          <div class="photo-slot-label">Right Side</div>
+          <div class="photo-drop" id="photoDrop2">
+            <button type="button" class="photo-upload-btn" id="photoBtn2">Tap to upload photo</button>
+            <img class="photo-thumb" id="photoThumb2" alt="Right Side preview" />
+            <button type="button" class="photo-remove" id="photoRemove2" aria-label="Remove photo">×</button>
+            <input type="file" class="photo-file-input" id="photoInput2" accept="image/*" />
+          </div>
+          <div class="photo-slot-error" id="photoErr2">File too large. Maximum 8MB per photo.</div>
+        </div>
+        <div class="photo-slot" data-slot="3">
+          <div class="photo-slot-label">Straight / Front</div>
+          <div class="photo-drop" id="photoDrop3">
+            <button type="button" class="photo-upload-btn" id="photoBtn3">Tap to upload photo</button>
+            <img class="photo-thumb" id="photoThumb3" alt="Straight / Front preview" />
+            <button type="button" class="photo-remove" id="photoRemove3" aria-label="Remove photo">×</button>
+            <input type="file" class="photo-file-input" id="photoInput3" accept="image/*" />
+          </div>
+          <div class="photo-slot-error" id="photoErr3">File too large. Maximum 8MB per photo.</div>
+        </div>
+        <div class="photo-slot" data-slot="4">
+          <div class="photo-slot-label">Competition View</div>
+          <div class="photo-drop" id="photoDrop4">
+            <button type="button" class="photo-upload-btn" id="photoBtn4">Tap to upload photo</button>
+            <img class="photo-thumb" id="photoThumb4" alt="Competition View preview" />
+            <button type="button" class="photo-remove" id="photoRemove4" aria-label="Remove photo">×</button>
+            <input type="file" class="photo-file-input" id="photoInput4" accept="image/*" />
+          </div>
+          <div class="photo-slot-error" id="photoErr4">File too large. Maximum 8MB per photo.</div>
+        </div>
+        <div class="photo-slot" data-slot="5">
+          <div class="photo-slot-label">Space Available</div>
+          <div class="photo-drop" id="photoDrop5">
+            <button type="button" class="photo-upload-btn" id="photoBtn5">Tap to upload photo</button>
+            <img class="photo-thumb" id="photoThumb5" alt="Space Available preview" />
+            <button type="button" class="photo-remove" id="photoRemove5" aria-label="Remove photo">×</button>
+            <input type="file" class="photo-file-input" id="photoInput5" accept="image/*" />
+          </div>
+          <div class="photo-slot-error" id="photoErr5">File too large. Maximum 8MB per photo.</div>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn btn-ghost" id="btnBack5">Back</button>
+        <button type="button" class="btn btn-primary" id="btnNext5">Next</button>
+      </div>
+    </section>
+
+    <!-- SECTION 6 — Remarks -->
+    <section class="section" id="section6" data-section="6">
+      <h1 class="section-header">SECTION 6 — REMARKS</h1>
+      <div class="section-subheader">Optional — any additional observations</div>
+
+      <div class="field">
+        <label for="remarks">Remarks</label>
+        <textarea
+          class="remarks-input"
+          id="remarks"
+          name="remarks"
+          placeholder="Any additional observations about this store, competitor activity, or upgrade notes."
+        ></textarea>
+      </div>
+
+      <button type="button" class="btn btn-submit" id="btnSubmit">SUBMIT</button>
+      <div class="submit-error" id="submitError" role="alert"></div>
+
+      <div class="nav-row" style="margin-top:1rem">
+        <button type="button" class="btn btn-ghost" id="btnBack6">Back</button>
+      </div>
+    </section>
+
+    <!-- Success screen (replaces form after submit) -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <div class="success-title">Submission Successful</div>
+      <div class="success-meta">Store: <strong id="successStoreName">—</strong></div>
+      <div class="success-scores" id="successScores">
+        D1: —/60 · D2: —/40 · Total: —/100
+      </div>
+      <div class="success-tier" id="successTier">Tier: —</div>
+      <p class="success-note">Your AM will review and approve this submission.</p>
+      <button type="button" class="btn btn-primary" id="btnAnotherStore" style="width:100%;min-height:48px">
+        Submit another store
+      </button>
+    </div>
   </div>
 
-  <footer class="score-footer">
+  <footer class="score-footer" id="scoreFooterBar">
     <div class="score-footer-inner" id="scoreFooter">
       D1: <span id="footerD1">—</span>/60 · D2: <span id="footerD2">—</span>/40 · Total: <span id="footerTotal">—</span>/100
     </div>
@@ -1642,19 +2059,34 @@
 
     POSITION_SCORES: { '1': 10, '2': 7, '3': 4, '4+': 1, 'hidden': 0 },
 
+    /* Per-side branding sq.ft scale (max 5 pts each — in-shop + out-shop) */
     SQFT_BUCKETS: [
       { label: 'None (0 sq.ft)',  value: 'none',    pts: 0 },
-      { label: '1–20 sq.ft',      value: '1-20',    pts: 2 },
-      { label: '21–50 sq.ft',     value: '21-50',   pts: 4 },
-      { label: '51–75 sq.ft',     value: '51-75',   pts: 6 },
-      { label: '76–100 sq.ft',    value: '76-100',  pts: 8 },
-      { label: '101–120 sq.ft',   value: '101-120', pts: 9 },
-      { label: '121+ sq.ft',      value: '121+',    pts: 10 }
+      { label: '1–20 sq.ft',      value: '1-20',    pts: 1 },
+      { label: '21–50 sq.ft',     value: '21-50',   pts: 2 },
+      { label: '51–75 sq.ft',     value: '51-75',   pts: 3 },
+      { label: '76–100 sq.ft',    value: '76-100',  pts: 4 },
+      { label: '101–120 sq.ft',   value: '101-120', pts: 4.5 },
+      { label: '121+ sq.ft',      value: '121+',    pts: 5 }
     ],
 
+    sqftPts5: function (value) {
+      var MAP = {
+        'none': 0, '1-20': 1, '21-50': 2,
+        '51-75': 3, '76-100': 4, '101-120': 4.5, '121+': 5
+      };
+      return MAP[value] || 0;
+    },
+
+    /* Combined visibility sq.ft score for battle comparison.
+       Accepts { inShop, outShop }, a legacy single bucket string, or a number. */
     sqftPts: function (value) {
-      var b = this.SQFT_BUCKETS.find(function (x) { return x.value === value; });
-      return b ? b.pts : 0;
+      if (value == null) return 0;
+      if (typeof value === 'number') return value;
+      if (typeof value === 'object') {
+        return this.sqftPts5(value.inShop || 'none') + this.sqftPts5(value.outShop || 'none');
+      }
+      return this.sqftPts5(value);
     },
 
     calcAssetWeight: function (assets) {
@@ -1746,13 +2178,29 @@
   window.PBG = PBG;
 
   var API_BASE = 'http://72.61.172.149/pbg-api';
+  var API_ORIGIN = 'http://72.61.172.149';
   var TOTAL_SECTIONS = 6;
   var DB_NAME = 'pbg_audit_db';
   var STORE_NAME = 'draft';
-  var DRAFT_KEY = 'current';
+  var DRAFT_KEY = 'draft_form';
+  var DRAFT_KEY_LEGACY = 'current';
+  var PENDING_KEY = 'pending_submission';
+  var PHOTO_KEY_PREFIX = 'photo_';
+  var PHOTO_MAX_BYTES = 8 * 1024 * 1024;
+  var PHOTO_SLOT_COUNT = 6;
   var MAX_EC = 3;
 
   var sessionMemory = { employeeId: '', name: '' };
+  try {
+    var _sm = sessionStorage.getItem('pbg_session_memory');
+    if (_sm) sessionMemory = JSON.parse(_sm);
+  } catch (e) { /* ignore */ }
+
+  function persistSessionMemory() {
+    try {
+      sessionStorage.setItem('pbg_session_memory', JSON.stringify(sessionMemory));
+    } catch (e) { /* ignore */ }
+  }
 
   var state = {
     section: 0,
@@ -1771,8 +2219,12 @@
     d1Touched: false,
     d2Touched: false,
     d4Touched: false,
+    d5Touched: false,
+    d6Touched: false,
     ecEntries: [{ id: 1 }],
-    d1Fingerprint: ''
+    d1Fingerprint: '',
+    submittedOk: false,
+    submitting: false
   };
 
   /* Shared cross-section form state — D1 written by Section 2, read by Section 3 */
@@ -1780,7 +2232,7 @@
     d1: {
       assets: [],
       position: 'hidden',
-      sqft: 'none',
+      sqft: { inShop: 'none', outShop: 'none' },
       score: 0
     },
     d2: {
@@ -1790,16 +2242,35 @@
     },
     d4: {
       /* data collection only — no score */
+    },
+    s6: {
+      remarks: ''
     }
   };
+
+  /* In-memory photo Blobs (IndexedDB keys photo_0 … photo_5) */
+  var photoBlobs = [null, null, null, null, null, null];
+  var photoObjectUrls = [null, null, null, null, null, null];
+  var photoUrlsCache = [];
 
   var SECTION_TITLES = {
     0: 'Auditor Details',
     1: 'Store Information',
     2: 'D1: Vivo Brand Strength',
     3: 'D2: Fighting Score',
-    4: 'Possible Store Upgrade'
+    4: 'Possible Store Upgrade',
+    5: 'Store Photos',
+    6: 'Remarks'
   };
+
+  var PHOTO_LABELS = [
+    'Entrance / Outside',
+    'Left Side',
+    'Right Side',
+    'Straight / Front',
+    'Competition View',
+    'Space Available'
+  ];
 
   /* Branding sq.ft buckets for Section 4 (smaller than D1 scoring buckets) */
   var UPGRADE_BRANDING_BUCKETS = [
@@ -1829,6 +2300,12 @@
     draftBannerText: $('draftBannerText'),
     btnResumeDraft: $('btnResumeDraft'),
     btnFreshDraft: $('btnFreshDraft'),
+    offlineBanner: $('offlineBanner'),
+    offlineBannerText: $('offlineBannerText'),
+    pendingBanner: $('pendingBanner'),
+    pendingBannerText: $('pendingBannerText'),
+    btnSubmitPending: $('btnSubmitPending'),
+    btnDiscardPending: $('btnDiscardPending'),
     employeeId: $('employeeId'),
     auditorName: $('auditorName'),
     phone: $('phone'),
@@ -1861,6 +2338,20 @@
     btnNext3: $('btnNext3'),
     btnBack4: $('btnBack4'),
     btnNext4: $('btnNext4'),
+    btnBack5: $('btnBack5'),
+    btnNext5: $('btnNext5'),
+    btnBack6: $('btnBack6'),
+    btnSubmit: $('btnSubmit'),
+    submitError: $('submitError'),
+    remarks: $('remarks'),
+    photoUploadWarn: $('photoUploadWarn'),
+    successScreen: $('successScreen'),
+    successStoreName: $('successStoreName'),
+    successScores: $('successScores'),
+    successTier: $('successTier'),
+    btnAnotherStore: $('btnAnotherStore'),
+    scoreFooterBar: $('scoreFooterBar'),
+    app: document.querySelector('.app'),
     d1LiveScore: $('d1LiveScore'),
     d1LiveTier: $('d1LiveTier'),
     d2LiveScore: $('d2LiveScore'),
@@ -1870,6 +2361,12 @@
     blockPosition: $('blockPosition'),
     brandingSqft: $('brandingSqft'),
     sqftPtsHint: $('sqftPtsHint'),
+    inshopSqft: $('inshopSqft'),
+    outshopSqft: $('outshopSqft'),
+    inshopSqftField: $('inshopSqftField'),
+    outshopSqftField: $('outshopSqftField'),
+    inshopSqftHint: $('inshopSqftHint'),
+    outshopSqftHint: $('outshopSqftHint'),
     visibilityLive: $('visibilityLive'),
     footerD1: $('footerD1'),
     footerD2: $('footerD2'),
@@ -1952,7 +2449,8 @@
     els.progressText.innerHTML =
       '<strong>Section ' + n + ' of ' + TOTAL_SECTIONS + '</strong> — ' +
       (SECTION_TITLES[n] || '');
-    els.progressFill.style.width = ((n + 1) / TOTAL_SECTIONS * 100) + '%';
+    els.progressFill.style.width =
+      (Math.min(n + 1, TOTAL_SECTIONS) / TOTAL_SECTIONS * 100) + '%';
     window.scrollTo(0, 0);
 
     if (n === 3) {
@@ -1962,6 +2460,18 @@
     if (n === 4) {
       updateUpgradeUI();
     }
+  }
+
+  function scrollToFirstError(sectionNum) {
+    goToSection(sectionNum);
+    setTimeout(function () {
+      var sec = $('section' + sectionNum);
+      if (!sec) return;
+      var bad = sec.querySelector('.error-border, .field-error.visible, .ack-box.visible');
+      if (bad && bad.scrollIntoView) {
+        bad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 50);
   }
 
   /* ---------- Section 0 validation ---------- */
@@ -2239,8 +2749,42 @@
     });
   }
 
+  function idbPut(key, value) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).put(value, key);
+        tx.oncomplete = function () { db.close(); resolve(); };
+        tx.onerror = function () { db.close(); reject(tx.error); };
+      });
+    });
+  }
+
+  function idbGet(key) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(STORE_NAME, 'readonly');
+        var req = tx.objectStore(STORE_NAME).get(key);
+        req.onsuccess = function () { db.close(); resolve(req.result); };
+        req.onerror = function () { db.close(); reject(req.error); };
+      });
+    }).catch(function () { return undefined; });
+  }
+
+  function idbDelete(key) {
+    return openDb().then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx = db.transaction(STORE_NAME, 'readwrite');
+        tx.objectStore(STORE_NAME).delete(key);
+        tx.oncomplete = function () { db.close(); resolve(); };
+        tx.onerror = function () { db.close(); reject(tx.error); };
+      });
+    }).catch(function () { /* ignore */ });
+  }
+
   function getFormSnapshot() {
     syncStateFromDom();
+    formState.s6 = { remarks: (els.remarks && els.remarks.value) || '' };
     return {
       timestamp: new Date().toISOString(),
       section: state.section,
@@ -2255,66 +2799,110 @@
       duplicateConfirmed: state.duplicateConfirmed,
       d1: captureD1State(),
       d2: captureD2State(),
-      d4: captureD4State()
+      d4: captureD4State(),
+      s6: formState.s6,
+      photoUrls: photoUrlsCache.slice()
     };
   }
 
   function saveDraft() {
     var snap = getFormSnapshot();
     state.draftTimestamp = snap.timestamp;
-    return openDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction(STORE_NAME, 'readwrite');
-        tx.objectStore(STORE_NAME).put(snap, DRAFT_KEY);
-        tx.oncomplete = function () {
-          db.close();
-          resolve();
-        };
-        tx.onerror = function () {
-          db.close();
-          reject(tx.error);
-        };
-      });
-    }).catch(function () { /* ignore IDB errors */ });
+    return idbPut(DRAFT_KEY, snap).catch(function () { /* ignore IDB errors */ });
   }
 
   function loadDraft() {
-    return openDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction(STORE_NAME, 'readonly');
-        var req = tx.objectStore(STORE_NAME).get(DRAFT_KEY);
-        req.onsuccess = function () {
-          db.close();
-          resolve(req.result || null);
-        };
-        req.onerror = function () {
-          db.close();
-          reject(req.error);
-        };
+    return idbGet(DRAFT_KEY).then(function (draft) {
+      if (draft) return draft;
+      /* Migrate Gate A legacy key → draft_form */
+      return idbGet(DRAFT_KEY_LEGACY).then(function (legacy) {
+        if (!legacy) return null;
+        return idbPut(DRAFT_KEY, legacy).then(function () {
+          return idbDelete(DRAFT_KEY_LEGACY).then(function () { return legacy; });
+        });
       });
     }).catch(function () { return null; });
   }
 
+  function clearAllPhotos() {
+    var tasks = [];
+    for (var i = 0; i < PHOTO_SLOT_COUNT; i++) {
+      revokePhotoUrl(i);
+      photoBlobs[i] = null;
+      tasks.push(idbDelete(PHOTO_KEY_PREFIX + i));
+      var drop = $('photoDrop' + i);
+      var thumb = $('photoThumb' + i);
+      var err = $('photoErr' + i);
+      var input = $('photoInput' + i);
+      if (drop) drop.classList.remove('has-photo');
+      if (thumb) { thumb.removeAttribute('src'); }
+      if (err) err.classList.remove('visible');
+      if (input) input.value = '';
+    }
+    photoUrlsCache = [];
+    return Promise.all(tasks);
+  }
+
   function clearDraft() {
-    return openDb().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction(STORE_NAME, 'readwrite');
-        tx.objectStore(STORE_NAME).delete(DRAFT_KEY);
-        tx.oncomplete = function () {
-          db.close();
-          resolve();
-        };
-        tx.onerror = function () {
-          db.close();
-          reject(tx.error);
-        };
-      });
-    }).catch(function () { /* ignore */ });
+    return Promise.all([
+      idbDelete(DRAFT_KEY),
+      idbDelete(DRAFT_KEY_LEGACY),
+      clearAllPhotos()
+    ]);
+  }
+
+  function savePhotoBlob(slot, blob) {
+    photoBlobs[slot] = blob;
+    return idbPut(PHOTO_KEY_PREFIX + slot, blob).catch(function () { /* ignore */ });
+  }
+
+  function deletePhotoBlob(slot) {
+    revokePhotoUrl(slot);
+    photoBlobs[slot] = null;
+    var drop = $('photoDrop' + slot);
+    var thumb = $('photoThumb' + slot);
+    var input = $('photoInput' + slot);
+    if (drop) drop.classList.remove('has-photo');
+    if (thumb) thumb.removeAttribute('src');
+    if (input) input.value = '';
+    return idbDelete(PHOTO_KEY_PREFIX + slot);
+  }
+
+  function loadAllPhotoBlobs() {
+    var tasks = [];
+    for (var i = 0; i < PHOTO_SLOT_COUNT; i++) {
+      (function (slot) {
+        tasks.push(
+          idbGet(PHOTO_KEY_PREFIX + slot).then(function (blob) {
+            if (blob instanceof Blob) {
+              photoBlobs[slot] = blob;
+              showPhotoThumb(slot, blob);
+            }
+          })
+        );
+      })(i);
+    }
+    return Promise.all(tasks);
+  }
+
+  function savePendingSubmission(extra) {
+    var snap = getFormSnapshot();
+    if (extra && extra.photoUrls) snap.photoUrls = extra.photoUrls;
+    snap.pendingAt = new Date().toISOString();
+    return idbPut(PENDING_KEY, snap).catch(function () { /* ignore */ });
+  }
+
+  function loadPendingSubmission() {
+    return idbGet(PENDING_KEY).then(function (v) { return v || null; });
+  }
+
+  function clearPendingSubmission() {
+    return idbDelete(PENDING_KEY);
   }
 
   var autosaveTimer = null;
   function scheduleAutosave() {
-    if (state.restoring) return;
+    if (state.restoring || state.submittedOk) return;
     clearTimeout(autosaveTimer);
     autosaveTimer = setTimeout(function () {
       saveDraft();
@@ -2322,7 +2910,7 @@
   }
 
   function markDirty() {
-    if (!state.restoring) state.dirty = true;
+    if (!state.restoring && !state.submittedOk) state.dirty = true;
   }
 
   function restoreFromDraft(draft) {
@@ -2349,13 +2937,20 @@
     if (draft.d1) applyD1State(draft.d1);
     if (draft.d2) applyD2State(draft.d2);
     if (draft.d4) applyD4State(draft.d4);
+    if (draft.s6 && els.remarks) {
+      els.remarks.value = draft.s6.remarks || '';
+      formState.s6 = { remarks: els.remarks.value };
+    }
+    if (draft.photoUrls) photoUrlsCache = draft.photoUrls.slice();
 
-    goToSection(typeof draft.section === 'number' ? draft.section : 0);
-    state.dirty = false;
-    state.restoring = false;
-    updateD1UI();
-    updateD2UI();
-    updateUpgradeUI();
+    loadAllPhotoBlobs().then(function () {
+      goToSection(typeof draft.section === 'number' ? draft.section : 0);
+      state.dirty = false;
+      state.restoring = false;
+      updateD1UI();
+      updateD2UI();
+      updateUpgradeUI();
+    });
   }
 
   function blankForm() {
@@ -2375,6 +2970,10 @@
     resetD1Form();
     resetD2Form();
     resetD4Form();
+    if (els.remarks) els.remarks.value = '';
+    formState.s6 = { remarks: '' };
+    photoUrlsCache = [];
+    clearAllPhotos();
     goToSection(0);
     state.dirty = false;
     state.restoring = false;
@@ -2386,15 +2985,20 @@
   /* ========== SECTION 2 — D1 ========== */
 
   function initBrandingSqftOptions() {
-    els.brandingSqft.innerHTML = '';
-    PBG.SQFT_BUCKETS.forEach(function (b) {
-      var opt = document.createElement('option');
-      opt.value = b.value;
-      opt.textContent = b.label + ' — ' + b.pts + ' pts';
-      els.brandingSqft.appendChild(opt);
-    });
-    els.brandingSqft.value = 'none';
-    els.brandingSqft.disabled = true;
+    function fillSelect(sel) {
+      if (!sel) return;
+      sel.innerHTML = '';
+      PBG.SQFT_BUCKETS.forEach(function (b) {
+        var opt = document.createElement('option');
+        opt.value = b.value;
+        opt.textContent = b.label + ' — ' + b.pts + ' pts';
+        sel.appendChild(opt);
+      });
+      sel.value = 'none';
+    }
+    fillSelect(els.inshopSqft);
+    fillSelect(els.outshopSqft);
+    syncVisibilitySqftFields();
   }
 
   function setToggle(targetId, yes) {
@@ -2412,17 +3016,22 @@
     }
   }
 
-  function syncBrandingSqftLock() {
-    var anyYes = els.inshopYes.checked || els.outshopYes.checked;
-    if (!anyYes) {
-      els.brandingSqft.value = 'none';
-      els.brandingSqft.disabled = true;
-    } else {
-      els.brandingSqft.disabled = false;
-      if (els.brandingSqft.value === 'none') {
-        /* leave editable; user picks a range */
-      }
+  function syncVisibilitySqftFields() {
+    var inYes = els.inshopYes.checked;
+    var outYes = els.outshopYes.checked;
+    if (els.inshopSqftField) {
+      els.inshopSqftField.style.display = inYes ? '' : 'none';
     }
+    if (els.outshopSqftField) {
+      els.outshopSqftField.style.display = outYes ? '' : 'none';
+    }
+    if (!inYes && els.inshopSqft) els.inshopSqft.value = 'none';
+    if (!outYes && els.outshopSqft) els.outshopSqft.value = 'none';
+  }
+
+  /* Backward-compatible alias used by existing toggle handlers */
+  function syncBrandingSqftLock() {
+    syncVisibilitySqftFields();
   }
 
   function renderECEntries() {
@@ -2619,7 +3228,10 @@
   }
 
   function getSelectedSqft() {
-    return els.brandingSqft.value || 'none';
+    return {
+      inShop: els.inshopYes.checked ? (els.inshopSqft.value || 'none') : 'none',
+      outShop: els.outshopYes.checked ? (els.outshopSqft.value || 'none') : 'none'
+    };
   }
 
   function calcD1() {
@@ -2628,10 +3240,11 @@
     if (hasAnyAssetSelected() && !isNoneSelected()) {
       posPts = PBG.POSITION_SCORES[getSelectedPosition()] || 0;
     }
-    var inShop = els.inshopYes.checked ? 5 : 0;
-    var outShop = els.outshopYes.checked ? 5 : 0;
-    var sqftPts = PBG.sqftPts(getSelectedSqft());
-    return tierPts + posPts + inShop + outShop + sqftPts;
+    var inShopPts = els.inshopYes.checked ? 5 : 0;
+    var outShopPts = els.outshopYes.checked ? 5 : 0;
+    var inShopSqft = els.inshopYes.checked ? PBG.sqftPts5(els.inshopSqft.value) : 0;
+    var outShopSqft = els.outshopYes.checked ? PBG.sqftPts5(els.outshopSqft.value) : 0;
+    return tierPts + posPts + inShopPts + outShopPts + inShopSqft + outShopSqft;
   }
 
   /* Size mismatch validation — returns { level, message } or null */
@@ -2830,11 +3443,14 @@
     els.d1LiveTier.textContent = 'Asset Tier: ' + tier.tier + ' / ' + tier.points + 'pts';
     els.tierResult.textContent = 'Asset Tier: ' + tier.tier + ' — ' + tier.points + ' pts';
 
-    var inShop = els.inshopYes.checked ? 5 : 0;
-    var outShop = els.outshopYes.checked ? 5 : 0;
-    var sqftPts = PBG.sqftPts(getSelectedSqft());
-    els.visibilityLive.textContent = 'Visibility: ' + (inShop + outShop + sqftPts) + ' / 20 pts';
-    els.sqftPtsHint.textContent = sqftPts + ' pts';
+    var inShopPts = els.inshopYes.checked ? 5 : 0;
+    var outShopPts = els.outshopYes.checked ? 5 : 0;
+    var inShopSqft = els.inshopYes.checked ? PBG.sqftPts5(els.inshopSqft.value) : 0;
+    var outShopSqft = els.outshopYes.checked ? PBG.sqftPts5(els.outshopSqft.value) : 0;
+    els.visibilityLive.textContent =
+      'Visibility: ' + (inShopPts + outShopPts + inShopSqft + outShopSqft) + ' / 20 pts';
+    if (els.inshopSqftHint) els.inshopSqftHint.textContent = inShopSqft + ' pts';
+    if (els.outshopSqftHint) els.outshopSqftHint.textContent = outShopSqft + ' pts';
 
     syncFormStateD1();
 
@@ -2896,13 +3512,6 @@
 
     if (hasAnyAssetSelected() && !isNoneSelected()) {
       if (!getSelectedPosition()) return false;
-    }
-
-    if ((els.inshopYes.checked || els.outshopYes.checked) &&
-        getSelectedSqft() === 'none') {
-      /* Allowed — None is a valid bucket even with presence, but brief says
-         if at least one Yes → dropdown editable. User can still pick None.
-         No block. */
     }
 
     if (!allAcksComplete()) return false;
@@ -3037,11 +3646,16 @@
             '</div>' +
           '</div>' +
 
-          /* Parameter 3 — branding sqft */
+          /* Parameter 3 — branding sqft (in-shop + out-shop, max 5 each) */
           '<div class="battle-param">' +
-            '<div class="block-label">' + label + ' branding sq.ft</div>' +
+            '<div class="block-label">' + label + ' visibility branding</div>' +
+            '<div class="field">' +
+              '<label for="' + id + 'InshopSqft">In-shop branding sq.ft</label>' +
+              '<select class="select-input" id="' + id + 'InshopSqft"></select>' +
+            '</div>' +
             '<div class="field" style="margin-bottom:0">' +
-              '<select class="select-input" id="' + id + 'BrandingSqft"></select>' +
+              '<label for="' + id + 'OutshopSqft">Out-shop branding sq.ft</label>' +
+              '<select class="select-input" id="' + id + 'OutshopSqft"></select>' +
             '</div>' +
           '</div>' +
 
@@ -3054,17 +3668,23 @@
     );
   }
 
+  function fillSqftSelect(sel, withPts) {
+    if (!sel) return;
+    sel.innerHTML = '';
+    PBG.SQFT_BUCKETS.forEach(function (b) {
+      var opt = document.createElement('option');
+      opt.value = b.value;
+      opt.textContent = withPts ? (b.label + ' — ' + b.pts + ' pts') : b.label;
+      sel.appendChild(opt);
+    });
+    sel.value = 'none';
+  }
+
   function initD2Battles() {
     els.d2Battles.innerHTML = renderBattle('samsung') + renderBattle('apple');
     ['samsung', 'apple'].forEach(function (brand) {
-      var sel = $(brand + 'BrandingSqft');
-      PBG.SQFT_BUCKETS.forEach(function (b) {
-        var opt = document.createElement('option');
-        opt.value = b.value;
-        opt.textContent = b.label;
-        sel.appendChild(opt);
-      });
-      sel.value = 'none';
+      fillSqftSelect($(brand + 'InshopSqft'), false);
+      fillSqftSelect($(brand + 'OutshopSqft'), false);
       setToggle(brand + '-present-yes', false);
     });
     bindD2Events();
@@ -3099,7 +3719,10 @@
   }
 
   function getCompetitorSqft(brand) {
-    return ($(brand + 'BrandingSqft') || {}).value || 'none';
+    return {
+      inShop: ($(brand + 'InshopSqft') || {}).value || 'none',
+      outShop: ($(brand + 'OutshopSqft') || {}).value || 'none'
+    };
   }
 
   function getSamsungAssets() { return getCompetitorAssets('samsung'); }
@@ -3333,8 +3956,14 @@
       var pr = document.querySelector('input[name="' + brand + 'Position"][value="' + d.position + '"]');
       if (pr) pr.checked = true;
     }
-    if ($(brand + 'BrandingSqft')) {
-      $(brand + 'BrandingSqft').value = d.brandingSqft || 'none';
+    var sq = d.brandingSqft;
+    if (typeof sq === 'string') {
+      /* Legacy single-bucket draft → apply to both sides */
+      if ($(brand + 'InshopSqft')) $(brand + 'InshopSqft').value = sq || 'none';
+      if ($(brand + 'OutshopSqft')) $(brand + 'OutshopSqft').value = sq || 'none';
+    } else if (sq && typeof sq === 'object') {
+      if ($(brand + 'InshopSqft')) $(brand + 'InshopSqft').value = sq.inShop || 'none';
+      if ($(brand + 'OutshopSqft')) $(brand + 'OutshopSqft').value = sq.outShop || 'none';
     }
   }
 
@@ -3370,7 +3999,8 @@
         r.checked = false;
       });
       if ($(brand + 'EcQty')) $(brand + 'EcQty').value = '';
-      if ($(brand + 'BrandingSqft')) $(brand + 'BrandingSqft').value = 'none';
+      if ($(brand + 'InshopSqft')) $(brand + 'InshopSqft').value = 'none';
+      if ($(brand + 'OutshopSqft')) $(brand + 'OutshopSqft').value = 'none';
     });
     state.d2Touched = false;
     formState.d2 = { samsungPresent: false, applePresent: false, score: null };
@@ -3412,7 +4042,8 @@
         r.addEventListener('change', onD2Change);
       });
       $(brand + 'EcQty').addEventListener('input', onD2Change);
-      $(brand + 'BrandingSqft').addEventListener('change', onD2Change);
+      $(brand + 'InshopSqft').addEventListener('change', onD2Change);
+      $(brand + 'OutshopSqft').addEventListener('change', onD2Change);
     });
   }
 
@@ -3908,6 +4539,454 @@
     $('upg5Other').addEventListener('input', onUpgradeChange);
   }
 
+  /* ========== SECTION 5 — Photos ========== */
+
+  function revokePhotoUrl(slot) {
+    if (photoObjectUrls[slot]) {
+      try { URL.revokeObjectURL(photoObjectUrls[slot]); } catch (e) { /* ignore */ }
+      photoObjectUrls[slot] = null;
+    }
+  }
+
+  function showPhotoThumb(slot, blob) {
+    revokePhotoUrl(slot);
+    var url = URL.createObjectURL(blob);
+    photoObjectUrls[slot] = url;
+    var thumb = $('photoThumb' + slot);
+    var drop = $('photoDrop' + slot);
+    if (thumb) thumb.src = url;
+    if (drop) drop.classList.add('has-photo');
+  }
+
+  function compressImageFile(file) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      var objectUrl = URL.createObjectURL(file);
+      img.onload = function () {
+        var w = img.naturalWidth || img.width;
+        var h = img.naturalHeight || img.height;
+        var maxEdge = 1200;
+        if (Math.max(w, h) > maxEdge) {
+          if (w >= h) {
+            h = Math.round(h * maxEdge / w);
+            w = maxEdge;
+          } else {
+            w = Math.round(w * maxEdge / h);
+            h = maxEdge;
+          }
+        }
+        var canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob(function (blob) {
+          URL.revokeObjectURL(objectUrl);
+          if (!blob) {
+            reject(new Error('Compression failed'));
+            return;
+          }
+          resolve(blob);
+        }, 'image/jpeg', 0.82);
+      };
+      img.onerror = function () {
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error('Could not read image'));
+      };
+      img.src = objectUrl;
+    });
+  }
+
+  function handlePhotoFile(slot, file) {
+    var errEl = $('photoErr' + slot);
+    if (errEl) {
+      errEl.textContent = 'File too large. Maximum 8MB per photo.';
+      errEl.classList.remove('visible');
+    }
+    if (!file) return;
+    if (!file.type || file.type.indexOf('image/') !== 0) {
+      if (errEl) {
+        errEl.textContent = 'Please select an image file.';
+        errEl.classList.add('visible');
+      }
+      return;
+    }
+    if (file.size > PHOTO_MAX_BYTES) {
+      if (errEl) {
+        errEl.textContent = 'File too large. Maximum 8MB per photo.';
+        errEl.classList.add('visible');
+      }
+      return;
+    }
+
+    compressImageFile(file).then(function (blob) {
+      photoBlobs[slot] = blob;
+      showPhotoThumb(slot, blob);
+      state.d5Touched = true;
+      markDirty();
+      savePhotoBlob(slot, blob);
+      scheduleAutosave();
+    }).catch(function () {
+      if (errEl) {
+        errEl.textContent = 'Could not process photo. Try another image.';
+        errEl.classList.add('visible');
+      }
+    });
+  }
+
+  function bindPhotoEvents() {
+    for (var i = 0; i < PHOTO_SLOT_COUNT; i++) {
+      (function (slot) {
+        var btn = $('photoBtn' + slot);
+        var input = $('photoInput' + slot);
+        var remove = $('photoRemove' + slot);
+        if (btn && input) {
+          btn.addEventListener('click', function () { input.click(); });
+        }
+        if (input) {
+          input.addEventListener('change', function () {
+            var file = input.files && input.files[0];
+            handlePhotoFile(slot, file);
+          });
+        }
+        if (remove) {
+          remove.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            deletePhotoBlob(slot);
+            state.d5Touched = true;
+            markDirty();
+            scheduleAutosave();
+          });
+        }
+      })(i);
+    }
+  }
+
+  function onRemarksChange() {
+    if (state.restoring) return;
+    formState.s6 = { remarks: els.remarks.value || '' };
+    state.d6Touched = true;
+    markDirty();
+    scheduleAutosave();
+  }
+
+  /* ========== SUBMIT FLOW ========== */
+
+  function getRemarksValue() {
+    return (els.remarks && els.remarks.value) || '';
+  }
+
+  function hideSubmitError() {
+    els.submitError.classList.remove('visible');
+    els.submitError.textContent = '';
+  }
+
+  function showSubmitError(msg) {
+    els.submitError.textContent = msg;
+    els.submitError.classList.add('visible');
+  }
+
+  function showPhotoWarn(msg) {
+    els.photoUploadWarn.textContent = msg;
+    els.photoUploadWarn.classList.add('visible');
+  }
+
+  function hidePhotoWarn() {
+    els.photoUploadWarn.classList.remove('visible');
+    els.photoUploadWarn.textContent = '';
+  }
+
+  function showOfflineBanner(msg) {
+    els.offlineBannerText.textContent = msg ||
+      'VPS unreachable. Your submission has been saved locally. Reopen this page when connected to submit.';
+    els.offlineBanner.classList.add('visible');
+  }
+
+  function hideOfflineBanner() {
+    els.offlineBanner.classList.remove('visible');
+  }
+
+  function checkVpsReachable() {
+    return fetch(API_BASE + '/health', { method: 'GET', cache: 'no-store' })
+      .then(function (res) { return res.ok; })
+      .catch(function () { return false; });
+  }
+
+  function validateAllForSubmit() {
+    hideSubmitError();
+
+    if (!validateSection0()) {
+      scrollToFirstError(0);
+      return false;
+    }
+
+    syncStateFromDom();
+    if (!state.lookupOk || !state.storeCode) {
+      goToSection(1);
+      setFieldError(els.storeCode, els.errStoreCode, 'Look up a valid store code before submitting.');
+      els.storeCode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+    if (state.duplicateNeedsConfirm && !state.duplicateConfirmed) {
+      goToSection(1);
+      els.duplicateBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+
+    if (!validateSection2(true)) {
+      scrollToFirstError(2);
+      return false;
+    }
+
+    if (!validateSection3()) {
+      scrollToFirstError(3);
+      return false;
+    }
+
+    /* Sections 4–6 optional */
+    return true;
+  }
+
+  function buildFormDataPayload() {
+    syncStateFromDom();
+    syncFormStateD1();
+    formState.d2.score = calcD2Section();
+    formState.s6 = { remarks: getRemarksValue() };
+
+    return {
+      s0: {
+        employeeId: state.employeeId,
+        name: state.name,
+        phone: state.phone,
+        date: state.auditDate
+      },
+      s1: {
+        storeCode: state.storeCode,
+        storeName: (state.store && state.store.store_name) || '',
+        store: state.store,
+        lookupOk: state.lookupOk
+      },
+      s2: Object.assign({}, captureD1State(), {
+        assets: formState.d1.assets,
+        position: formState.d1.position,
+        sqft: formState.d1.sqft,
+        score: calcD1()
+      }),
+      s3: Object.assign({}, captureD2State(), {
+        samsungPresent: formState.d2.samsungPresent,
+        applePresent: formState.d2.applePresent,
+        score: formState.d2.score
+      }),
+      s4: captureD4State(),
+      s6: { remarks: getRemarksValue() }
+    };
+  }
+
+  function buildAuditPayload(photoUrls) {
+    var d1 = calcD1();
+    var d2 = calcD2Section();
+    var total = d1 + d2;
+    var storeName = (state.store && state.store.store_name) || '';
+
+    /* Server JSON-stringifies form_data + photos — send objects/arrays */
+    return {
+      store_code: state.storeCode,
+      store_name: storeName,
+      employee_id: state.employeeId,
+      ho_executive_name: state.name,
+      ho_executive_phone: state.phone,
+      audit_date: state.auditDate,
+      d1_score: d1,
+      d2_score: d2,
+      d3_score: 0,
+      total_score: total,
+      form_data: buildFormDataPayload(),
+      photos: photoUrls || [],
+      status: 'submitted'
+    };
+  }
+
+  function absolutePhotoUrl(url) {
+    if (!url) return url;
+    if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) return url;
+    if (url.charAt(0) === '/') return API_ORIGIN + url;
+    return API_ORIGIN + '/' + url;
+  }
+
+  function uploadOnePhoto(slot, blob) {
+    var fd = new FormData();
+    fd.append('photo', blob, 'photo_' + slot + '.jpg');
+    return fetch(API_BASE + '/uploads', { method: 'POST', body: fd })
+      .then(function (res) {
+        if (!res.ok) throw new Error('upload ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        return absolutePhotoUrl(data.url || data.filename);
+      });
+  }
+
+  function uploadPhotosWithRetry(existingUrls) {
+    var urls = (existingUrls || []).slice();
+    var warnings = [];
+    var chain = Promise.resolve();
+
+    for (var i = 0; i < PHOTO_SLOT_COUNT; i++) {
+      (function (slot) {
+        chain = chain.then(function () {
+          var blob = photoBlobs[slot];
+          if (!blob) return;
+
+          /* Skip if this slot already has a URL from a prior offline attempt */
+          if (urls[slot]) return;
+
+          return uploadOnePhoto(slot, blob)
+            .catch(function () {
+              return uploadOnePhoto(slot, blob);
+            })
+            .then(function (url) {
+              urls[slot] = url;
+            })
+            .catch(function () {
+              warnings.push('Photo ' + (slot + 1) + ' upload failed. Continuing without it.');
+            });
+        });
+      })(i);
+    }
+
+    return chain.then(function () {
+      var compact = [];
+      for (var s = 0; s < PHOTO_SLOT_COUNT; s++) {
+        if (urls[s]) compact.push(urls[s]);
+      }
+      return { urls: compact, slotMap: urls, warnings: warnings };
+    });
+  }
+
+  function postAudit(payload) {
+    return fetch(API_BASE + '/audits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+
+  function showSuccessScreen(payload) {
+    var tier = PBG.getTier(payload.total_score);
+    els.successStoreName.textContent = payload.store_name || '—';
+    els.successScores.textContent =
+      'D1: ' + payload.d1_score + '/60  ·  D2: ' + payload.d2_score +
+      '/40  ·  Total: ' + payload.total_score + '/100';
+    els.successTier.textContent =
+      'Tier: ' + tier.grade + ' — ' + tier.label;
+
+    els.app.classList.add('submitted');
+    if (els.scoreFooterBar) els.scoreFooterBar.style.display = 'none';
+    document.querySelectorAll('.section').forEach(function (s) {
+      s.classList.remove('active');
+    });
+    els.successScreen.classList.add('visible');
+    state.submittedOk = true;
+    state.dirty = false;
+  }
+
+  function setSubmitting(busy) {
+    state.submitting = busy;
+    setBtnEnabled(els.btnSubmit, !busy);
+    els.btnSubmit.textContent = busy ? 'Submitting…' : 'SUBMIT';
+  }
+
+  function runSubmitFlow(opts) {
+    opts = opts || {};
+    var fromPending = !!opts.fromPending;
+    var existingUrls = opts.existingUrls || photoUrlsCache.slice();
+
+    if (state.submitting) return;
+    hideSubmitError();
+    hideOfflineBanner();
+    hidePhotoWarn();
+
+    if (!fromPending && !validateAllForSubmit()) return;
+
+    if (fromPending) {
+      /* Restore snapshot fields already applied; still require store + auditor */
+      if (!state.lookupOk || !state.storeCode || !state.employeeId || !state.name) {
+        showSubmitError('Pending submission is incomplete. Please fill the form and submit again.');
+        return;
+      }
+    }
+
+    setSubmitting(true);
+
+    checkVpsReachable().then(function (ok) {
+      if (!ok) {
+        return savePendingSubmission({ photoUrls: existingUrls }).then(function () {
+          setSubmitting(false);
+          showOfflineBanner(
+            fromPending
+              ? 'Saved locally — submit when connected.'
+              : 'VPS unreachable. Your submission has been saved locally. Reopen this page when connected to submit.'
+          );
+          goToSection(6);
+        });
+      }
+
+      /* Step 3 — upload photos */
+      return uploadPhotosWithRetry(existingUrls).then(function (result) {
+        photoUrlsCache = result.slotMap.slice();
+        if (result.warnings.length) {
+          showPhotoWarn(result.warnings.join(' '));
+        }
+
+        var payload = buildAuditPayload(result.urls);
+
+        return postAudit(payload).then(function (res) {
+          if (res.status === 201) {
+            return Promise.all([
+              clearDraft(),
+              clearPendingSubmission()
+            ]).then(function () {
+              sessionMemory.employeeId = state.employeeId;
+              sessionMemory.name = state.name;
+              persistSessionMemory();
+              setSubmitting(false);
+              showSuccessScreen(payload);
+            });
+          }
+
+          setSubmitting(false);
+          showSubmitError(
+            'Submission failed (' + res.status + '). Check connection and try again.'
+          );
+          saveDraft();
+          return savePendingSubmission({ photoUrls: result.slotMap });
+        }).catch(function () {
+          setSubmitting(false);
+          showSubmitError('Submission failed (network). Check connection and try again.');
+          saveDraft();
+          return savePendingSubmission({ photoUrls: result.slotMap });
+        });
+      });
+    }).catch(function () {
+      setSubmitting(false);
+      showSubmitError('Submission failed. Check connection and try again.');
+    });
+  }
+
+  function applyPendingAndSubmit(pending) {
+    if (!pending) return;
+    els.pendingBanner.classList.remove('visible');
+    restoreFromDraft(pending);
+    /* restoreFromDraft is async via photos — wait briefly then submit */
+    setTimeout(function () {
+      runSubmitFlow({
+        fromPending: true,
+        existingUrls: pending.photoUrls || []
+      });
+    }, 400);
+  }
+
   function captureD1State() {
     var ec = state.ecEntries.map(function (e) {
       var checked = document.querySelector('input[name="ecSubtype_' + e.id + '"]:checked');
@@ -3990,7 +5069,15 @@
     setToggle('inshop-yes', !!d.inshop);
     setToggle('outshop-yes', !!d.outshop);
     syncBrandingSqftLock();
-    if (d.brandingSqft) els.brandingSqft.value = d.brandingSqft;
+    if (d.brandingSqft && typeof d.brandingSqft === 'object') {
+      if (els.inshopSqft) els.inshopSqft.value = d.brandingSqft.inShop || 'none';
+      if (els.outshopSqft) els.outshopSqft.value = d.brandingSqft.outShop || 'none';
+    } else if (typeof d.brandingSqft === 'string') {
+      /* Legacy combined bucket — seed both sides when present */
+      if (d.inshop && els.inshopSqft) els.inshopSqft.value = d.brandingSqft;
+      if (d.outshop && els.outshopSqft) els.outshopSqft.value = d.brandingSqft;
+    }
+    syncBrandingSqftLock();
 
     state.d1Touched = !!d.d1Touched;
     syncAssetPanels();
@@ -4030,8 +5117,9 @@
     });
     setToggle('inshop-yes', false);
     setToggle('outshop-yes', false);
-    els.brandingSqft.value = 'none';
-    els.brandingSqft.disabled = true;
+    if (els.inshopSqft) els.inshopSqft.value = 'none';
+    if (els.outshopSqft) els.outshopSqft.value = 'none';
+    syncVisibilitySqftFields();
     state.d1Touched = false;
     syncAssetPanels();
     applyWarnAck($('xzoneWarn'), $('xzoneAck'), null);
@@ -4091,7 +5179,8 @@
       });
     });
 
-    els.brandingSqft.addEventListener('change', onD1Change);
+    if (els.inshopSqft) els.inshopSqft.addEventListener('change', onD1Change);
+    if (els.outshopSqft) els.outshopSqft.addEventListener('change', onD1Change);
   }
 
   /* ---------- Events ---------- */
@@ -4100,6 +5189,7 @@
     syncStateFromDom();
     sessionMemory.employeeId = state.employeeId;
     sessionMemory.name = state.name;
+    persistSessionMemory();
     saveDraft();
     goToSection(1);
   });
@@ -4175,10 +5265,43 @@
       updateNext4Enabled();
       return;
     }
-    /* Gate E (Section 5) not yet available — stay on Section 4 */
-    e.preventDefault();
     saveDraft();
+    goToSection(5);
   });
+
+  els.btnBack5.addEventListener('click', function () {
+    goToSection(4);
+  });
+
+  els.btnNext5.addEventListener('click', function () {
+    saveDraft();
+    goToSection(6);
+  });
+
+  els.btnBack6.addEventListener('click', function () {
+    goToSection(5);
+  });
+
+  els.btnSubmit.addEventListener('click', function () {
+    runSubmitFlow();
+  });
+
+  els.btnAnotherStore.addEventListener('click', function () {
+    window.location.reload();
+  });
+
+  els.btnSubmitPending.addEventListener('click', function () {
+    var pending = els.pendingBanner._pending;
+    applyPendingAndSubmit(pending);
+  });
+
+  els.btnDiscardPending.addEventListener('click', function () {
+    els.pendingBanner.classList.remove('visible');
+    clearPendingSubmission();
+  });
+
+  els.remarks.addEventListener('input', onRemarksChange);
+  els.remarks.addEventListener('change', onRemarksChange);
 
   els.btnDupYes.addEventListener('click', function () {
     state.duplicateConfirmed = true;
@@ -4228,9 +5351,9 @@
   });
 
   window.addEventListener('beforeunload', function (e) {
-    if (!state.dirty) return;
+    if (state.submittedOk || !state.dirty) return;
     e.preventDefault();
-    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+    e.returnValue = 'You have unsaved changes.';
     return e.returnValue;
   });
 
@@ -4247,39 +5370,67 @@
     renderECEntries();
     bindD1Events();
     bindD4Events();
+    bindPhotoEvents();
     syncAssetPanels();
     syncAllUpgradePanels();
     updateD1UI();
     updateD2UI();
     updateUpgradeUI();
 
-    loadDraft().then(function (draft) {
-      var hasContent = draft && (
-        draft.employeeId ||
-        draft.name ||
-        draft.phone ||
-        draft.storeCode ||
-        (draft.section && draft.section > 0) ||
-        (draft.d1 && draft.d1.d1Touched) ||
-        (draft.d2 && draft.d2.d2Touched) ||
-        (draft.d4 && draft.d4.d4Touched)
-      );
+    Promise.all([loadPendingSubmission(), loadDraft(), checkVpsReachable()])
+      .then(function (results) {
+        var pending = results[0];
+        var draft = results[1];
+        var reachable = results[2];
 
-      if (hasContent) {
-        els.draftBanner._draft = draft;
-        els.draftBannerText.textContent =
-          'Unsaved draft found from ' + formatDisplayDate(draft.timestamp) +
-          '. Resume or start fresh?';
-        els.draftBanner.classList.add('visible');
-      }
+        if (pending && reachable) {
+          var storeLabel =
+            (pending.store && pending.store.store_name) ||
+            pending.storeCode ||
+            'this store';
+          els.pendingBanner._pending = pending;
+          els.pendingBannerText.textContent =
+            '📤 You have a pending submission for ' + storeLabel + '. Submit now?';
+          els.pendingBanner.classList.add('visible');
+        } else if (pending && !reachable) {
+          els.pendingBanner._pending = pending;
+          els.pendingBannerText.textContent =
+            '📤 Pending submission saved locally. Connect to submit.';
+          els.pendingBanner.classList.add('visible');
+        }
 
-      if (sessionMemory.employeeId && !els.employeeId.value) {
-        els.employeeId.value = sessionMemory.employeeId;
-      }
-      if (sessionMemory.name && !els.auditorName.value) {
-        els.auditorName.value = sessionMemory.name;
-      }
-    });
+        var hasContent = draft && (
+          draft.employeeId ||
+          draft.name ||
+          draft.phone ||
+          draft.storeCode ||
+          (draft.section && draft.section > 0) ||
+          (draft.d1 && draft.d1.d1Touched) ||
+          (draft.d2 && draft.d2.d2Touched) ||
+          (draft.d4 && draft.d4.d4Touched) ||
+          (draft.s6 && draft.s6.remarks)
+        );
+
+        if (hasContent && !pending) {
+          var draftStore =
+            (draft.store && draft.store.store_name) ||
+            draft.storeCode ||
+            '';
+          els.draftBanner._draft = draft;
+          els.draftBannerText.textContent =
+            '📋 Unsaved draft found from ' + formatDisplayDate(draft.timestamp) +
+            (draftStore ? ' — ' + draftStore : '') +
+            '. Resume or start fresh?';
+          els.draftBanner.classList.add('visible');
+        }
+
+        if (sessionMemory.employeeId && !els.employeeId.value) {
+          els.employeeId.value = sessionMemory.employeeId;
+        }
+        if (sessionMemory.name && !els.auditorName.value) {
+          els.auditorName.value = sessionMemory.name;
+        }
+      });
   }
 
   init();
