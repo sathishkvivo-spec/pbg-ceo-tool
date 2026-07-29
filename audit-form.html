@@ -896,6 +896,73 @@
 
     .battle-pos-panel { display: none; margin-top: 0.65rem; }
     .battle-pos-panel.visible { display: block; }
+
+    /* Section 4 — Upgrade Assessment (reuse battle-card / sub-panel / toggle) */
+    .upgrade-none-note {
+      display: none;
+      margin: 0.35rem 0 1rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 8px;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.28);
+      font-size: 0.8rem;
+      color: var(--gold);
+      line-height: 1.4;
+    }
+
+    .upgrade-none-note.visible { display: block; }
+
+    .upgrade-block .toggle-row {
+      border-bottom: none;
+      padding: 0;
+    }
+
+    .upgrade-block .sub-panel {
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+    }
+
+    .branding-side-block {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .branding-side-block:first-child {
+      margin-top: 0.35rem;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .branding-side-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.55rem;
+      letter-spacing: 0.04em;
+    }
+
+    .posm-qty-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .posm-qty-row:last-of-type { border-bottom: none; }
+
+    .posm-qty-row span {
+      font-size: 0.875rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .posm-qty-row input {
+      width: 5.5rem;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -1254,6 +1321,279 @@
         <button type="button" class="btn btn-primary" id="btnNext3" disabled>Next</button>
       </div>
     </section>
+
+    <!-- SECTION 4 — Upgrade Assessment (data collection only — no scoring) -->
+    <section class="section" id="section4" data-section="4">
+      <h1 class="section-header">SECTION 4 — POSSIBLE STORE UPGRADE</h1>
+      <div class="section-subheader">Assessment only — costs filled by AM during review</div>
+
+      <p class="helper-gold">Mark each upgrade type that is physically possible in this store. AM will assess projected costs during review.</p>
+
+      <!-- TYPE 1 — New Project Possible -->
+      <div class="battle-card upgrade-block" id="upgType1">
+        <div class="toggle-row">
+          <span class="toggle-label">New Project Possible?</span>
+          <div class="toggle-group" role="group" aria-label="New Project Possible">
+            <button type="button" class="toggle-btn" id="upg1YesBtn" data-target="upg1-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="upg1NoBtn" data-target="upg1-yes" data-val="no">No</button>
+          </div>
+        </div>
+        <input type="checkbox" id="upg1-yes" hidden />
+
+        <div class="sub-panel" id="upg1Panel">
+          <div class="field">
+            <label for="upg1ProjectType">Project type <span class="req">*</span></label>
+            <select class="select-input" id="upg1ProjectType">
+              <option value="">Select project type...</option>
+              <option value="x-zone">X-Zone</option>
+              <option value="shop-in-shop">Shop-in-Shop</option>
+              <option value="shop-upgrade">Shop Upgrade</option>
+              <option value="customized-zone">Customized Zone</option>
+            </select>
+          </div>
+
+          <div class="field" id="upg1XzoneSubWrap" style="display:none">
+            <label>X-Zone sub-type <span class="req">*</span></label>
+            <div class="inline-radios">
+              <label class="inline-radio">
+                <input type="radio" name="upg1XzoneSubtype" value="island" /> Island Setup
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="upg1XzoneSubtype" value="backwall" /> Backwall Setup
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="upg1Sqft">Sq.ft available <span class="req">*</span></label>
+            <input type="number" id="upg1Sqft" min="0" step="1" inputmode="decimal" placeholder="e.g. 80" />
+          </div>
+          <div class="warn-box" id="upg1Warn"></div>
+          <div class="ack-box" id="upg1Ack">
+            <label class="ack-check">
+              <input type="checkbox" id="upg1AckCheck" />
+              <span>I acknowledge this size mismatch and confirm my selection.</span>
+            </label>
+            <div class="field" style="margin-bottom:0">
+              <label for="upg1AckReason">Reason <span class="req">*</span></label>
+              <input type="text" id="upg1AckReason" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE 2 — Old Project Upgrade to New Project -->
+      <div class="battle-card upgrade-block" id="upgType2">
+        <div class="toggle-row">
+          <span class="toggle-label">Old Project Upgrade to New Project Possible?</span>
+          <div class="toggle-group" role="group" aria-label="Old Project Upgrade Possible">
+            <button type="button" class="toggle-btn" id="upg2YesBtn" data-target="upg2-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="upg2NoBtn" data-target="upg2-yes" data-val="no">No</button>
+          </div>
+        </div>
+        <input type="checkbox" id="upg2-yes" hidden />
+
+        <div class="sub-panel" id="upg2Panel">
+          <div class="field">
+            <label for="upg2ProjectType">Project type <span class="req">*</span></label>
+            <select class="select-input" id="upg2ProjectType">
+              <option value="">Select project type...</option>
+              <option value="x-zone">X-Zone</option>
+              <option value="shop-in-shop">Shop-in-Shop</option>
+              <option value="shop-upgrade">Shop Upgrade</option>
+              <option value="customized-zone">Customized Zone</option>
+            </select>
+          </div>
+
+          <div class="field" id="upg2XzoneSubWrap" style="display:none">
+            <label>X-Zone sub-type <span class="req">*</span></label>
+            <div class="inline-radios">
+              <label class="inline-radio">
+                <input type="radio" name="upg2XzoneSubtype" value="island" /> Island Setup
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="upg2XzoneSubtype" value="backwall" /> Backwall Setup
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="upg2Sqft">Sq.ft available <span class="req">*</span></label>
+            <input type="number" id="upg2Sqft" min="0" step="1" inputmode="decimal" placeholder="e.g. 80" />
+          </div>
+          <div class="warn-box" id="upg2Warn"></div>
+          <div class="ack-box" id="upg2Ack">
+            <label class="ack-check">
+              <input type="checkbox" id="upg2AckCheck" />
+              <span>I acknowledge this size mismatch and confirm my selection.</span>
+            </label>
+            <div class="field" style="margin-bottom:0">
+              <label for="upg2AckReason">Reason <span class="req">*</span></label>
+              <input type="text" id="upg2AckReason" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE 3 — Experience Table Placement -->
+      <div class="battle-card upgrade-block" id="upgType3">
+        <div class="toggle-row">
+          <span class="toggle-label">Experience Table Placement Possible?</span>
+          <div class="toggle-group" role="group" aria-label="Experience Table Placement Possible">
+            <button type="button" class="toggle-btn" id="upg3YesBtn" data-target="upg3-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="upg3NoBtn" data-target="upg3-yes" data-val="no">No</button>
+          </div>
+        </div>
+        <input type="checkbox" id="upg3-yes" hidden />
+
+        <div class="sub-panel" id="upg3Panel">
+          <div class="field">
+            <label>Table type <span class="req">*</span></label>
+            <div class="inline-radios">
+              <label class="inline-radio">
+                <input type="radio" name="upg3TableType" value="single-side" /> Single Side
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="upg3TableType" value="double-side" /> Double Side
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="upg3TableType" value="island-table" /> Island Table
+              </label>
+            </div>
+          </div>
+
+          <div class="field" id="upg3SizeWrap" style="display:none">
+            <label for="upg3Size">Size <span class="req">*</span></label>
+            <select class="select-input" id="upg3Size">
+              <option value="">Select size...</option>
+              <option value="4ft">4ft</option>
+              <option value="6ft">6ft</option>
+              <option value="8ft">8ft</option>
+            </select>
+          </div>
+
+          <div class="field" id="upg3IslandSizeWrap" style="display:none">
+            <label for="upg3IslandSize">Size</label>
+            <input type="text" id="upg3IslandSize" value="2.5ft × 2.5ft" readonly />
+          </div>
+
+          <div class="field" id="upg3QtyWrap" style="display:none">
+            <label for="upg3Qty">Qty <span class="req">*</span></label>
+            <input type="number" id="upg3Qty" min="1" step="1" inputmode="numeric" placeholder="1" />
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE 4 — New Branding Possible -->
+      <div class="battle-card upgrade-block" id="upgType4">
+        <div class="toggle-row">
+          <span class="toggle-label">New Branding Possible?</span>
+          <div class="toggle-group" role="group" aria-label="New Branding Possible">
+            <button type="button" class="toggle-btn" id="upg4YesBtn" data-target="upg4-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="upg4NoBtn" data-target="upg4-yes" data-val="no">No</button>
+          </div>
+        </div>
+        <input type="checkbox" id="upg4-yes" hidden />
+
+        <div class="sub-panel" id="upg4Panel">
+          <div class="field">
+            <label>Location <span class="req">*</span></label>
+            <div class="inline-radios">
+              <label class="inline-radio">
+                <input type="radio" name="upg4Location" value="in-shop" /> In-shop only
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="upg4Location" value="out-shop" /> Out-shop only
+              </label>
+              <label class="inline-radio">
+                <input type="radio" name="upg4Location" value="both" /> Both (In-shop + Out-shop)
+              </label>
+            </div>
+          </div>
+
+          <div id="upg4InshopBlock" class="branding-side-block" style="display:none">
+            <div class="branding-side-title">In-shop branding</div>
+            <div class="field">
+              <label for="upg4InshopType">In-shop type <span class="req">*</span></label>
+              <select class="select-input" id="upg4InshopType">
+                <option value="">Select type...</option>
+                <option value="traditional">Traditional In-shop</option>
+                <option value="premium">Premium In-shop</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="upg4InshopQty">Qty <span class="req">*</span></label>
+              <input type="number" id="upg4InshopQty" min="1" max="10" step="1" inputmode="numeric" placeholder="1–10" />
+            </div>
+            <div class="field" id="upg4InshopBucketsField" style="display:none">
+              <label>Sq.ft bucket per unit <span class="req">*</span></label>
+              <div class="ec-list" id="upg4InshopBuckets"></div>
+            </div>
+          </div>
+
+          <div id="upg4OutshopBlock" class="branding-side-block" style="display:none">
+            <div class="branding-side-title">Out-shop branding</div>
+            <div class="field">
+              <label for="upg4OutshopType">Out-shop type <span class="req">*</span></label>
+              <select class="select-input" id="upg4OutshopType">
+                <option value="">Select type...</option>
+                <option value="traditional">Traditional Out-shop</option>
+                <option value="premium">Premium Out-shop</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="upg4OutshopQty">Qty <span class="req">*</span></label>
+              <input type="number" id="upg4OutshopQty" min="1" max="10" step="1" inputmode="numeric" placeholder="1–10" />
+            </div>
+            <div class="field" id="upg4OutshopBucketsField" style="display:none">
+              <label>Sq.ft bucket per unit <span class="req">*</span></label>
+              <div class="ec-list" id="upg4OutshopBuckets"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE 5 — Hard POSM Placement -->
+      <div class="battle-card upgrade-block" id="upgType5">
+        <div class="toggle-row">
+          <span class="toggle-label">Hard POSM Placement Possible?</span>
+          <div class="toggle-group" role="group" aria-label="Hard POSM Placement Possible">
+            <button type="button" class="toggle-btn" id="upg5YesBtn" data-target="upg5-yes" data-val="yes">Yes</button>
+            <button type="button" class="toggle-btn active-no" id="upg5NoBtn" data-target="upg5-yes" data-val="no">No</button>
+          </div>
+        </div>
+        <input type="checkbox" id="upg5-yes" hidden />
+
+        <div class="sub-panel" id="upg5Panel">
+          <div class="block-label">Select POSM types and quantities</div>
+          <div class="posm-qty-row">
+            <span>Lit Standee</span>
+            <input type="number" id="upg5LitQty" min="0" max="10" step="1" inputmode="numeric" value="0" aria-label="Lit Standee qty" />
+          </div>
+          <div class="posm-qty-row">
+            <span>Pedestal Prop</span>
+            <input type="number" id="upg5PedestalQty" min="0" max="10" step="1" inputmode="numeric" value="0" aria-label="Pedestal Prop qty" />
+          </div>
+          <div class="posm-qty-row">
+            <span>MDF Standee</span>
+            <input type="number" id="upg5MdfQty" min="0" max="10" step="1" inputmode="numeric" value="0" aria-label="MDF Standee qty" />
+          </div>
+          <div class="field" style="margin-top:0.75rem;margin-bottom:0">
+            <label for="upg5Other">Other / Additional description</label>
+            <input type="text" id="upg5Other" autocomplete="off" placeholder="Any additional POSM details or items not listed above" />
+          </div>
+        </div>
+      </div>
+
+      <div class="upgrade-none-note" id="upgradeNoneNote" role="status">
+        No upgrade possibility identified. AM will note during review.
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn btn-ghost" id="btnBack4">Back</button>
+        <button type="button" class="btn btn-primary" id="btnNext4" disabled>Next</button>
+      </div>
+    </section>
   </div>
 
   <footer class="score-footer">
@@ -1430,6 +1770,7 @@
     restoring: false,
     d1Touched: false,
     d2Touched: false,
+    d4Touched: false,
     ecEntries: [{ id: 1 }],
     d1Fingerprint: ''
   };
@@ -1446,6 +1787,9 @@
       samsungPresent: false,
       applePresent: false,
       score: null
+    },
+    d4: {
+      /* data collection only — no score */
     }
   };
 
@@ -1453,8 +1797,20 @@
     0: 'Auditor Details',
     1: 'Store Information',
     2: 'D1: Vivo Brand Strength',
-    3: 'D2: Fighting Score'
+    3: 'D2: Fighting Score',
+    4: 'Possible Store Upgrade'
   };
+
+  /* Branding sq.ft buckets for Section 4 (smaller than D1 scoring buckets) */
+  var UPGRADE_BRANDING_BUCKETS = [
+    { label: 'None', value: 'none' },
+    { label: '1–10 sq.ft', value: '1-10' },
+    { label: '11–20 sq.ft', value: '11-20' },
+    { label: '21–30 sq.ft', value: '21-30' },
+    { label: '31–40 sq.ft', value: '31-40' },
+    { label: '41–50 sq.ft', value: '41-50' },
+    { label: '51+ sq.ft', value: '51+' }
+  ];
 
   var PROJECT_KEYS = {
     'x-zone-island': true,
@@ -1503,10 +1859,13 @@
     btnNext2: $('btnNext2'),
     btnBack3: $('btnBack3'),
     btnNext3: $('btnNext3'),
+    btnBack4: $('btnBack4'),
+    btnNext4: $('btnNext4'),
     d1LiveScore: $('d1LiveScore'),
     d1LiveTier: $('d1LiveTier'),
     d2LiveScore: $('d2LiveScore'),
     d2Battles: $('d2Battles'),
+    upgradeNoneNote: $('upgradeNoneNote'),
     tierResult: $('tierResult'),
     blockPosition: $('blockPosition'),
     brandingSqft: $('brandingSqft'),
@@ -1599,6 +1958,9 @@
     if (n === 3) {
       syncFormStateD1();
       updateD2UI();
+    }
+    if (n === 4) {
+      updateUpgradeUI();
     }
   }
 
@@ -1892,7 +2254,8 @@
       duplicateNeedsConfirm: state.duplicateNeedsConfirm,
       duplicateConfirmed: state.duplicateConfirmed,
       d1: captureD1State(),
-      d2: captureD2State()
+      d2: captureD2State(),
+      d4: captureD4State()
     };
   }
 
@@ -1985,12 +2348,14 @@
 
     if (draft.d1) applyD1State(draft.d1);
     if (draft.d2) applyD2State(draft.d2);
+    if (draft.d4) applyD4State(draft.d4);
 
     goToSection(typeof draft.section === 'number' ? draft.section : 0);
     state.dirty = false;
     state.restoring = false;
     updateD1UI();
     updateD2UI();
+    updateUpgradeUI();
   }
 
   function blankForm() {
@@ -2009,11 +2374,13 @@
     hideError(els.errStoreCode);
     resetD1Form();
     resetD2Form();
+    resetD4Form();
     goToSection(0);
     state.dirty = false;
     state.restoring = false;
     updateD1UI();
     updateD2UI();
+    updateUpgradeUI();
   }
 
   /* ========== SECTION 2 — D1 ========== */
@@ -2900,8 +3267,7 @@
     }
 
     updateFooterTotal();
-    /* Gate D not yet available — Next stays disabled */
-    setBtnEnabled(els.btnNext3, false);
+    setBtnEnabled(els.btnNext3, validateSection3());
   }
 
   function validateSection3() {
@@ -3048,6 +3414,498 @@
       $(brand + 'EcQty').addEventListener('input', onD2Change);
       $(brand + 'BrandingSqft').addEventListener('change', onD2Change);
     });
+  }
+
+  /* ========== SECTION 4 — Upgrade Assessment (no scoring) ========== */
+
+  function upgToggleOn(n) {
+    return !!($('upg' + n + '-yes') && $('upg' + n + '-yes').checked);
+  }
+
+  function getUpgradeProjectTypeKey(prefix) {
+    var pt = ($(prefix + 'ProjectType') || {}).value || '';
+    if (!pt) return null;
+    if (pt === 'x-zone') {
+      var sub = document.querySelector('input[name="' + prefix + 'XzoneSubtype"]:checked');
+      if (!sub) return null;
+      return sub.value === 'backwall' ? 'x-zone-backwall' : 'x-zone-island';
+    }
+    return pt;
+  }
+
+  function syncUpgradeProjectPanel(prefix) {
+    var yes = upgToggleOn(prefix === 'upg1' ? 1 : 2);
+    var panel = $(prefix + 'Panel');
+    if (panel) panel.classList.toggle('visible', yes);
+    if (!yes) {
+      applyWarnAck($(prefix + 'Warn'), $(prefix + 'Ack'), null);
+      return;
+    }
+    var pt = ($(prefix + 'ProjectType') || {}).value || '';
+    var wrap = $(prefix + 'XzoneSubWrap');
+    if (wrap) wrap.style.display = pt === 'x-zone' ? '' : 'none';
+  }
+
+  function validateUpgradeProject(prefix, onBlur) {
+    var n = prefix === 'upg1' ? 1 : 2;
+    if (!upgToggleOn(n)) {
+      applyWarnAck($(prefix + 'Warn'), $(prefix + 'Ack'), null);
+      return true;
+    }
+    var typeKey = getUpgradeProjectTypeKey(prefix);
+    var raw = ($(prefix + 'Sqft') || {}).value;
+    if (!typeKey || raw === '') {
+      if (onBlur) applyWarnAck($(prefix + 'Warn'), $(prefix + 'Ack'), null);
+      return !onBlur;
+    }
+    var result = validateProjectSqft(typeKey, parseFloat(raw));
+    applyWarnAck($(prefix + 'Warn'), $(prefix + 'Ack'), result);
+    return !result || ackComplete(prefix);
+  }
+
+  function syncUpgradeTablePanel() {
+    var yes = upgToggleOn(3);
+    $('upg3Panel').classList.toggle('visible', yes);
+    if (!yes) {
+      $('upg3SizeWrap').style.display = 'none';
+      $('upg3IslandSizeWrap').style.display = 'none';
+      $('upg3QtyWrap').style.display = 'none';
+      return;
+    }
+    var checked = document.querySelector('input[name="upg3TableType"]:checked');
+    var type = checked ? checked.value : '';
+    if (!type) {
+      $('upg3SizeWrap').style.display = 'none';
+      $('upg3IslandSizeWrap').style.display = 'none';
+      $('upg3QtyWrap').style.display = 'none';
+      return;
+    }
+    if (type === 'island-table') {
+      $('upg3SizeWrap').style.display = 'none';
+      $('upg3IslandSizeWrap').style.display = '';
+      $('upg3QtyWrap').style.display = '';
+    } else {
+      $('upg3SizeWrap').style.display = '';
+      $('upg3IslandSizeWrap').style.display = 'none';
+      $('upg3QtyWrap').style.display = '';
+    }
+  }
+
+  function brandingBucketOptionsHtml(selected) {
+    var html = '';
+    UPGRADE_BRANDING_BUCKETS.forEach(function (b) {
+      html += '<option value="' + b.value + '"' +
+        (selected === b.value ? ' selected' : '') + '>' + b.label + '</option>';
+    });
+    return html;
+  }
+
+  function renderBrandingBuckets(side, qty, preserve) {
+    var list = $('upg4' + side + 'Buckets');
+    var field = $('upg4' + side + 'BucketsField');
+    if (!list || !field) return;
+    var n = parseInt(qty, 10);
+    if (!n || n < 1) {
+      list.innerHTML = '';
+      field.style.display = 'none';
+      return;
+    }
+    if (n > 10) n = 10;
+    var prev = {};
+    if (preserve) {
+      list.querySelectorAll('select').forEach(function (sel, i) {
+        prev[i] = sel.value;
+      });
+    }
+    var html = '';
+    for (var i = 0; i < n; i++) {
+      html +=
+        '<div class="field" style="margin-bottom:' + (i === n - 1 ? '0' : '0.55rem') + '">' +
+          '<label for="upg4' + side + 'Bucket_' + i + '">Unit ' + (i + 1) + ' sq.ft</label>' +
+          '<select class="select-input" id="upg4' + side + 'Bucket_' + i + '">' +
+            brandingBucketOptionsHtml(prev[i] || 'none') +
+          '</select>' +
+        '</div>';
+    }
+    list.innerHTML = html;
+    field.style.display = '';
+    list.querySelectorAll('select').forEach(function (sel) {
+      sel.addEventListener('change', onUpgradeChange);
+    });
+  }
+
+  function syncUpgradeBrandingPanel() {
+    var yes = upgToggleOn(4);
+    $('upg4Panel').classList.toggle('visible', yes);
+    if (!yes) {
+      $('upg4InshopBlock').style.display = 'none';
+      $('upg4OutshopBlock').style.display = 'none';
+      return;
+    }
+    var loc = document.querySelector('input[name="upg4Location"]:checked');
+    var location = loc ? loc.value : '';
+    var showIn = location === 'in-shop' || location === 'both';
+    var showOut = location === 'out-shop' || location === 'both';
+    $('upg4InshopBlock').style.display = showIn ? '' : 'none';
+    $('upg4OutshopBlock').style.display = showOut ? '' : 'none';
+    if (showIn) renderBrandingBuckets('Inshop', $('upg4InshopQty').value, true);
+    else {
+      $('upg4InshopBuckets').innerHTML = '';
+      $('upg4InshopBucketsField').style.display = 'none';
+    }
+    if (showOut) renderBrandingBuckets('Outshop', $('upg4OutshopQty').value, true);
+    else {
+      $('upg4OutshopBuckets').innerHTML = '';
+      $('upg4OutshopBucketsField').style.display = 'none';
+    }
+  }
+
+  function syncUpgradePosmPanel() {
+    $('upg5Panel').classList.toggle('visible', upgToggleOn(5));
+  }
+
+  function syncAllUpgradePanels() {
+    syncUpgradeProjectPanel('upg1');
+    syncUpgradeProjectPanel('upg2');
+    syncUpgradeTablePanel();
+    syncUpgradeBrandingPanel();
+    syncUpgradePosmPanel();
+
+    var anyYes = upgToggleOn(1) || upgToggleOn(2) || upgToggleOn(3) ||
+      upgToggleOn(4) || upgToggleOn(5);
+    els.upgradeNoneNote.classList.toggle('visible', !anyYes);
+  }
+
+  function readBrandingBuckets(side, qty) {
+    var n = parseInt(qty, 10) || 0;
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var el = $('upg4' + side + 'Bucket_' + i);
+      out.push(el ? el.value : 'none');
+    }
+    return out;
+  }
+
+  function brandingSideComplete(side) {
+    var type = ($('upg4' + side + 'Type') || {}).value || '';
+    var qty = parseInt(($('upg4' + side + 'Qty') || {}).value, 10);
+    if (!type) return false;
+    if (!qty || qty < 1 || qty > 10) return false;
+    var buckets = readBrandingBuckets(side, qty);
+    if (buckets.length !== qty) return false;
+    return true;
+  }
+
+  function validateUpgradeType1(onBlur) {
+    if (!upgToggleOn(1)) return true;
+    if (!($('upg1ProjectType').value || '')) return false;
+    if ($('upg1ProjectType').value === 'x-zone') {
+      if (!document.querySelector('input[name="upg1XzoneSubtype"]:checked')) return false;
+    }
+    if ($('upg1Sqft').value === '') return false;
+    validateUpgradeProject('upg1', !!onBlur || !!$('upg1Sqft').value);
+    if ($('upg1Ack').classList.contains('visible') && !ackComplete('upg1')) return false;
+    return true;
+  }
+
+  function validateUpgradeType2(onBlur) {
+    if (!upgToggleOn(2)) return true;
+    if (!($('upg2ProjectType').value || '')) return false;
+    if ($('upg2ProjectType').value === 'x-zone') {
+      if (!document.querySelector('input[name="upg2XzoneSubtype"]:checked')) return false;
+    }
+    if ($('upg2Sqft').value === '') return false;
+    validateUpgradeProject('upg2', !!onBlur || !!$('upg2Sqft').value);
+    if ($('upg2Ack').classList.contains('visible') && !ackComplete('upg2')) return false;
+    return true;
+  }
+
+  function validateUpgradeType3() {
+    if (!upgToggleOn(3)) return true;
+    var checked = document.querySelector('input[name="upg3TableType"]:checked');
+    if (!checked) return false;
+    var qty = parseInt($('upg3Qty').value, 10);
+    if (!qty || qty < 1) return false;
+    if (checked.value !== 'island-table') {
+      if (!($('upg3Size').value || '')) return false;
+    }
+    return true;
+  }
+
+  function validateUpgradeType4() {
+    if (!upgToggleOn(4)) return true;
+    var loc = document.querySelector('input[name="upg4Location"]:checked');
+    if (!loc) return false;
+    if (loc.value === 'in-shop' || loc.value === 'both') {
+      if (!brandingSideComplete('Inshop')) return false;
+    }
+    if (loc.value === 'out-shop' || loc.value === 'both') {
+      if (!brandingSideComplete('Outshop')) return false;
+    }
+    return true;
+  }
+
+  function validateUpgradeType5() {
+    if (!upgToggleOn(5)) return true;
+    var lit = parseInt($('upg5LitQty').value, 10);
+    var ped = parseInt($('upg5PedestalQty').value, 10);
+    var mdf = parseInt($('upg5MdfQty').value, 10);
+    if (isNaN(lit)) lit = 0;
+    if (isNaN(ped)) ped = 0;
+    if (isNaN(mdf)) mdf = 0;
+    if (lit < 0 || lit > 10 || ped < 0 || ped > 10 || mdf < 0 || mdf > 10) return false;
+    return (lit + ped + mdf) > 0;
+  }
+
+  function validateSection4(onBlur) {
+    return validateUpgradeType1(onBlur) &&
+      validateUpgradeType2(onBlur) &&
+      validateUpgradeType3() &&
+      validateUpgradeType4() &&
+      validateUpgradeType5();
+  }
+
+  function updateNext4Enabled() {
+    setBtnEnabled(els.btnNext4, validateSection4(false));
+  }
+
+  function updateUpgradeUI() {
+    syncAllUpgradePanels();
+    updateNext4Enabled();
+  }
+
+  function onUpgradeChange() {
+    if (!state.restoring) {
+      state.d4Touched = true;
+      markDirty();
+      scheduleAutosave();
+    }
+    updateUpgradeUI();
+  }
+
+  function captureD4State() {
+    function projectState(prefix) {
+      var sub = document.querySelector('input[name="' + prefix + 'XzoneSubtype"]:checked');
+      return {
+        yes: $(prefix + '-yes').checked,
+        projectType: ($(prefix + 'ProjectType') || {}).value || '',
+        xzoneSubtype: sub ? sub.value : '',
+        sqft: ($(prefix + 'Sqft') || {}).value || '',
+        ackCheck: !!($(prefix + 'AckCheck') || {}).checked,
+        ackReason: ($(prefix + 'AckReason') || {}).value || ''
+      };
+    }
+    var tableType = document.querySelector('input[name="upg3TableType"]:checked');
+    var location = document.querySelector('input[name="upg4Location"]:checked');
+    return {
+      type1: projectState('upg1'),
+      type2: projectState('upg2'),
+      type3: {
+        yes: $('upg3-yes').checked,
+        tableType: tableType ? tableType.value : '',
+        size: $('upg3Size').value || '',
+        qty: $('upg3Qty').value || ''
+      },
+      type4: {
+        yes: $('upg4-yes').checked,
+        location: location ? location.value : '',
+        inshopType: $('upg4InshopType').value || '',
+        inshopQty: $('upg4InshopQty').value || '',
+        inshopBuckets: readBrandingBuckets('Inshop', $('upg4InshopQty').value),
+        outshopType: $('upg4OutshopType').value || '',
+        outshopQty: $('upg4OutshopQty').value || '',
+        outshopBuckets: readBrandingBuckets('Outshop', $('upg4OutshopQty').value)
+      },
+      type5: {
+        yes: $('upg5-yes').checked,
+        litQty: $('upg5LitQty').value || '0',
+        pedestalQty: $('upg5PedestalQty').value || '0',
+        mdfQty: $('upg5MdfQty').value || '0',
+        other: $('upg5Other').value || ''
+      },
+      d4Touched: state.d4Touched
+    };
+  }
+
+  function applyUpgradeProjectState(prefix, d) {
+    if (!d) return;
+    setToggle(prefix + '-yes', !!d.yes);
+    if ($(prefix + 'ProjectType')) $(prefix + 'ProjectType').value = d.projectType || '';
+    if (d.xzoneSubtype) {
+      var r = document.querySelector(
+        'input[name="' + prefix + 'XzoneSubtype"][value="' + d.xzoneSubtype + '"]'
+      );
+      if (r) r.checked = true;
+    }
+    if ($(prefix + 'Sqft')) $(prefix + 'Sqft').value = d.sqft || '';
+    if ($(prefix + 'AckCheck')) $(prefix + 'AckCheck').checked = !!d.ackCheck;
+    if ($(prefix + 'AckReason')) $(prefix + 'AckReason').value = d.ackReason || '';
+  }
+
+  function applyBrandingBuckets(side, qty, buckets) {
+    renderBrandingBuckets(side, qty, false);
+    var list = buckets || [];
+    list.forEach(function (val, i) {
+      var el = $('upg4' + side + 'Bucket_' + i);
+      if (el) el.value = val || 'none';
+    });
+  }
+
+  function applyD4State(d) {
+    if (!d) return;
+    var wasRestoring = state.restoring;
+    state.restoring = true;
+
+    applyUpgradeProjectState('upg1', d.type1);
+    applyUpgradeProjectState('upg2', d.type2);
+
+    if (d.type3) {
+      setToggle('upg3-yes', !!d.type3.yes);
+      if (d.type3.tableType) {
+        var tt = document.querySelector(
+          'input[name="upg3TableType"][value="' + d.type3.tableType + '"]'
+        );
+        if (tt) tt.checked = true;
+      }
+      $('upg3Size').value = d.type3.size || '';
+      $('upg3Qty').value = d.type3.qty || '';
+    }
+
+    if (d.type4) {
+      setToggle('upg4-yes', !!d.type4.yes);
+      if (d.type4.location) {
+        var loc = document.querySelector(
+          'input[name="upg4Location"][value="' + d.type4.location + '"]'
+        );
+        if (loc) loc.checked = true;
+      }
+      $('upg4InshopType').value = d.type4.inshopType || '';
+      $('upg4InshopQty').value = d.type4.inshopQty || '';
+      $('upg4OutshopType').value = d.type4.outshopType || '';
+      $('upg4OutshopQty').value = d.type4.outshopQty || '';
+      syncUpgradeBrandingPanel();
+      applyBrandingBuckets('Inshop', d.type4.inshopQty, d.type4.inshopBuckets);
+      applyBrandingBuckets('Outshop', d.type4.outshopQty, d.type4.outshopBuckets);
+    }
+
+    if (d.type5) {
+      setToggle('upg5-yes', !!d.type5.yes);
+      $('upg5LitQty').value = d.type5.litQty != null ? d.type5.litQty : '0';
+      $('upg5PedestalQty').value = d.type5.pedestalQty != null ? d.type5.pedestalQty : '0';
+      $('upg5MdfQty').value = d.type5.mdfQty != null ? d.type5.mdfQty : '0';
+      $('upg5Other').value = d.type5.other || '';
+    }
+
+    state.d4Touched = !!d.d4Touched;
+
+    if (d.type1 && d.type1.sqft) validateUpgradeProject('upg1', true);
+    if (d.type2 && d.type2.sqft) validateUpgradeProject('upg2', true);
+
+    state.restoring = wasRestoring;
+    if (!wasRestoring) updateUpgradeUI();
+  }
+
+  function resetD4Form() {
+    var wasRestoring = state.restoring;
+    state.restoring = true;
+    [1, 2, 3, 4, 5].forEach(function (n) {
+      setToggle('upg' + n + '-yes', false);
+    });
+    $('upg1ProjectType').value = '';
+    $('upg2ProjectType').value = '';
+    document.querySelectorAll('input[name="upg1XzoneSubtype"]').forEach(function (r) {
+      r.checked = false;
+    });
+    document.querySelectorAll('input[name="upg2XzoneSubtype"]').forEach(function (r) {
+      r.checked = false;
+    });
+    $('upg1Sqft').value = '';
+    $('upg2Sqft').value = '';
+    $('upg1AckCheck').checked = false;
+    $('upg1AckReason').value = '';
+    $('upg2AckCheck').checked = false;
+    $('upg2AckReason').value = '';
+    applyWarnAck($('upg1Warn'), $('upg1Ack'), null);
+    applyWarnAck($('upg2Warn'), $('upg2Ack'), null);
+
+    document.querySelectorAll('input[name="upg3TableType"]').forEach(function (r) {
+      r.checked = false;
+    });
+    $('upg3Size').value = '';
+    $('upg3Qty').value = '';
+
+    document.querySelectorAll('input[name="upg4Location"]').forEach(function (r) {
+      r.checked = false;
+    });
+    $('upg4InshopType').value = '';
+    $('upg4InshopQty').value = '';
+    $('upg4OutshopType').value = '';
+    $('upg4OutshopQty').value = '';
+    $('upg4InshopBuckets').innerHTML = '';
+    $('upg4OutshopBuckets').innerHTML = '';
+    $('upg4InshopBucketsField').style.display = 'none';
+    $('upg4OutshopBucketsField').style.display = 'none';
+
+    $('upg5LitQty').value = '0';
+    $('upg5PedestalQty').value = '0';
+    $('upg5MdfQty').value = '0';
+    $('upg5Other').value = '';
+
+    state.d4Touched = false;
+    formState.d4 = {};
+    state.restoring = wasRestoring;
+    if (!wasRestoring) updateUpgradeUI();
+  }
+
+  function bindD4Events() {
+    [1, 2, 3, 4, 5].forEach(function (n) {
+      document.querySelectorAll('.toggle-btn[data-target="upg' + n + '-yes"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setToggle('upg' + n + '-yes', btn.getAttribute('data-val') === 'yes');
+          onUpgradeChange();
+        });
+      });
+    });
+
+    ['upg1', 'upg2'].forEach(function (prefix) {
+      $(prefix + 'ProjectType').addEventListener('change', function () {
+        syncUpgradeProjectPanel(prefix);
+        if ($(prefix + 'Sqft').value) validateUpgradeProject(prefix, true);
+        onUpgradeChange();
+      });
+      document.querySelectorAll('input[name="' + prefix + 'XzoneSubtype"]').forEach(function (r) {
+        r.addEventListener('change', function () {
+          if ($(prefix + 'Sqft').value) validateUpgradeProject(prefix, true);
+          onUpgradeChange();
+        });
+      });
+      $(prefix + 'Sqft').addEventListener('blur', function () {
+        validateUpgradeProject(prefix, true);
+        updateNext4Enabled();
+      });
+      $(prefix + 'Sqft').addEventListener('input', onUpgradeChange);
+      $(prefix + 'AckCheck').addEventListener('change', onUpgradeChange);
+      $(prefix + 'AckReason').addEventListener('input', onUpgradeChange);
+    });
+
+    document.querySelectorAll('input[name="upg3TableType"]').forEach(function (r) {
+      r.addEventListener('change', onUpgradeChange);
+    });
+    $('upg3Size').addEventListener('change', onUpgradeChange);
+    $('upg3Qty').addEventListener('input', onUpgradeChange);
+
+    document.querySelectorAll('input[name="upg4Location"]').forEach(function (r) {
+      r.addEventListener('change', onUpgradeChange);
+    });
+    $('upg4InshopType').addEventListener('change', onUpgradeChange);
+    $('upg4OutshopType').addEventListener('change', onUpgradeChange);
+    $('upg4InshopQty').addEventListener('input', onUpgradeChange);
+    $('upg4OutshopQty').addEventListener('input', onUpgradeChange);
+
+    ['upg5LitQty', 'upg5PedestalQty', 'upg5MdfQty'].forEach(function (id) {
+      $(id).addEventListener('input', onUpgradeChange);
+    });
+    $('upg5Other').addEventListener('input', onUpgradeChange);
   }
 
   function captureD1State() {
@@ -3290,8 +4148,36 @@
   });
 
   els.btnNext3.addEventListener('click', function (e) {
+    if (els.btnNext3.disabled || els.btnNext3.hasAttribute('disabled')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if (!validateSection3()) {
+      updateD2UI();
+      return;
+    }
+    saveDraft();
+    goToSection(4);
+  });
+
+  els.btnBack4.addEventListener('click', function () {
+    goToSection(3);
+  });
+
+  els.btnNext4.addEventListener('click', function (e) {
+    if (els.btnNext4.disabled || els.btnNext4.hasAttribute('disabled')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if (!validateSection4(true)) {
+      updateNext4Enabled();
+      return;
+    }
+    /* Gate E (Section 5) not yet available — stay on Section 4 */
     e.preventDefault();
-    e.stopPropagation();
+    saveDraft();
   });
 
   els.btnDupYes.addEventListener('click', function () {
@@ -3355,11 +4241,17 @@
     initD2Battles();
     setToggle('inshop-yes', false);
     setToggle('outshop-yes', false);
+    [1, 2, 3, 4, 5].forEach(function (n) {
+      setToggle('upg' + n + '-yes', false);
+    });
     renderECEntries();
     bindD1Events();
+    bindD4Events();
     syncAssetPanels();
+    syncAllUpgradePanels();
     updateD1UI();
     updateD2UI();
+    updateUpgradeUI();
 
     loadDraft().then(function (draft) {
       var hasContent = draft && (
@@ -3369,7 +4261,8 @@
         draft.storeCode ||
         (draft.section && draft.section > 0) ||
         (draft.d1 && draft.d1.d1Touched) ||
-        (draft.d2 && draft.d2.d2Touched)
+        (draft.d2 && draft.d2.d2Touched) ||
+        (draft.d4 && draft.d4.d4Touched)
       );
 
       if (hasContent) {
