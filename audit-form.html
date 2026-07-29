@@ -822,6 +822,80 @@
 
     #blockPosition { display: none; }
     #blockPosition.visible { display: block; }
+
+    /* Section 3 — D2 battles */
+    .battle-card {
+      margin-bottom: 1.35rem;
+      padding: 0.9rem 0.95rem 1rem;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: var(--radius);
+    }
+
+    .battle-card-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .battle-absent-badge {
+      display: none;
+      margin-top: 0.65rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      color: var(--success);
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .battle-absent-badge.visible { display: block; }
+
+    .battle-params { display: none; margin-top: 0.75rem; }
+    .battle-params.visible { display: block; }
+
+    .battle-param {
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .battle-param:first-of-type {
+      margin-top: 0.35rem;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .battle-result {
+      display: none;
+      margin-top: 0.9rem;
+      padding: 0.7rem 0.8rem;
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.28);
+      border-radius: 8px;
+    }
+
+    .battle-result.visible { display: block; }
+
+    .battle-result-score {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .battle-result-meta {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .battle-pos-panel { display: none; margin-top: 0.65rem; }
+    .battle-pos-panel.visible { display: block; }
   </style>
 </head>
 <body>
@@ -1162,15 +1236,22 @@
       </div>
     </section>
 
-    <!-- Gate B end placeholder (Section 3 stub) -->
+    <!-- SECTION 3 — D2: Vivo vs Competitor Fighting Score -->
     <section class="section" id="section3" data-section="3">
-      <h1 class="section-header">SECTION 3 — COMING IN GATE C</h1>
-      <div class="gate-end">
-        <strong>Gate B complete</strong>
-        D2 Competitive Strength will be added in Gate C.
+      <h1 class="section-header">SECTION 3 — D2: VIVO VS COMPETITOR FIGHTING SCORE</h1>
+      <div class="section-subheader">40 POINTS TOTAL</div>
+
+      <div class="d1-live-row">
+        <div class="d1-live-score" id="d2LiveScore">D2 Score: — / 40</div>
       </div>
+
+      <p class="helper-gold">Absent competitor = full battle points — Vivo is uncontested in this store.</p>
+
+      <div id="d2Battles"></div>
+
       <div class="nav-row">
         <button type="button" class="btn btn-ghost" id="btnBack3">Back</button>
+        <button type="button" class="btn btn-primary" id="btnNext3" disabled>Next</button>
       </div>
     </section>
   </div>
@@ -1251,37 +1332,67 @@
     },
 
     calcBattle: function (vivoAssets, vivoPosition, vivoSqft, comp) {
-      if (!comp.present) return 40;
+      if (!comp || !comp.present) return 40;
       var wins = 0, draws = 0;
       var total = 3;
 
-      var vW = this.calcAssetWeight(vivoAssets);
-      var cW = this.calcAssetWeight(comp.assets);
+      var vW = this.calcAssetWeight(vivoAssets || []);
+      var cW = this.calcAssetWeight(comp.assets || []);
       if (vW > cW) wins++; else if (vW === cW) draws++;
 
-      var vP = vivoPosition === 'hidden' ? 99 : parseInt(vivoPosition, 10) || 99;
-      var cP = comp.position === 'absent' ? 99 : parseInt(comp.position, 10) || 99;
+      var vP = (vivoPosition === 'hidden' || vivoPosition === 'absent' || !vivoPosition)
+        ? 99
+        : parseInt(vivoPosition, 10) || 99;
+      var cP = (comp.position === 'absent' || comp.position === 'hidden' || !comp.position)
+        ? 99
+        : parseInt(comp.position, 10) || 99;
       if (vP < cP) wins++; else if (vP === cP) draws++;
 
       var vS = this.sqftPts(vivoSqft);
       var cS = this.sqftPts(comp.sqft);
       if (vS > cS) wins++; else if (vS === cS) draws++;
 
-      if (wins === 0 && draws === 0 && vW === 0 && cW === 0) return 0;
+      /* C9: competitor present but all parameters effectively zero → battle = 0
+         (prevents three zero-zero draws scoring 20) */
+      if (vW === 0 && cW === 0 && vS === 0 && cS === 0 && wins === 0) return 0;
 
       return Math.round((wins + 0.5 * draws) / total * 40);
     },
 
+    calcBattleDetail: function (vivoAssets, vivoPosition, vivoSqft, comp) {
+      if (!comp || !comp.present) {
+        return { score: 40, wins: 0, draws: 0, losses: 0, absent: true };
+      }
+      var wins = 0, draws = 0, losses = 0;
+      var vW = this.calcAssetWeight(vivoAssets || []);
+      var cW = this.calcAssetWeight(comp.assets || []);
+      if (vW > cW) wins++; else if (vW === cW) draws++; else losses++;
+
+      var vP = (vivoPosition === 'hidden' || vivoPosition === 'absent' || !vivoPosition)
+        ? 99
+        : parseInt(vivoPosition, 10) || 99;
+      var cP = (comp.position === 'absent' || comp.position === 'hidden' || !comp.position)
+        ? 99
+        : parseInt(comp.position, 10) || 99;
+      if (vP < cP) wins++; else if (vP === cP) draws++; else losses++;
+
+      var vS = this.sqftPts(vivoSqft);
+      var cS = this.sqftPts(comp.sqft);
+      if (vS > cS) wins++; else if (vS === cS) draws++; else losses++;
+
+      var score = this.calcBattle(vivoAssets, vivoPosition, vivoSqft, comp);
+      return { score: score, wins: wins, draws: draws, losses: losses, absent: false };
+    },
+
     calcD2: function (vivoData, samsung, apple) {
-      var battles = [];
-      if (samsung !== null) battles.push(this.calcBattle(
-        vivoData.assets, vivoData.position, vivoData.sqft, samsung
-      ));
-      if (apple !== null) battles.push(this.calcBattle(
-        vivoData.assets, vivoData.position, vivoData.sqft, apple
-      ));
-      if (!battles.length) return 0;
-      return Math.round(battles.reduce(function (a, b) { return a + b; }, 0) / battles.length);
+      /* Always average both battles — absent competitor = 40 (uncontested) */
+      var s = (!samsung || !samsung.present)
+        ? 40
+        : this.calcBattle(vivoData.assets, vivoData.position, vivoData.sqft, samsung);
+      var a = (!apple || !apple.present)
+        ? 40
+        : this.calcBattle(vivoData.assets, vivoData.position, vivoData.sqft, apple);
+      return Math.round((s + a) / 2);
     },
 
     getTier: function (score) {
@@ -1318,14 +1429,31 @@
     draftTimestamp: null,
     restoring: false,
     d1Touched: false,
-    ecEntries: [{ id: 1 }]
+    d2Touched: false,
+    ecEntries: [{ id: 1 }],
+    d1Fingerprint: ''
+  };
+
+  /* Shared cross-section form state — D1 written by Section 2, read by Section 3 */
+  var formState = {
+    d1: {
+      assets: [],
+      position: 'hidden',
+      sqft: 'none',
+      score: 0
+    },
+    d2: {
+      samsungPresent: false,
+      applePresent: false,
+      score: null
+    }
   };
 
   var SECTION_TITLES = {
     0: 'Auditor Details',
     1: 'Store Information',
     2: 'D1: Vivo Brand Strength',
-    3: 'Coming in Gate C'
+    3: 'D2: Fighting Score'
   };
 
   var PROJECT_KEYS = {
@@ -1374,8 +1502,11 @@
     btnBack2: $('btnBack2'),
     btnNext2: $('btnNext2'),
     btnBack3: $('btnBack3'),
+    btnNext3: $('btnNext3'),
     d1LiveScore: $('d1LiveScore'),
     d1LiveTier: $('d1LiveTier'),
+    d2LiveScore: $('d2LiveScore'),
+    d2Battles: $('d2Battles'),
     tierResult: $('tierResult'),
     blockPosition: $('blockPosition'),
     brandingSqft: $('brandingSqft'),
@@ -1464,6 +1595,11 @@
       (SECTION_TITLES[n] || '');
     els.progressFill.style.width = ((n + 1) / TOTAL_SECTIONS * 100) + '%';
     window.scrollTo(0, 0);
+
+    if (n === 3) {
+      syncFormStateD1();
+      updateD2UI();
+    }
   }
 
   /* ---------- Section 0 validation ---------- */
@@ -1755,7 +1891,8 @@
       lookupOk: state.lookupOk,
       duplicateNeedsConfirm: state.duplicateNeedsConfirm,
       duplicateConfirmed: state.duplicateConfirmed,
-      d1: captureD1State()
+      d1: captureD1State(),
+      d2: captureD2State()
     };
   }
 
@@ -1847,11 +1984,13 @@
     }
 
     if (draft.d1) applyD1State(draft.d1);
+    if (draft.d2) applyD2State(draft.d2);
 
     goToSection(typeof draft.section === 'number' ? draft.section : 0);
     state.dirty = false;
     state.restoring = false;
     updateD1UI();
+    updateD2UI();
   }
 
   function blankForm() {
@@ -1869,10 +2008,12 @@
     clearStoreCard();
     hideError(els.errStoreCode);
     resetD1Form();
+    resetD2Form();
     goToSection(0);
     state.dirty = false;
     state.restoring = false;
     updateD1UI();
+    updateD2UI();
   }
 
   /* ========== SECTION 2 — D1 ========== */
@@ -2328,12 +2469,15 @@
     els.visibilityLive.textContent = 'Visibility: ' + (inShop + outShop + sqftPts) + ' / 20 pts';
     els.sqftPtsHint.textContent = sqftPts + ' pts';
 
+    syncFormStateD1();
+
     if (state.d1Touched || state.section >= 2) {
       els.footerD1.textContent = String(d1);
     } else {
       els.footerD1.textContent = '—';
     }
 
+    updateFooterTotal();
     updateNext2Enabled();
   }
 
@@ -2406,6 +2550,504 @@
       scheduleAutosave();
     }
     updateD1UI();
+  }
+
+  function syncFormStateD1() {
+    formState.d1 = {
+      assets: getD1SelectedAssets(),
+      position: getD1SelectedPosition(),
+      sqft: getD1SelectedSqft(),
+      score: calcD1()
+    };
+    state.d1Fingerprint = JSON.stringify({
+      assets: formState.d1.assets,
+      position: formState.d1.position,
+      sqft: formState.d1.sqft
+    });
+  }
+
+  function getD1SelectedAssets() {
+    return getSelectedAssets();
+  }
+
+  function getD1SelectedPosition() {
+    if (isNoneSelected() || !hasAnyAssetSelected()) return 'hidden';
+    return getSelectedPosition() || 'hidden';
+  }
+
+  function getD1SelectedSqft() {
+    return getSelectedSqft();
+  }
+
+  function updateFooterTotal() {
+    var d1Raw = els.footerD1.textContent;
+    var d2Raw = els.footerD2.textContent;
+    var d1 = d1Raw === '—' ? null : parseInt(d1Raw, 10);
+    var d2 = d2Raw === '—' ? null : parseInt(d2Raw, 10);
+    if (d1 == null || d2 == null || isNaN(d1) || isNaN(d2)) {
+      els.footerTotal.textContent = '—';
+      return;
+    }
+    els.footerTotal.textContent = String(d1 + d2);
+  }
+
+  /* ========== SECTION 3 — D2 ========== */
+
+  function brandLabel(brand) {
+    return brand === 'samsung' ? 'Samsung' : 'Apple';
+  }
+
+  function renderBattle(brand) {
+    var label = brandLabel(brand);
+    var upper = label.toUpperCase();
+    var id = brand;
+
+    return (
+      '<div class="battle-card" id="battle-' + id + '" data-brand="' + id + '">' +
+        '<div class="battle-card-title">' + upper + ' BATTLE</div>' +
+
+        '<div class="toggle-row" style="border-bottom:none;padding-bottom:0">' +
+          '<span class="toggle-label">' + label + ' present in this store?</span>' +
+          '<div class="toggle-group" role="group" aria-label="' + label + ' present">' +
+            '<button type="button" class="toggle-btn" id="' + id + 'PresentYesBtn" data-target="' + id + '-present-yes" data-val="yes">Yes</button>' +
+            '<button type="button" class="toggle-btn active-no" id="' + id + 'PresentNoBtn" data-target="' + id + '-present-yes" data-val="no">No</button>' +
+          '</div>' +
+        '</div>' +
+        '<input type="checkbox" id="' + id + '-present-yes" hidden />' +
+
+        '<div class="battle-absent-badge visible" id="' + id + 'AbsentBadge">' +
+          label + ' Battle: 40 / 40 pts — Competitor absent' +
+        '</div>' +
+
+        '<div class="battle-params" id="' + id + 'Params">' +
+          /* Parameter 1 — assets */
+          '<div class="battle-param">' +
+            '<div class="block-label">' + label + ' Asset Types Present</div>' +
+            '<p class="block-helper">Select all ' + label + ' assets visible in this store.</p>' +
+            '<div class="check-list">' +
+              '<label class="check-item"><input type="checkbox" id="' + id + 'AssetXZone" /><span>X-Zone (Island / Backwall sub-type)</span></label>' +
+              '<label class="check-item"><input type="checkbox" id="' + id + 'AssetSiS" /><span>Shop-in-Shop</span></label>' +
+              '<label class="check-item"><input type="checkbox" id="' + id + 'AssetSU" /><span>Shop Upgrade</span></label>' +
+              '<label class="check-item"><input type="checkbox" id="' + id + 'AssetCZ" /><span>Customized Zone</span></label>' +
+              '<label class="check-item"><input type="checkbox" id="' + id + 'AssetEC" /><span>Experience Cabinet (sub-type + qty)</span></label>' +
+              '<label class="check-item"><input type="checkbox" id="' + id + 'AssetNone" /><span>None</span></label>' +
+            '</div>' +
+
+            '<div class="sub-panel" id="' + id + 'PanelXZone">' +
+              '<div class="sub-panel-title">X-Zone sub-type</div>' +
+              '<div class="inline-radios">' +
+                '<label class="inline-radio"><input type="radio" name="' + id + 'XzoneSubtype" value="island" /> Island</label>' +
+                '<label class="inline-radio"><input type="radio" name="' + id + 'XzoneSubtype" value="backwall" /> Backwall</label>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="sub-panel" id="' + id + 'PanelEC">' +
+              '<div class="sub-panel-title">Experience Cabinet</div>' +
+              '<div class="field">' +
+                '<label>Sub-type <span class="req">*</span></label>' +
+                '<div class="inline-radios">' +
+                  '<label class="inline-radio"><input type="radio" name="' + id + 'EcSubtype" value="ec-single-side" /> Single Side</label>' +
+                  '<label class="inline-radio"><input type="radio" name="' + id + 'EcSubtype" value="ec-double-side" /> Double Side</label>' +
+                  '<label class="inline-radio"><input type="radio" name="' + id + 'EcSubtype" value="ec-island-table" /> Island</label>' +
+                '</div>' +
+              '</div>' +
+              '<div class="field" style="margin-bottom:0">' +
+                '<label for="' + id + 'EcQty">Qty <span class="req">*</span></label>' +
+                '<input type="number" id="' + id + 'EcQty" min="1" step="1" inputmode="numeric" />' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          /* Parameter 2 — position */
+          '<div class="battle-param battle-pos-panel" id="' + id + 'PosPanel">' +
+            '<div class="block-label">' + label + ' primary asset position</div>' +
+            '<div class="radio-list">' +
+              '<label class="radio-item"><input type="radio" name="' + id + 'Position" value="1" /><div class="radio-body"><div class="radio-label">Position 1</div></div></label>' +
+              '<label class="radio-item"><input type="radio" name="' + id + 'Position" value="2" /><div class="radio-body"><div class="radio-label">Position 2</div></div></label>' +
+              '<label class="radio-item"><input type="radio" name="' + id + 'Position" value="3" /><div class="radio-body"><div class="radio-label">Position 3</div></div></label>' +
+              '<label class="radio-item"><input type="radio" name="' + id + 'Position" value="4+" /><div class="radio-body"><div class="radio-label">Position 4+</div></div></label>' +
+              '<label class="radio-item"><input type="radio" name="' + id + 'Position" value="absent" /><div class="radio-body"><div class="radio-label">Absent / Not visible</div></div></label>' +
+            '</div>' +
+          '</div>' +
+
+          /* Parameter 3 — branding sqft */
+          '<div class="battle-param">' +
+            '<div class="block-label">' + label + ' branding sq.ft</div>' +
+            '<div class="field" style="margin-bottom:0">' +
+              '<select class="select-input" id="' + id + 'BrandingSqft"></select>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="battle-result" id="' + id + 'BattleResult">' +
+            '<div class="battle-result-score" id="' + id + 'BattleScore"></div>' +
+            '<div class="battle-result-meta" id="' + id + 'BattleMeta"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function initD2Battles() {
+    els.d2Battles.innerHTML = renderBattle('samsung') + renderBattle('apple');
+    ['samsung', 'apple'].forEach(function (brand) {
+      var sel = $(brand + 'BrandingSqft');
+      PBG.SQFT_BUCKETS.forEach(function (b) {
+        var opt = document.createElement('option');
+        opt.value = b.value;
+        opt.textContent = b.label;
+        sel.appendChild(opt);
+      });
+      sel.value = 'none';
+      setToggle(brand + '-present-yes', false);
+    });
+    bindD2Events();
+  }
+
+  function getCompetitorAssets(brand) {
+    var assets = [];
+    if ($(brand + 'AssetNone').checked) return assets;
+
+    if ($(brand + 'AssetXZone').checked) {
+      var sub = document.querySelector('input[name="' + brand + 'XzoneSubtype"]:checked');
+      if (sub && sub.value === 'backwall') assets.push({ type: 'x-zone-backwall' });
+      else if (sub && sub.value === 'island') assets.push({ type: 'x-zone-island' });
+      else assets.push({ type: 'x-zone-island', incomplete: true });
+    }
+    if ($(brand + 'AssetSiS').checked) assets.push({ type: 'shop-in-shop' });
+    if ($(brand + 'AssetSU').checked) assets.push({ type: 'shop-upgrade' });
+    if ($(brand + 'AssetCZ').checked) assets.push({ type: 'customized-zone' });
+    if ($(brand + 'AssetEC').checked) {
+      var ecSub = document.querySelector('input[name="' + brand + 'EcSubtype"]:checked');
+      var qty = parseInt(($(brand + 'EcQty') || {}).value, 10) || 0;
+      if (ecSub) {
+        assets.push({ type: ecSub.value, qty: qty });
+      }
+    }
+    return assets;
+  }
+
+  function getCompetitorPosition(brand) {
+    var r = document.querySelector('input[name="' + brand + 'Position"]:checked');
+    return r ? r.value : 'absent';
+  }
+
+  function getCompetitorSqft(brand) {
+    return ($(brand + 'BrandingSqft') || {}).value || 'none';
+  }
+
+  function getSamsungAssets() { return getCompetitorAssets('samsung'); }
+  function getSamsungPosition() { return getCompetitorPosition('samsung'); }
+  function getSamsungSqft() { return getCompetitorSqft('samsung'); }
+  function getAppleAssets() { return getCompetitorAssets('apple'); }
+  function getApplePosition() { return getCompetitorPosition('apple'); }
+  function getAppleSqft() { return getCompetitorSqft('apple'); }
+
+  function competitorHasAssetSelected(brand) {
+    return $(brand + 'AssetXZone').checked ||
+      $(brand + 'AssetSiS').checked ||
+      $(brand + 'AssetSU').checked ||
+      $(brand + 'AssetCZ').checked ||
+      $(brand + 'AssetEC').checked;
+  }
+
+  function competitorAssetChoiceMade(brand) {
+    return competitorHasAssetSelected(brand) || $(brand + 'AssetNone').checked;
+  }
+
+  function competitorBattleComplete(brand) {
+    var presentEl = $(brand + '-present-yes');
+    if (!presentEl.checked) return true;
+    if (!competitorAssetChoiceMade(brand)) return false;
+    if (competitorHasAssetSelected(brand)) {
+      if ($(brand + 'AssetXZone').checked) {
+        if (!document.querySelector('input[name="' + brand + 'XzoneSubtype"]:checked')) return false;
+      }
+      if ($(brand + 'AssetEC').checked) {
+        if (!document.querySelector('input[name="' + brand + 'EcSubtype"]:checked')) return false;
+        var qty = parseInt(($(brand + 'EcQty') || {}).value, 10);
+        if (!qty || qty < 1) return false;
+      }
+      if (!document.querySelector('input[name="' + brand + 'Position"]:checked')) return false;
+    }
+    return true;
+  }
+
+  function syncCompetitorPanels(brand) {
+    var present = $(brand + '-present-yes').checked;
+    $(brand + 'AbsentBadge').classList.toggle('visible', !present);
+    $(brand + 'Params').classList.toggle('visible', present);
+
+    if (!present) {
+      $(brand + 'BattleResult').classList.remove('visible');
+      return;
+    }
+
+    $(brand + 'PanelXZone').classList.toggle('visible', $(brand + 'AssetXZone').checked);
+    $(brand + 'PanelEC').classList.toggle('visible', $(brand + 'AssetEC').checked);
+
+    var showPos = competitorHasAssetSelected(brand) && !$(brand + 'AssetNone').checked;
+    $(brand + 'PosPanel').classList.toggle('visible', showPos);
+  }
+
+  function handleCompetitorAssetChange(brand, changed) {
+    var noneEl = $(brand + 'AssetNone');
+    var others = [
+      $(brand + 'AssetXZone'),
+      $(brand + 'AssetSiS'),
+      $(brand + 'AssetSU'),
+      $(brand + 'AssetCZ'),
+      $(brand + 'AssetEC')
+    ];
+    if (changed === noneEl && noneEl.checked) {
+      others.forEach(function (cb) { cb.checked = false; });
+    } else if (changed !== noneEl && changed.checked) {
+      noneEl.checked = false;
+    }
+    syncCompetitorPanels(brand);
+    onD2Change();
+  }
+
+  function buildCompetitorData(brand) {
+    var present = $(brand + '-present-yes').checked;
+    if (!present) return { present: false };
+    return {
+      present: true,
+      assets: getCompetitorAssets(brand),
+      position: getCompetitorPosition(brand),
+      sqft: getCompetitorSqft(brand)
+    };
+  }
+
+  function calcD2Section() {
+    syncFormStateD1();
+    var vivo = {
+      assets: formState.d1.assets,
+      position: formState.d1.position,
+      sqft: formState.d1.sqft
+    };
+    var samsungPresent = $('samsung-present-yes').checked;
+    var applePresent = $('apple-present-yes').checked;
+
+    var samsung = samsungPresent ? {
+      present: true,
+      assets: getSamsungAssets(),
+      position: getSamsungPosition(),
+      sqft: getSamsungSqft()
+    } : { present: false };
+
+    var apple = applePresent ? {
+      present: true,
+      assets: getAppleAssets(),
+      position: getApplePosition(),
+      sqft: getAppleSqft()
+    } : { present: false };
+
+    return PBG.calcD2(vivo, samsung, apple);
+  }
+
+  function updateBattleResultUI(brand) {
+    var resultEl = $(brand + 'BattleResult');
+    var scoreEl = $(brand + 'BattleScore');
+    var metaEl = $(brand + 'BattleMeta');
+    var present = $(brand + '-present-yes').checked;
+    var label = brandLabel(brand);
+
+    if (!present) {
+      resultEl.classList.remove('visible');
+      return;
+    }
+
+    if (!competitorBattleComplete(brand)) {
+      resultEl.classList.remove('visible');
+      return;
+    }
+
+    var detail = PBG.calcBattleDetail(
+      formState.d1.assets,
+      formState.d1.position,
+      formState.d1.sqft,
+      buildCompetitorData(brand)
+    );
+
+    scoreEl.textContent = label + ' Battle: ' + detail.score + ' / 40';
+    metaEl.textContent = 'Win: ' + detail.wins + ' · Draw: ' + detail.draws + ' · Loss: ' + detail.losses;
+    resultEl.classList.add('visible');
+  }
+
+  function updateD2UI() {
+    syncFormStateD1();
+    syncCompetitorPanels('samsung');
+    syncCompetitorPanels('apple');
+    updateBattleResultUI('samsung');
+    updateBattleResultUI('apple');
+
+    var d2 = calcD2Section();
+    formState.d2.samsungPresent = $('samsung-present-yes').checked;
+    formState.d2.applePresent = $('apple-present-yes').checked;
+    formState.d2.score = d2;
+
+    var bothAbsent = !formState.d2.samsungPresent && !formState.d2.applePresent;
+    if (bothAbsent) {
+      els.d2LiveScore.textContent = 'D2 Score: 40 / 40 — Both competitors absent';
+    } else {
+      els.d2LiveScore.textContent = 'D2 Score: ' + d2 + ' / 40';
+    }
+
+    if (state.d2Touched || state.section >= 3) {
+      els.footerD2.textContent = String(d2);
+    } else {
+      els.footerD2.textContent = '—';
+    }
+
+    updateFooterTotal();
+    /* Gate D not yet available — Next stays disabled */
+    setBtnEnabled(els.btnNext3, false);
+  }
+
+  function validateSection3() {
+    return competitorBattleComplete('samsung') && competitorBattleComplete('apple');
+  }
+
+  function onD2Change() {
+    if (!state.restoring) {
+      state.d2Touched = true;
+      markDirty();
+      scheduleAutosave();
+    }
+    updateD2UI();
+  }
+
+  function captureD2State() {
+    function brandState(brand) {
+      var ecSub = document.querySelector('input[name="' + brand + 'EcSubtype"]:checked');
+      var xzSub = document.querySelector('input[name="' + brand + 'XzoneSubtype"]:checked');
+      var pos = document.querySelector('input[name="' + brand + 'Position"]:checked');
+      return {
+        present: $(brand + '-present-yes').checked,
+        xZone: $(brand + 'AssetXZone').checked,
+        sis: $(brand + 'AssetSiS').checked,
+        su: $(brand + 'AssetSU').checked,
+        cz: $(brand + 'AssetCZ').checked,
+        ec: $(brand + 'AssetEC').checked,
+        none: $(brand + 'AssetNone').checked,
+        xzoneSubtype: xzSub ? xzSub.value : '',
+        ecSubtype: ecSub ? ecSub.value : '',
+        ecQty: ($(brand + 'EcQty') || {}).value || '',
+        position: pos ? pos.value : '',
+        brandingSqft: getCompetitorSqft(brand)
+      };
+    }
+    return {
+      samsung: brandState('samsung'),
+      apple: brandState('apple'),
+      d2Touched: state.d2Touched
+    };
+  }
+
+  function applyBrandD2State(brand, d) {
+    if (!d) return;
+    setToggle(brand + '-present-yes', !!d.present);
+    $(brand + 'AssetXZone').checked = !!d.xZone;
+    $(brand + 'AssetSiS').checked = !!d.sis;
+    $(brand + 'AssetSU').checked = !!d.su;
+    $(brand + 'AssetCZ').checked = !!d.cz;
+    $(brand + 'AssetEC').checked = !!d.ec;
+    $(brand + 'AssetNone').checked = !!d.none;
+
+    if (d.xzoneSubtype) {
+      var xz = document.querySelector('input[name="' + brand + 'XzoneSubtype"][value="' + d.xzoneSubtype + '"]');
+      if (xz) xz.checked = true;
+    }
+    if (d.ecSubtype) {
+      var ec = document.querySelector('input[name="' + brand + 'EcSubtype"][value="' + d.ecSubtype + '"]');
+      if (ec) ec.checked = true;
+    }
+    if ($(brand + 'EcQty')) $(brand + 'EcQty').value = d.ecQty || '';
+    if (d.position) {
+      var pr = document.querySelector('input[name="' + brand + 'Position"][value="' + d.position + '"]');
+      if (pr) pr.checked = true;
+    }
+    if ($(brand + 'BrandingSqft')) {
+      $(brand + 'BrandingSqft').value = d.brandingSqft || 'none';
+    }
+  }
+
+  function applyD2State(d) {
+    if (!d) return;
+    var wasRestoring = state.restoring;
+    state.restoring = true;
+    applyBrandD2State('samsung', d.samsung);
+    applyBrandD2State('apple', d.apple);
+    state.d2Touched = !!d.d2Touched;
+    state.restoring = wasRestoring;
+    if (!wasRestoring) updateD2UI();
+  }
+
+  function resetD2Form() {
+    var wasRestoring = state.restoring;
+    state.restoring = true;
+    ['samsung', 'apple'].forEach(function (brand) {
+      setToggle(brand + '-present-yes', false);
+      $(brand + 'AssetXZone').checked = false;
+      $(brand + 'AssetSiS').checked = false;
+      $(brand + 'AssetSU').checked = false;
+      $(brand + 'AssetCZ').checked = false;
+      $(brand + 'AssetEC').checked = false;
+      $(brand + 'AssetNone').checked = false;
+      document.querySelectorAll('input[name="' + brand + 'XzoneSubtype"]').forEach(function (r) {
+        r.checked = false;
+      });
+      document.querySelectorAll('input[name="' + brand + 'EcSubtype"]').forEach(function (r) {
+        r.checked = false;
+      });
+      document.querySelectorAll('input[name="' + brand + 'Position"]').forEach(function (r) {
+        r.checked = false;
+      });
+      if ($(brand + 'EcQty')) $(brand + 'EcQty').value = '';
+      if ($(brand + 'BrandingSqft')) $(brand + 'BrandingSqft').value = 'none';
+    });
+    state.d2Touched = false;
+    formState.d2 = { samsungPresent: false, applePresent: false, score: null };
+    state.restoring = wasRestoring;
+    if (!wasRestoring) updateD2UI();
+  }
+
+  function bindD2Events() {
+    ['samsung', 'apple'].forEach(function (brand) {
+      document.querySelectorAll('.toggle-btn[data-target="' + brand + '-present-yes"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var val = btn.getAttribute('data-val');
+          setToggle(brand + '-present-yes', val === 'yes');
+          syncCompetitorPanels(brand);
+          onD2Change();
+        });
+      });
+
+      [
+        $(brand + 'AssetXZone'),
+        $(brand + 'AssetSiS'),
+        $(brand + 'AssetSU'),
+        $(brand + 'AssetCZ'),
+        $(brand + 'AssetEC'),
+        $(brand + 'AssetNone')
+      ].forEach(function (cb) {
+        cb.addEventListener('change', function () {
+          handleCompetitorAssetChange(brand, cb);
+        });
+      });
+
+      document.querySelectorAll('input[name="' + brand + 'XzoneSubtype"]').forEach(function (r) {
+        r.addEventListener('change', onD2Change);
+      });
+      document.querySelectorAll('input[name="' + brand + 'EcSubtype"]').forEach(function (r) {
+        r.addEventListener('change', onD2Change);
+      });
+      document.querySelectorAll('input[name="' + brand + 'Position"]').forEach(function (r) {
+        r.addEventListener('change', onD2Change);
+      });
+      $(brand + 'EcQty').addEventListener('input', onD2Change);
+      $(brand + 'BrandingSqft').addEventListener('change', onD2Change);
+    });
   }
 
   function captureD1State() {
@@ -2581,7 +3223,7 @@
       r.addEventListener('change', onD1Change);
     });
 
-    document.querySelectorAll('.toggle-btn').forEach(function (btn) {
+    document.querySelectorAll('#section2 .toggle-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var target = btn.getAttribute('data-target');
         var val = btn.getAttribute('data-val');
@@ -2637,12 +3279,19 @@
       updateNext2Enabled();
       return;
     }
+    syncFormStateD1();
+    state.d2Touched = true;
     saveDraft();
     goToSection(3);
   });
 
   els.btnBack3.addEventListener('click', function () {
     goToSection(2);
+  });
+
+  els.btnNext3.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
   });
 
   els.btnDupYes.addEventListener('click', function () {
@@ -2703,12 +3352,14 @@
   function init() {
     els.auditDate.value = todayISODate();
     initBrandingSqftOptions();
+    initD2Battles();
     setToggle('inshop-yes', false);
     setToggle('outshop-yes', false);
     renderECEntries();
     bindD1Events();
     syncAssetPanels();
     updateD1UI();
+    updateD2UI();
 
     loadDraft().then(function (draft) {
       var hasContent = draft && (
@@ -2717,7 +3368,8 @@
         draft.phone ||
         draft.storeCode ||
         (draft.section && draft.section > 0) ||
-        (draft.d1 && draft.d1.d1Touched)
+        (draft.d1 && draft.d1.d1Touched) ||
+        (draft.d2 && draft.d2.d2Touched)
       );
 
       if (hasContent) {
