@@ -260,7 +260,7 @@ body::after {
   display: grid; grid-template-columns: 55% 45%; flex: 1; min-height: 0; height: 100%;
 }
 .store-modal__photo {
-  position: relative; min-width: 0; min-height: 0; background: #070707;
+  position: relative; min-width: 0; min-height: 0; background: #0a0a0f;
   border-right: 1px solid var(--gold-line); display: flex; flex-direction: column;
 }
 .store-modal__scores {
@@ -291,12 +291,13 @@ body::after {
 }
 .photo-slider__stage {
   position: relative; flex: 1; min-height: 0; width: 100%;
-  background: #070707; overflow: hidden; display: grid; place-items: center;
+  background: #0a0a0f; overflow: hidden; display: grid; place-items: center;
   aspect-ratio: auto;
 }
 .photo-slider__stage img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; display: block;
+  object-fit: contain; display: block;
+  background: #0a0a0f;
 }
 .photo-slider__empty { color: var(--text-secondary); font-size: 13px; }
 .photo-nav {
@@ -694,7 +695,7 @@ body.is-presenting .section.is-present-slide { display: flex; }
 .modal-photo-side {
   flex: 1.2;
   position: relative;
-  background: #0a0a0a;
+  background: #0a0a0f;
   min-width: 0;
   min-height: 0;
   border-right: 1px solid var(--gold-line);
@@ -1820,12 +1821,12 @@ body.is-presenting #s1.section.is-present-slide {
   font-weight: 600;
 }
 
-/* Always-open note panels (default expanded) */
+/* Embedded explanation footers — always visible inside each column card */
 #s2 .s2-note {
   margin-top: auto;
   flex: 0 0 auto;
-  padding-top: 0.4rem;
-  border-top: 1px solid rgba(201,168,76,0.14);
+  padding: 0.4rem 0 0.05rem;
+  border-top: 1px solid rgba(201,168,76,0.18);
 }
 #s2 .s2-note__head {
   display: flex;
@@ -2016,7 +2017,6 @@ body.is-presenting #s1.section.is-present-slide {
   line-height: 1.35;
 }
 
-#s2 .s2-panel.is-active.has-open-collapse { overflow-y: auto; }
 body.is-presenting #s2.section {
   display: none;
   padding: 0.85rem clamp(1rem, 2vw, 1.75rem) 0.7rem;
@@ -5560,11 +5560,6 @@ body.is-presenting #s4.section.is-present-slide {
     nodes.forEach((n) => io.observe(n));
   }
 
-  function syncS2PanelOverflow(panel) {
-    if (!panel) return;
-    panel.classList.toggle("has-open-collapse", !!panel.querySelector(".s2-collapse.is-open"));
-  }
-
   function activateS2Tab(key) {
     const tabs = [...document.querySelectorAll("#s2 .s2-tab")];
     const panels = {
@@ -5590,22 +5585,6 @@ body.is-presenting #s4.section.is-present-slide {
     if (!tabs.length) return;
     tabs.forEach((tab) => {
       tab.addEventListener("click", () => activateS2Tab(tab.getAttribute("data-s2-tab")));
-    });
-  }
-
-  function initS2Collapses() {
-    document.querySelectorAll("#s2 [data-s2-collapse]").forEach((wrap) => {
-      const btn = wrap.querySelector(".s2-collapse__btn");
-      const body = wrap.querySelector(".s2-collapse__body");
-      if (!btn || !body) return;
-      btn.addEventListener("click", () => {
-        const open = !wrap.classList.contains("is-open");
-        wrap.classList.toggle("is-open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-        if (open) body.removeAttribute("hidden");
-        else body.setAttribute("hidden", "");
-        syncS2PanelOverflow(wrap.closest(".s2-panel"));
-      });
     });
   }
 
@@ -6378,7 +6357,6 @@ body.is-presenting #s4.section.is-present-slide {
     initNavObserver();
     initReveal();
     initS2Tabs();
-    initS2Collapses();
     initS1();
     initS3();
     initS4();
