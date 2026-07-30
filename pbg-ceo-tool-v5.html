@@ -1507,6 +1507,11 @@ body.is-presenting #s1.section.is-present-slide {
   font-weight: 500;
   text-align: right;
 }
+#s1 .s1-data-note.is-live {
+  opacity: 0.9;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
 #s1 .s1-data-note[hidden] { display: none !important; }
 .store-card__legacy-note {
   margin: 0.35rem 0 0;
@@ -1516,7 +1521,7 @@ body.is-presenting #s1.section.is-present-slide {
   opacity: 0.9;
 }
 
-/* ========== S2 — Scoring Logic ========== */
+/* ========== S2 — Scoring Logic (CEO-grade) ========== */
 #s2.section {
   display: flex;
   flex-direction: column;
@@ -1527,7 +1532,7 @@ body.is-presenting #s1.section.is-present-slide {
   min-height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+  padding: 0.85rem clamp(1rem, 2vw, 1.75rem) 0.7rem;
 }
 #s2 .section__frame {
   display: flex;
@@ -1540,16 +1545,15 @@ body.is-presenting #s1.section.is-present-slide {
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
-  justify-content: flex-start;
 }
 #s2 .s2-head {
   flex: 0 0 auto;
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.35rem;
 }
 #s2 .section__eyebrow.section-label {
   position: static;
-  margin: 0 0 0.2rem;
-  font-size: 11px;
+  margin: 0 0 0.1rem;
+  font-size: 10px;
   letter-spacing: 0.2em;
   color: #C9A84C;
   text-transform: uppercase;
@@ -1557,19 +1561,18 @@ body.is-presenting #s1.section.is-present-slide {
 }
 #s2 .s2-heading {
   margin: 0;
-  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-size: clamp(1.25rem, 2.1vw, 1.55rem);
   font-weight: 650;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.1;
   color: #fff;
 }
 #s2 .s2-tabs {
   display: flex;
   justify-content: center;
-  align-items: stretch;
   gap: 0;
   flex: 0 0 auto;
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.45rem;
   border-bottom: 1px solid rgba(201,168,76,0.18);
 }
 #s2 .s2-tab {
@@ -1583,7 +1586,7 @@ body.is-presenting #s1.section.is-present-slide {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.55rem 1.35rem;
+  padding: 0.4rem 1.2rem;
   cursor: pointer;
   transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
 }
@@ -1610,84 +1613,80 @@ body.is-presenting #s1.section.is-present-slide {
   min-height: 0;
   flex-direction: column;
   overflow: hidden;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
-#s2 .s2-panel.is-active {
-  display: flex;
-}
-#s2 .s2-strip {
+#s2 .s2-panel.is-active { display: flex; }
+
+/* Hero header */
+#s2 .s2-hero {
   flex: 0 0 auto;
-  margin: 0;
-  padding: 0.5rem 0.85rem;
-  border-radius: 10px;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #C9A84C;
-  font-weight: 600;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,168,76,0.18);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 12px;
+  background: rgba(18,18,20,0.75);
+  border: 1px solid rgba(201,168,76,0.28);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
 }
-#s2 .s2-collapse {
+#s2 .s2-hero__icon {
   flex: 0 0 auto;
-}
-#s2 .s2-collapse__btn {
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(201,168,76,0.55);
+  background: rgba(201,168,76,0.08);
   color: #C9A84C;
-  cursor: pointer;
+}
+#s2 .s2-hero__icon svg { width: 22px; height: 22px; }
+#s2 .s2-hero__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.65rem;
+}
+#s2 .s2-hero__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.15;
+}
+#s2 .s2-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  border: 1.5px solid #C9A84C;
+  color: #C9A84C;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
-#s2 .s2-collapse__btn:hover,
-#s2 .s2-collapse__btn:focus-visible {
-  color: #e0c06a;
-  outline: none;
-}
-#s2 .s2-collapse__chevron {
-  display: inline-block;
-  transition: transform 0.2s var(--ease);
-  font-size: 10px;
-  line-height: 1;
-}
-#s2 .s2-collapse.is-open .s2-collapse__chevron {
-  transform: rotate(180deg);
-}
-#s2 .s2-collapse__body {
-  display: none;
-  margin: 0.35rem 0 0;
-  padding: 0.55rem 0.75rem;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.035);
-  border: 1px solid rgba(201,168,76,0.14);
-  color: rgba(255,255,255,0.72);
+#s2 .s2-hero__desc {
+  flex: 1 1 220px;
+  margin: 0;
   font-size: 12px;
-  line-height: 1.45;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.62);
+  max-width: 34rem;
 }
-#s2 .s2-collapse.is-open .s2-collapse__body {
-  display: block;
-}
-#s2 .s2-collapse__body p {
-  margin: 0 0 0.45rem;
-}
-#s2 .s2-collapse__body p:last-child {
-  margin-bottom: 0;
-}
+
+/* Equal columns */
 #s2 .s2-blocks {
-  /* Content-hug equal row: match tallest card, do not fill leftover viewport */
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 0;
   display: flex;
   align-items: stretch;
-  gap: 0.65rem;
+  gap: 0.45rem;
 }
 #s2 .s2-block {
   flex: 1 1 0;
@@ -1695,182 +1694,286 @@ body.is-presenting #s1.section.is-present-slide {
   flex-direction: column;
   min-height: 0;
   min-width: 0;
-  height: auto;
-  align-self: stretch;
-  padding: 0.55rem 0.65rem 0.6rem;
+  padding: 0.45rem 0.55rem;
   border-radius: 12px;
-  background: rgba(18, 18, 20, 0.72);
+  background: rgba(18,18,20,0.72);
   border: 1px solid rgba(201,168,76,0.28);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    0 6px 22px rgba(0,0,0,0.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 6px 22px rgba(0,0,0,0.28);
   overflow: hidden;
 }
 #s2 .s2-block.glass {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
-#s2 .s2-block__label {
+#s2 .s2-block__head {
   flex: 0 0 auto;
-  margin: 0 0 0.4rem;
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.3rem;
+}
+#s2 .s2-ico {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(201,168,76,0.45);
+  background: rgba(201,168,76,0.08);
+  color: #C9A84C;
+}
+#s2 .s2-ico svg { width: 15px; height: 15px; }
+#s2 .s2-block__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.2;
+}
+#s2 .s2-block__pts {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #C9A84C;
-  font-weight: 600;
+  white-space: nowrap;
 }
+
+/* Tables */
 #s2 .s2-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.3;
 }
 #s2 .s2-table th,
 #s2 .s2-table td {
-  padding: 0.28rem 0.35rem;
+  padding: 0.28rem 0.28rem;
   text-align: left;
-  vertical-align: top;
-  border-bottom: 1px solid rgba(201,168,76,0.1);
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(201,168,76,0.12);
 }
 #s2 .s2-table th {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
-  font-weight: 500;
-  padding-top: 0;
-}
-#s2 .s2-table tr:last-child td {
-  border-bottom: none;
-}
-#s2 .s2-table td:first-child {
   color: #C9A84C;
   font-weight: 600;
+  padding-top: 0;
+}
+#s2 .s2-table tr:last-child td { border-bottom: none; }
+#s2 .s2-table td { color: rgba(255,255,255,0.78); }
+#s2 .s2-pts {
+  color: #C9A84C !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  text-align: right !important;
   white-space: nowrap;
   width: 1%;
 }
-#s2 .s2-table td:last-child {
-  color: rgba(255,255,255,0.85);
+#s2 .s2-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201,168,76,0.55);
+  color: #C9A84C;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   white-space: nowrap;
-  width: 1%;
-  text-align: right;
-  font-weight: 600;
+  background: rgba(201,168,76,0.06);
 }
 #s2 .s2-table--pos td:nth-child(2) {
-  text-align: right;
-  white-space: nowrap;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.55);
   font-weight: 600;
+  white-space: nowrap;
   width: 1%;
 }
-#s2 .s2-table--pos td:last-child {
-  text-align: left;
-  font-weight: 400;
-  color: rgba(255,255,255,0.55);
-  white-space: normal;
-}
-#s2 .s2-subparams {
-  list-style: none;
-  margin: 0 0 0.4rem;
-  padding: 0;
-  display: grid;
-  gap: 0.2rem;
+#s2 .s2-table--pos td:first-child {
+  color: #C9A84C;
+  font-weight: 700;
+  white-space: nowrap;
 }
 #s2 .s2-vis-grid {
   flex: 0 1 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: 0.55rem 0.65rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.35rem 0.55rem;
   min-height: 0;
 }
-#s2 .s2-vis-grid .s2-subparams {
-  margin: 0;
-}
-#s2 .s2-vis-scale {
-  min-width: 0;
-}
-#s2 .s2-vis-scale .s2-ref-label {
-  margin-top: 0;
-}
-#s2 .s2-subparams li {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  font-size: 11px;
-  color: rgba(255,255,255,0.8);
-  padding: 0.18rem 0;
-  border-bottom: 1px solid rgba(201,168,76,0.08);
-}
-#s2 .s2-subparams li:last-child {
-  border-bottom: none;
-}
-#s2 .s2-subparams strong {
-  color: #C9A84C;
-  font-weight: 600;
-  white-space: nowrap;
-}
+#s2 .s2-vis-grid .s2-table { font-size: 12px; }
+#s2 .s2-vis-grid .s2-pts { font-size: 13px !important; }
 #s2 .s2-ref-label {
-  margin: 0.15rem 0 0.25rem;
-  font-size: 9px;
+  margin: 0 0 0.2rem;
+  font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: #C9A84C;
+  font-weight: 600;
 }
-#s2 .s2-table--sqft {
-  font-size: 10px;
-}
-#s2 .s2-table--sqft th,
-#s2 .s2-table--sqft td {
-  padding: 0.15rem 0.25rem;
-}
-#s2 .s2-block .s2-collapse {
+
+/* Always-open note panels (default expanded) */
+#s2 .s2-note {
   margin-top: auto;
   flex: 0 0 auto;
-  padding-top: 0.55rem;
+  padding-top: 0.4rem;
   border-top: 1px solid rgba(201,168,76,0.14);
 }
+#s2 .s2-note__head {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.3rem;
+  color: #C9A84C;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#s2 .s2-note__head svg { width: 13px; height: 13px; flex: 0 0 auto; }
+#s2 .s2-note__body {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.68);
+}
+#s2 .s2-note__body p { margin: 0 0 0.28rem; }
+#s2 .s2-note__body p:last-child { margin-bottom: 0; }
+#s2 .s2-tier-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.28rem;
+}
+#s2 .s2-tier-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem;
+  align-items: start;
+  font-size: 11px;
+  line-height: 1.3;
+  color: rgba(255,255,255,0.68);
+}
+
+/* Formula bar */
+#s2 .s2-formula {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 12px;
+  background: rgba(18,18,20,0.82);
+  border: 1px solid rgba(201,168,76,0.28);
+  overflow: hidden;
+}
+#s2 .s2-formula__seg {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+#s2 .s2-formula__seg--grow { flex: 1 1 auto; }
+#s2 .s2-formula__ico {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(201,168,76,0.5);
+  color: #C9A84C;
+  background: rgba(201,168,76,0.08);
+}
+#s2 .s2-formula__ico svg { width: 13px; height: 13px; }
+#s2 .s2-formula__label {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.15;
+}
+#s2 .s2-formula__value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #C9A84C;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+#s2 .s2-formula__op {
+  flex: 0 0 auto;
+  color: rgba(255,255,255,0.55);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 0.15rem;
+}
+#s2 .s2-formula__result {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  background: #C9A84C;
+  color: #111;
+  text-align: center;
+  line-height: 1.15;
+}
+#s2 .s2-formula__result small {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+#s2 .s2-formula__result strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* D2 layout */
 #s2 .s2-d2-layout {
   flex: 1 1 auto;
   min-height: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: 0.65rem;
+  display: flex;
   align-items: stretch;
+  gap: 0.55rem;
 }
 #s2 .s2-d2-col {
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   min-height: 0;
   min-width: 0;
-  padding: 0.55rem 0.7rem 0.65rem;
+  padding: 0.55rem 0.7rem 0.55rem;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,168,76,0.15);
+  background: rgba(18,18,20,0.72);
+  border: 1px solid rgba(201,168,76,0.28);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
   overflow: hidden;
-  gap: 0.4rem;
-}
-#s2 .s2-d2-col__title {
-  margin: 0;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #C9A84C;
-  font-weight: 600;
 }
 #s2 .s2-battle-pair {
-  margin: 0;
-  font-size: 13px;
-  color: rgba(255,255,255,0.85);
-  font-weight: 500;
+  margin: 0 0 0.35rem;
+  font-size: 14px;
+  color: rgba(255,255,255,0.88);
+  font-weight: 600;
 }
-#s2 .s2-battle-pair span {
-  color: #C9A84C;
-}
+#s2 .s2-battle-pair span { color: #C9A84C; }
 #s2 .s2-final-note {
-  margin: 0;
-  font-size: 11px;
+  margin: 0 0 0.45rem;
+  font-size: 12px;
   color: rgba(255,255,255,0.5);
 }
 #s2 .s2-rules {
@@ -1878,78 +1981,51 @@ body.is-presenting #s1.section.is-present-slide {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 #s2 .s2-rules li {
   position: relative;
   margin: 0;
   padding: 0.4rem 0.55rem 0.4rem 0.85rem;
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1.35;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.75);
   border-radius: 8px;
   background: rgba(0,0,0,0.22);
-  border: 1px solid rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.12);
 }
 #s2 .s2-rules li::before {
   content: '';
   position: absolute;
   left: 0.35rem;
-  top: 0.55rem;
-  bottom: 0.55rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
   width: 2px;
   border-radius: 1px;
   background: #C9A84C;
 }
-#s2 .s2-table--params {
-  font-size: 10.5px;
-  table-layout: fixed;
-  width: 100%;
-}
+#s2 .s2-table--params { font-size: 13px; table-layout: fixed; width: 100%; }
 #s2 .s2-table--params th:nth-child(1),
-#s2 .s2-table--params td:first-child {
-  width: 1.6rem;
-  text-align: center;
-}
-#s2 .s2-table--params th:nth-child(2),
-#s2 .s2-table--params td:nth-child(2) {
-  width: 8.5rem;
-  color: #fff;
-  font-weight: 600;
-  white-space: nowrap;
-}
-#s2 .s2-table--params th:nth-child(3),
+#s2 .s2-table--params td:first-child { width: 2rem; text-align: center; color: #C9A84C; font-weight: 700; }
+#s2 .s2-table--params td:nth-child(2) { color: #fff; font-weight: 700; white-space: nowrap; width: 9rem; }
 #s2 .s2-table--params td:last-child {
-  width: auto;
   text-align: left;
   font-weight: 400;
-  color: rgba(255,255,255,0.62);
+  color: rgba(255,255,255,0.65);
   white-space: normal;
   line-height: 1.35;
 }
-#s2 .s2-panel.is-active.has-open-collapse {
-  overflow-y: auto;
-}
+
+#s2 .s2-panel.is-active.has-open-collapse { overflow-y: auto; }
 body.is-presenting #s2.section {
   display: none;
-  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+  padding: 0.85rem clamp(1rem, 2vw, 1.75rem) 0.7rem;
 }
-body.is-presenting #s2.section.is-present-slide {
-  display: flex;
-}
-@media (max-height: 800px) {
-  #s2.section { padding: 1rem clamp(1rem, 2vw, 1.75rem) 0.85rem; }
-  #s2 .s2-heading { font-size: 1.35rem; }
-  #s2 .s2-tab { padding: 0.4rem 1rem; font-size: 10px; }
-  #s2 .s2-table { font-size: 10px; }
-  #s2 .s2-table th, #s2 .s2-table td { padding: 0.2rem 0.28rem; }
-  #s2 .s2-block { padding: 0.45rem 0.55rem 0.5rem; }
-  #s2 .s2-rules li { font-size: 11px; padding: 0.32rem 0.45rem 0.32rem 0.75rem; }
-}
+body.is-presenting #s2.section.is-present-slide { display: flex; }
 @media (max-width: 1100px) {
-  #s2 .s2-vis-grid {
-    grid-template-columns: 1fr;
-  }
+  #s2 .s2-vis-grid { grid-template-columns: 1fr; }
+  #s2 .s2-hero { flex-wrap: wrap; }
+  #s2 .s2-formula { flex-wrap: wrap; }
 }
 
 /* ========== S3 — Store Results ========== */
@@ -2052,6 +2128,9 @@ body.is-presenting #s2.section.is-present-slide {
 #s3 .s3-panel.is-active {
   display: flex;
 }
+#s3 #s3-panel-overview.is-active {
+  gap: 0.65rem;
+}
 #s3 .s3-panel.is-active.has-open-collapse {
   overflow-y: auto;
 }
@@ -2065,14 +2144,14 @@ body.is-presenting #s2.section.is-present-slide {
 #s3 .s3-kpis {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.45rem;
+  gap: 0.55rem;
   flex: 0 0 auto;
 }
 #s3 .s3-kpi {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  padding: 0.55rem 0.65rem 0.5rem;
+  padding: 0.7rem 0.75rem 0.65rem;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(201,168,76,0.15);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
@@ -2164,9 +2243,13 @@ body.is-presenting #s2.section.is-present-slide {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 0.4rem;
-  padding: 0.35rem 0 0;
+  justify-content: stretch;
+  gap: 0.85rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(201,168,76,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
 }
 #s3 .s3-dist__pending {
   margin: auto 0;
@@ -2176,21 +2259,32 @@ body.is-presenting #s2.section.is-present-slide {
   letter-spacing: 0.02em;
 }
 #s3 .s3-dist__row {
+  flex: 1 1 0;
   display: grid;
-  grid-template-columns: 9.5rem 1fr 4.5rem;
+  grid-template-columns: 10.5rem 1fr 4.75rem;
+  align-items: stretch;
+  gap: 0.75rem;
+  min-height: 0;
+}
+#s3 .s3-dist__label,
+#s3 .s3-dist__meta {
+  display: flex;
   align-items: center;
-  gap: 0.55rem;
+  min-height: 0;
 }
 #s3 .s3-dist__label {
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 650;
   color: rgba(255,255,255,0.7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 #s3 .s3-dist__track {
-  height: 10px;
-  border-radius: 999px;
+  height: auto;
+  min-height: 28px;
+  align-self: stretch;
+  border-radius: 10px;
   background: rgba(255,255,255,0.06);
   overflow: hidden;
 }
@@ -2201,10 +2295,45 @@ body.is-presenting #s2.section.is-present-slide {
   transition: width 0.45s var(--ease);
 }
 #s3 .s3-dist__meta {
-  font-size: 11px;
-  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  color: rgba(255,255,255,0.58);
   text-align: right;
+  justify-content: flex-end;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+#s3 .s3-overview-callout {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+#s3 .s3-overview-callout__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(201,168,76,0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+#s3 .s3-overview-callout__label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  font-weight: 600;
+}
+#s3 .s3-overview-callout__value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #C9A84C;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 #s3 .s3-fallback-note {
   position: absolute;
@@ -2287,24 +2416,32 @@ body.is-presenting #s2.section.is-present-slide {
 #s3 .s3-card[data-tier="D"] { border-left: 3px solid #ef4444; }
 #s3 .s3-card__thumb {
   width: 100%;
-  height: 36px;
+  height: 80px;
+  max-height: 80px;
   border-radius: 6px;
   overflow: hidden;
-  background: rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.03);
   flex: 0 0 auto;
 }
 #s3 .s3-card__thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 #s3 .s3-card__thumb.is-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  color: rgba(255,255,255,0.3);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #C9A84C;
+  background: rgba(255,255,255,0.03);
+}
+#s3 .s3-card__thumb.is-empty span {
+  color: #C9A84C;
 }
 #s3 .s3-card__top {
   display: flex;
@@ -2580,7 +2717,7 @@ body.is-presenting #s3.section.is-present-slide {
   #s3 .s3-tab { padding: 0.4rem 0.9rem; font-size: 10px; }
   #s3 .s3-kpi { padding: 0.4rem 0.5rem; }
   #s3 .s3-kpi__value { font-size: 1.45rem; }
-  #s3 .s3-card__thumb { height: 28px; }
+  #s3 .s3-card__thumb { height: 64px; max-height: 64px; }
   #s3 .s3-priority-row {
     grid-template-columns: minmax(0, 1.4fr) auto minmax(6.5rem, 0.8fr) minmax(6.5rem, 0.8fr) minmax(8rem, 1.1fr) auto;
     padding: 0.35rem 0.55rem;
@@ -2934,6 +3071,32 @@ body.is-presenting #s3.section.is-present-slide {
   gap: 0.4rem;
 }
 #s4 .s4-costs-wrap[hidden] { display: none !important; }
+#s4 .s4-costs-actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+#s4 .s4-dl-btn {
+  appearance: none;
+  border: 1px solid rgba(201,168,76,0.45);
+  background: rgba(201,168,76,0.1);
+  color: #C9A84C;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+#s4 .s4-dl-btn:hover,
+#s4 .s4-dl-btn:focus-visible {
+  background: rgba(201,168,76,0.2);
+  border-color: rgba(201,168,76,0.7);
+  outline: none;
+}
 #s4 .s4-table-wrap {
   flex: 1 1 auto;
   min-height: 0;
@@ -3081,6 +3244,7 @@ body.is-presenting #s4.section.is-present-slide {
 }
 
 </style>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <button type="button" class="present-btn" id="present-btn">PRESENT</button>
@@ -3158,46 +3322,59 @@ body.is-presenting #s4.section.is-present-slide {
         <div class="s2-panels">
           <!-- D1 -->
           <div class="s2-panel is-active" role="tabpanel" id="s2-panel-d1" aria-labelledby="s2-tab-d1">
-            <p class="s2-strip glass">D1 — Vivo Brand Strength · 60 Points Total</p>
-
-            <div class="s2-collapse" data-s2-collapse>
-              <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                <span class="s2-collapse__chevron" aria-hidden="true">▾</span> Why 60 points?
-              </button>
-              <div class="s2-collapse__body" hidden>
-                <p>D1 measures what Vivo has built inside the store — independently of any competitor. 60 points because physical brand presence is the foundation. Without it, no competitor battle matters. Asset Tier carries 30 because the type and scale of investment signals commitment. Position carries 10 because first-contact with the customer is disproportionately valuable. Visibility Branding carries 20 because it drives awareness before the customer even reaches the counter.</p>
+            <header class="s2-hero">
+              <div class="s2-hero__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 21h8M12 17v4M7 4h10v3a5 5 0 0 1-10 0V4z"/><path d="M7 4H5a2 2 0 0 0 2 4M17 4h2a2 2 0 0 1-2 4"/></svg>
               </div>
-            </div>
+              <div class="s2-hero__main">
+                <h3 class="s2-hero__title">D1 — Vivo Brand Strength</h3>
+                <span class="s2-pill">60 Points Total</span>
+                <p class="s2-hero__desc">Measures how strongly Vivo is built into the store’s premium asset ecosystem — depth, placement, and visibility combined.</p>
+              </div>
+            </header>
 
             <div class="s2-blocks">
               <article class="s2-block glass">
-                <h3 class="s2-block__label">Asset Tier · 30 Pts</h3>
+                <div class="s2-block__head">
+                  <span class="s2-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg>
+                  </span>
+                  <h3 class="s2-block__title">1. Asset Tier</h3>
+                  <p class="s2-block__pts">30 Points</p>
+                </div>
                 <table class="s2-table">
                   <thead>
                     <tr><th>Tier</th><th>Condition</th><th>Points</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Tier 1</td><td>Shop-in-Shop / X-Zone / Shop Upgrade / Customized Zone present</td><td>30</td></tr>
-                    <tr><td>Tier 2</td><td>No project · 2+ Experience Cabinets</td><td>20</td></tr>
-                    <tr><td>Tier 3</td><td>No project · 1 Experience Cabinet</td><td>12</td></tr>
-                    <tr><td>Tier 0</td><td>No qualifying assets</td><td>0</td></tr>
+                    <tr><td><span class="s2-badge">Tier 1</span></td><td>Shop-in-Shop / X-Zone / Shop Upgrade / Customized Zone present</td><td class="s2-pts">30</td></tr>
+                    <tr><td><span class="s2-badge">Tier 2</span></td><td>No project · 2+ Experience Cabinets</td><td class="s2-pts">20</td></tr>
+                    <tr><td><span class="s2-badge">Tier 3</span></td><td>No project · 1 Experience Cabinet</td><td class="s2-pts">12</td></tr>
+                    <tr><td><span class="s2-badge">Tier 0</span></td><td>No qualifying assets</td><td class="s2-pts">0</td></tr>
                   </tbody>
                 </table>
-                <div class="s2-collapse" data-s2-collapse>
-                  <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                    <span class="s2-collapse__chevron" aria-hidden="true">▾</span> What do these tiers mean?
-                  </button>
-                  <div class="s2-collapse__body" hidden>
-                    <p>Tier 1 — Vivo has built its own dedicated zone inside the store. This is financial commitment, not just presence. A competitor cannot simply place a standee next to it and compete.</p>
-                    <p>Tier 2 — Vivo is present with multiple premium cabinets. Credible, but displaceable.</p>
-                    <p>Tier 3 — Vivo has a foothold. One cabinet means one competitor push can remove us.</p>
-                    <p>Tier 0 — Vivo does not exist in this store's premium asset landscape.</p>
+                <div class="s2-note">
+                  <div class="s2-note__head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.6.6 1 1.4 1 2.2V16h6v-.8c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3z"/></svg>
+                    What do these tiers mean?
                   </div>
+                  <ul class="s2-tier-list">
+                    <li><span class="s2-badge">Tier 1</span><span>Dedicated Vivo zone — financial commitment competitors cannot match with a standee.</span></li>
+                    <li><span class="s2-badge">Tier 2</span><span>Multiple premium cabinets — credible, but displaceable.</span></li>
+                    <li><span class="s2-badge">Tier 3</span><span>One-cabinet foothold — one competitor push can remove us.</span></li>
+                    <li><span class="s2-badge">Tier 0</span><span>No presence in the store’s premium asset landscape.</span></li>
+                  </ul>
                 </div>
               </article>
 
               <article class="s2-block glass">
-                <h3 class="s2-block__label">Asset Position · 10 Pts</h3>
+                <div class="s2-block__head">
+                  <span class="s2-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+                  </span>
+                  <h3 class="s2-block__title">2. Asset Position</h3>
+                  <p class="s2-block__pts">10 Points</p>
+                </div>
                 <table class="s2-table s2-table--pos">
                   <thead>
                     <tr><th>Position</th><th>Score</th><th>Meaning</th></tr>
@@ -3210,71 +3387,129 @@ body.is-presenting #s4.section.is-present-slide {
                     <tr><td>Hidden / Absent</td><td>0 pts</td><td>No customer reach</td></tr>
                   </tbody>
                 </table>
-                <div class="s2-collapse" data-s2-collapse>
-                  <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                    <span class="s2-collapse__chevron" aria-hidden="true">▾</span> Why this scoring?
-                  </button>
-                  <div class="s2-collapse__body" hidden>
-                    <p>Customer attention follows a decay curve from store entry. Position 1 captures the highest purchase-influence moment. Each step back is not linear — it is compounding loss. A Tier 1 asset at Position 4 loses most of its investment value. Position is scored steeply to reflect this reality.</p>
+                <div class="s2-note">
+                  <div class="s2-note__head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.6.6 1 1.4 1 2.2V16h6v-.8c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3z"/></svg>
+                    Why this scoring?
+                  </div>
+                  <div class="s2-note__body">
+                    <p>Customer attention follows a decay curve from store entry. Position 1 captures the highest purchase-influence moment. Each step back is compounding loss — a Tier 1 asset at Position 4 loses most of its investment value.</p>
                   </div>
                 </div>
               </article>
 
               <article class="s2-block glass">
-                <h3 class="s2-block__label">Visibility Branding · 20 Pts</h3>
+                <div class="s2-block__head">
+                  <span class="s2-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </span>
+                  <h3 class="s2-block__title">3. Visibility Branding</h3>
+                  <p class="s2-block__pts">20 Points</p>
+                </div>
                 <div class="s2-vis-grid">
-                  <ul class="s2-subparams">
-                    <li><span>In-shop presence</span><strong>5 pts</strong></li>
-                    <li><span>Out-shop presence</span><strong>5 pts</strong></li>
-                    <li><span>In-shop sq.ft range</span><strong>5 pts</strong></li>
-                    <li><span>Out-shop sq.ft range</span><strong>5 pts</strong></li>
-                  </ul>
-                  <div class="s2-vis-scale">
+                  <table class="s2-table">
+                    <thead>
+                      <tr><th>Branding type</th><th>Points</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>In-shop presence</td><td class="s2-pts">5 pts</td></tr>
+                      <tr><td>Out-shop presence</td><td class="s2-pts">5 pts</td></tr>
+                      <tr><td>In-shop sq.ft range</td><td class="s2-pts">5 pts</td></tr>
+                      <tr><td>Out-shop sq.ft range</td><td class="s2-pts">5 pts</td></tr>
+                    </tbody>
+                  </table>
+                  <div>
                     <p class="s2-ref-label">Sq.ft scale</p>
-                    <table class="s2-table s2-table--sqft">
+                    <table class="s2-table">
                       <thead>
                         <tr><th>Range</th><th>Points</th></tr>
                       </thead>
                       <tbody>
-                        <tr><td>None</td><td>0</td></tr>
-                        <tr><td>1–20 sq.ft</td><td>1 pt</td></tr>
-                        <tr><td>21–50 sq.ft</td><td>2 pts</td></tr>
-                        <tr><td>51–75 sq.ft</td><td>3 pts</td></tr>
-                        <tr><td>76–100 sq.ft</td><td>4 pts</td></tr>
-                        <tr><td>101–120 sq.ft</td><td>4.5 pts</td></tr>
-                        <tr><td>121+ sq.ft</td><td>5 pts</td></tr>
+                        <tr><td>None</td><td class="s2-pts">0</td></tr>
+                        <tr><td>1–20 sq.ft</td><td class="s2-pts">1</td></tr>
+                        <tr><td>21–50 sq.ft</td><td class="s2-pts">2</td></tr>
+                        <tr><td>51–75 sq.ft</td><td class="s2-pts">3</td></tr>
+                        <tr><td>76–100 sq.ft</td><td class="s2-pts">4</td></tr>
+                        <tr><td>101–120 sq.ft</td><td class="s2-pts">4.5</td></tr>
+                        <tr><td>121+ sq.ft</td><td class="s2-pts">5</td></tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                <div class="s2-collapse" data-s2-collapse>
-                  <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                    <span class="s2-collapse__chevron" aria-hidden="true">▾</span> Why visibility branding matters?
-                  </button>
-                  <div class="s2-collapse__body" hidden>
-                    <p>Visibility branding drives awareness before the customer reaches any asset. In-shop branding reinforces the decision at point of purchase. Out-shop branding intercepts the customer before they enter. Space matters because a 10 sq.ft sticker and a 150 sq.ft backwall are not the same signal — to the customer or to the retailer.</p>
+                <div class="s2-note">
+                  <div class="s2-note__head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.6.6 1 1.4 1 2.2V16h6v-.8c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3z"/></svg>
+                    Why visibility branding matters?
+                  </div>
+                  <div class="s2-note__body">
+                    <p>Drives awareness before the customer reaches any asset. In-shop reinforces the buy decision; out-shop intercepts before entry. A 10 sq.ft sticker and a 150 sq.ft backwall are not the same signal.</p>
                   </div>
                 </div>
               </article>
+            </div>
+
+            <div class="s2-formula" aria-label="D1 scoring formula">
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2L12 16.8 5.7 20.8 8 13.6 2 9.2h7.6L12 2z"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">D1 Total</div>
+                  <div class="s2-formula__value">60 Points</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">=</span>
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">Asset Tier</div>
+                  <div class="s2-formula__value">30 Points</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">+</span>
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">Asset Position</div>
+                  <div class="s2-formula__value">10 Points</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">+</span>
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">Visibility Branding</div>
+                  <div class="s2-formula__value">20 Points</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">=</span>
+              <div class="s2-formula__result">
+                <small>D1 Brand Strength</small>
+                <strong>60 Points Total</strong>
+              </div>
             </div>
           </div>
 
           <!-- D2 -->
           <div class="s2-panel" role="tabpanel" id="s2-panel-d2" aria-labelledby="s2-tab-d2" hidden>
-            <p class="s2-strip glass">D2 — Vivo vs Competitor Fighting Score · 40 Points Total</p>
-
-            <div class="s2-collapse" data-s2-collapse>
-              <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                <span class="s2-collapse__chevron" aria-hidden="true">▾</span> Why 40 points?
-              </button>
-              <div class="s2-collapse__body" hidden>
-                <p>D2 measures Vivo's position relative to Samsung and Apple — head-to-head, parameter by parameter. 40 points because relative dominance determines which brand the store staff instinctively recommend. D1 tells us what Vivo has. D2 tells us whether it is enough to win.</p>
+            <header class="s2-hero">
+              <div class="s2-hero__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m14.5 17.5 3 3 4-4M3 14l7-7 4 4-7 7H3v-4zM14 7l3-3 3 3-3 3"/></svg>
               </div>
-            </div>
+              <div class="s2-hero__main">
+                <h3 class="s2-hero__title">D2 — Fighting Score</h3>
+                <span class="s2-pill">40 Points Total</span>
+                <p class="s2-hero__desc">Measures Vivo’s position relative to Samsung and Apple — head-to-head, parameter by parameter. Relative dominance decides who the store recommends.</p>
+              </div>
+            </header>
 
             <div class="s2-d2-layout">
               <div class="s2-d2-col glass">
-                <h3 class="s2-d2-col__title">Battle Structure</h3>
+                <div class="s2-block__head">
+                  <span class="s2-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 12h7M11 7l5 5-5 5M20 5v14"/></svg>
+                  </span>
+                  <h3 class="s2-block__title">1. Battle Structure</h3>
+                  <p class="s2-block__pts">40 Points</p>
+                </div>
                 <p class="s2-battle-pair">Two battles: Vivo vs <span>Samsung</span> · Vivo vs <span>Apple</span></p>
                 <p class="s2-final-note">D2 final = average of both battle scores.</p>
                 <ul class="s2-rules">
@@ -3282,18 +3517,25 @@ body.is-presenting #s4.section.is-present-slide {
                   <li>Both brands absent on a parameter → score = 0 for that battle</li>
                   <li>Final = (Samsung battle + Apple battle) ÷ 2</li>
                 </ul>
-                <div class="s2-collapse" data-s2-collapse>
-                  <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                    <span class="s2-collapse__chevron" aria-hidden="true">▾</span> How is each battle scored?
-                  </button>
-                  <div class="s2-collapse__body" hidden>
-                    <p>Each battle is fought across 3 parameters. On each parameter: Vivo higher = Win. Equal = Draw (0.5). Competitor higher = Loss (0). Final battle score = (Wins + 0.5 × Draws) ÷ 3 × 40. If a competitor is not present in the store at all — Vivo wins that battle by default. You cannot lose a fight your opponent didn't show up to.</p>
+                <div class="s2-note">
+                  <div class="s2-note__head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.6.6 1 1.4 1 2.2V16h6v-.8c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3z"/></svg>
+                    How is each battle scored?
+                  </div>
+                  <div class="s2-note__body">
+                    <p>Each battle spans 3 parameters. Vivo higher = Win. Equal = Draw (0.5). Competitor higher = Loss (0). Battle score = (Wins + 0.5 × Draws) ÷ 3 × 40. Absent competitor = default win.</p>
                   </div>
                 </div>
               </div>
 
               <div class="s2-d2-col glass">
-                <h3 class="s2-d2-col__title">3 Parameters</h3>
+                <div class="s2-block__head">
+                  <span class="s2-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="18" cy="18" r="3"/></svg>
+                  </span>
+                  <h3 class="s2-block__title">2. Three Parameters</h3>
+                  <p class="s2-block__pts">Compared</p>
+                </div>
                 <table class="s2-table s2-table--params">
                   <thead>
                     <tr><th>#</th><th>Parameter</th><th>What is compared</th></tr>
@@ -3304,14 +3546,55 @@ body.is-presenting #s4.section.is-present-slide {
                     <tr><td>3</td><td>Visibility Branding</td><td>In-shop + Out-shop sq.ft combined — Vivo vs competitor</td></tr>
                   </tbody>
                 </table>
-                <div class="s2-collapse" data-s2-collapse>
-                  <button type="button" class="s2-collapse__btn" aria-expanded="false">
-                    <span class="s2-collapse__chevron" aria-hidden="true">▾</span> Why only these 3 parameters?
-                  </button>
-                  <div class="s2-collapse__body" hidden>
-                    <p>These 3 parameters cover the complete customer influence chain: what is physically present (Asset Presence), where it sits in the customer journey (Asset Position), and how much visual territory Vivo owns (Visibility Branding). Every other variable is either a subset of these or too subjective to score consistently across 30 stores.</p>
+                <div class="s2-note">
+                  <div class="s2-note__head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c.6.6 1 1.4 1 2.2V16h6v-.8c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3z"/></svg>
+                    Why only these 3 parameters?
+                  </div>
+                  <div class="s2-note__body">
+                    <p>These cover the full influence chain: physical presence, customer journey position, and visual territory. Everything else is a subset — or too subjective to score across 30 stores.</p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div class="s2-formula" aria-label="D2 scoring formula">
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2L12 16.8 5.7 20.8 8 13.6 2 9.2h7.6L12 2z"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">D2 Total</div>
+                  <div class="s2-formula__value">40 Points</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">=</span>
+              <span class="s2-formula__op">(</span>
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 14V8l4 6 4-6v6"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">Samsung Battle</div>
+                  <div class="s2-formula__value">Max 40</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">+</span>
+              <div class="s2-formula__seg">
+                <span class="s2-formula__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c2.5 3 4 5.5 4 8a4 4 0 1 1-8 0c0-2.5 1.5-5 4-8z"/><path d="M9 20h6"/></svg></span>
+                <div>
+                  <div class="s2-formula__label">Apple Battle</div>
+                  <div class="s2-formula__value">Max 40</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">)</span>
+              <span class="s2-formula__op">÷</span>
+              <div class="s2-formula__seg">
+                <div>
+                  <div class="s2-formula__label">Average</div>
+                  <div class="s2-formula__value">2</div>
+                </div>
+              </div>
+              <span class="s2-formula__op">=</span>
+              <div class="s2-formula__result">
+                <small>D2 Fighting Score</small>
+                <strong>40 Points Total</strong>
               </div>
             </div>
           </div>
@@ -3378,6 +3661,16 @@ body.is-presenting #s4.section.is-present-slide {
             </div>
 
             <div class="s3-dist" id="s3-dist" aria-label="Score distribution by tier"></div>
+            <div class="s3-overview-callout" id="s3-overview-callout" aria-label="Score summary">
+              <div class="s3-overview-callout__item">
+                <span class="s3-overview-callout__label">Avg Score</span>
+                <span class="s3-overview-callout__value" id="s3-overview-avg">—</span>
+              </div>
+              <div class="s3-overview-callout__item">
+                <span class="s3-overview-callout__label">Benchmark</span>
+                <span class="s3-overview-callout__value" id="s3-overview-bench">75</span>
+              </div>
+            </div>
           </div>
 
           <!-- Store Results -->
@@ -3468,8 +3761,12 @@ body.is-presenting #s4.section.is-present-slide {
               <p class="s4-empty__sub">Upgrade assessments will appear here once AM approves field submissions.</p>
             </div>
             <div class="s4-costs-wrap" id="s4-costs-wrap" hidden>
+              <div class="s4-costs-actions">
+                <button type="button" class="s4-dl-btn" id="s4-dl-excel">↓ Download Excel</button>
+                <button type="button" class="s4-dl-btn" id="s4-dl-pdf">↓ Download PDF</button>
+              </div>
               <div class="s4-table-wrap">
-                <table class="s4-table" id="s4-cost-table" aria-label="Projected upgrade costs">
+                <table class="s4-table" id="costs-table" aria-label="Projected upgrade costs">
                   <thead>
                     <tr>
                       <th scope="col">Store</th>
@@ -4091,6 +4388,7 @@ body.is-presenting #s4.section.is-present-slide {
     DATA_SOURCE = source;
     updateS1Stats();
     updateDataSourceNotes();
+    refreshS1Chains();
     if (typeof refreshS3 === "function") refreshS3();
   }
 
@@ -4172,11 +4470,18 @@ body.is-presenting #s4.section.is-present-slide {
   function updateDataSourceNotes() {
     const note = document.getElementById("s1-data-note");
     if (note) {
-      if (DATA_SOURCE === "fallback") {
+      if (DATA_SOURCE === "live") {
+        const n = getS1SourceStores().length;
+        note.hidden = false;
+        note.textContent = "Showing " + n + " approved audits";
+        note.classList.add("is-live");
+      } else if (DATA_SOURCE === "fallback") {
         note.hidden = false;
         note.textContent = "Scores pending re-audit";
+        note.classList.remove("is-live");
       } else {
         note.hidden = true;
+        note.classList.remove("is-live");
       }
     }
     document.querySelectorAll(".store-card__legacy-note").forEach((el) => {
@@ -4364,6 +4669,9 @@ body.is-presenting #s4.section.is-present-slide {
     const list = getS3Stores();
     const n = list.length;
     const counts = s3TierCounts(list);
+    const avg = n
+      ? Math.round(list.reduce((sum, s) => sum + (Number(s.total) || 0), 0) / n)
+      : 0;
     const setText = (id, text) => {
       const el = document.getElementById(id);
       if (el) el.textContent = text;
@@ -4379,6 +4687,8 @@ body.is-presenting #s4.section.is-present-slide {
     setText("s3-kpi-b-pct", pct(counts.B));
     setText("s3-kpi-c-pct", pct(counts.C));
     setText("s3-kpi-d-pct", pct(counts.D));
+    setText("s3-overview-avg", n ? String(avg) : "—");
+    setText("s3-overview-bench", String(FRAMEWORK.BENCHMARK));
 
     const dist = document.getElementById("s3-dist");
     if (!dist) return;
@@ -4421,12 +4731,50 @@ body.is-presenting #s4.section.is-present-slide {
     return Math.max(1, Math.ceil(total / S3_PAGE_SIZE));
   }
 
+  function storeInitials(name) {
+    const chain = typeof getChainFromName === "function" ? getChainFromName(name) : "";
+    if (chain && chain !== "Other") {
+      const parts = chain.split(/\s+/).filter(Boolean);
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    const parts = String(name || "")
+      .replace(/\(.*?\)/g, " ")
+      .trim()
+      .split(/\s+/)
+      .filter((p) => p && !/^(AREA|STORE|CHN)$/i.test(p));
+    if (!parts.length) return "?";
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+
+  function getStorePhoto(store_code, store_name) {
+    if (typeof STORE_PHOTOS === "undefined" || !STORE_PHOTOS) return null;
+    if (store_code && STORE_PHOTOS[store_code]) return STORE_PHOTOS[store_code];
+    if (store_name && STORE_PHOTOS[store_name]) return STORE_PHOTOS[store_name];
+    return null;
+  }
+
+  function photoEntryFromMap(raw) {
+    if (!raw) return null;
+    if (Array.isArray(raw)) {
+      const list = raw.filter((p) => p && typeof p.src === "string" && p.src.length > 32);
+      if (!list.length) return null;
+      return list.find((p) => p.label === "entrance_outside") || list[0];
+    }
+    if (typeof raw === "string" && raw.length > 32) {
+      return { label: "entrance_outside", display: "Entrance", src: raw };
+    }
+    return null;
+  }
+
   function s3CardHtml(store) {
     const tier = getTier(store.total);
     const channel = String(store.channel || "MT").toUpperCase() === "GT" ? "GT" : "MT";
     const legacy = store.legacyFramework || S3_USING_FALLBACK
       ? '<p class="s3-card__legacy">Previous framework score</p>'
       : "";
+    const initials = escapeHtml(storeInitials(store.name));
     return (
       '<article class="s3-card glass" role="listitem" tabindex="0" data-code="' +
       escapeHtml(store.code || "") +
@@ -4437,7 +4785,11 @@ body.is-presenting #s4.section.is-present-slide {
       '">' +
       '<div class="s3-card__thumb is-empty" data-store="' +
       escapeHtml(store.name || "") +
-      '"><span>…</span></div>' +
+      '" data-code="' +
+      escapeHtml(store.code || "") +
+      '"><span>' +
+      initials +
+      "</span></div>" +
       '<div class="s3-card__top">' +
       '<h3 class="s3-card__name">' +
       escapeHtml(store.name || "") +
@@ -4471,10 +4823,13 @@ body.is-presenting #s4.section.is-present-slide {
   function hydrateS3CardThumbs() {
     document.querySelectorAll("#s3-store-grid .s3-card__thumb").forEach((thumb) => {
       if (thumb.getAttribute("data-hydrated") === "1") return;
-      const name = thumb.getAttribute("data-store");
-      const photo = PhotoEngine.entrance(name);
-      if (!photo) {
-        thumb.innerHTML = "<span>N/A</span>";
+      const name = thumb.getAttribute("data-store") || "";
+      const code = thumb.getAttribute("data-code") || "";
+      const mapped = getStorePhoto(code, name);
+      const photo = photoEntryFromMap(mapped) || PhotoEngine.entrance(name);
+      if (!photo || !photo.src) {
+        thumb.classList.add("is-empty");
+        thumb.innerHTML = "<span>" + escapeHtml(storeInitials(name)) + "</span>";
         thumb.setAttribute("data-hydrated", "1");
         return;
       }
@@ -4483,7 +4838,7 @@ body.is-presenting #s4.section.is-present-slide {
       thumb.classList.remove("is-empty");
       thumb.innerHTML = "";
       thumb.appendChild(img);
-      PhotoEngine.bindLazy(img, photo.src, name + ":entrance");
+      PhotoEngine.bindLazy(img, photo.src, (code || name) + ":entrance");
       thumb.setAttribute("data-hydrated", "1");
     });
   }
@@ -4717,6 +5072,7 @@ body.is-presenting #s4.section.is-present-slide {
   const CHAIN_PREFIXES = [
     { re: /^Poorvika Appliances\b/i, chain: "Poorvika", subtype: "Appliances" },
     { re: /^Poorvika\b/i, chain: "Poorvika", subtype: "Mobile" },
+    { re: /^Reliance Digital\b/i, chain: "Reliance Digital" },
     { re: /^Chennai Mobiles\b/i, chain: "Chennai Mobiles" },
     { re: /^Sangeetha Mobiles\b/i, chain: "Sangeetha Mobiles" },
     { re: /^Supreme Mobiles\b/i, chain: "Supreme Mobiles" },
@@ -4724,15 +5080,18 @@ body.is-presenting #s4.section.is-present-slide {
     { re: /^Mayur Mobiles\b/i, chain: "Mayur Mobiles" },
     { re: /^Pothys Hyper\b/i, chain: "Pothys Hyper" },
     { re: /^Vasanth\s*&?\s*Co\b/i, chain: "Vasanth & Co" },
+    { re: /^Sathya\b/i, chain: "Sathya" },
     { re: /^Croma\b/i, chain: "Croma" }
   ];
 
   /* Locked display order (ties after store-count sort). Not alphabetical. */
   const LOCKED_RETAIL_CHAIN_ORDER = [
+    "Reliance Digital",
+    "Croma",
     "Poorvika",
     "Chennai Mobiles",
+    "Sathya",
     "Sangeetha Mobiles",
-    "Croma",
     "Vasanth & Co",
     "Supreme Mobiles",
     "Sun Mobiles",
@@ -4740,13 +5099,33 @@ body.is-presenting #s4.section.is-present-slide {
     "Pothys Hyper"
   ];
 
+  function getChainFromName(name) {
+    const n = String(name || "").toUpperCase();
+    if (n.startsWith("POORVIKA")) return "Poorvika";
+    if (n.startsWith("RELIANCE DIGITAL")) return "Reliance Digital";
+    if (n.startsWith("CROMA")) return "Croma";
+    if (n.startsWith("CHENNAI MOBILES")) return "Chennai Mobiles";
+    if (n.startsWith("SATHYA")) return "Sathya";
+    if (n.startsWith("SANGEETHA")) return "Sangeetha Mobiles";
+    if (n.startsWith("VASANTH")) return "Vasanth & Co";
+    if (n.startsWith("SUPREME")) return "Supreme Mobiles";
+    if (n.startsWith("SUN MOBILES")) return "Sun Mobiles";
+    if (n.startsWith("MAYUR")) return "Mayur Mobiles";
+    if (n.startsWith("POTHYS")) return "Pothys Hyper";
+    return "Other";
+  }
+
   function resolveStoreChain(store) {
-    const name = store.name || "";
+    const name = store.name || store.store_name || "";
     for (let i = 0; i < CHAIN_PREFIXES.length; i++) {
       const def = CHAIN_PREFIXES[i];
       if (def.re.test(name)) {
         return { chain: def.chain, subtype: def.subtype || null, channel: store.channel || "MT" };
       }
+    }
+    const chain = getChainFromName(name);
+    if (chain !== "Other") {
+      return { chain: chain, subtype: null, channel: store.channel || "MT" };
     }
     const mobiles = name.match(/^(.+?\bMobiles)\b/i);
     if (mobiles) return { chain: mobiles[1], subtype: null, channel: store.channel || "MT" };
@@ -4756,9 +5135,17 @@ body.is-presenting #s4.section.is-present-slide {
     return { chain: first, subtype: null, channel: store.channel || "MT" };
   }
 
+  function getS1SourceStores() {
+    if (DATA_SOURCE === "live" && ACTIVE_STORES.length) {
+      const scored = ACTIVE_STORES.filter((s) => Number(s.total) > 0);
+      if (scored.length) return scored;
+    }
+    return STORES.map(normalizeEmbeddedStore);
+  }
+
   function groupRetailChains(channel) {
     const map = new Map();
-    STORES.forEach((store) => {
+    getS1SourceStores().forEach((store) => {
       const info = resolveStoreChain(store);
       if (info.channel !== channel) return;
       const key = info.chain + "|" + info.channel;
@@ -4832,21 +5219,18 @@ body.is-presenting #s4.section.is-present-slide {
     return Number.isFinite(n) ? n : 24;
   }
 
+  let s1RetailRows = [];
+
   function wireRetailRow(opts) {
     const viewport = document.getElementById(opts.viewportId);
     const track = document.getElementById(opts.trackId);
     const prev = document.getElementById(opts.prevId);
     const next = document.getElementById(opts.nextId);
-    if (!viewport || !track || !prev || !next) return;
+    if (!viewport || !track || !prev || !next) return null;
 
-    const chains = groupRetailChains(opts.channel);
-    const channelLabel = opts.channel === "GT" ? "General Trade (GT)" : "Modern Trade (MT)";
-    track.innerHTML = chains
-      .map((c, i) => retailCardHtml(c, channelLabel, i === 0))
-      .join("");
-
-    /* Card width always matches MT slot math (6-up), so GT cards stay same width + left-aligned. */
     const widthSlots = opts.widthSlots || opts.visible || 6;
+    const channelLabel = opts.channel === "GT" ? "General Trade (GT)" : "Modern Trade (MT)";
+
     const syncCardWidth = () => {
       const gap = getLayoutGapPx(track);
       const widthSource = opts.widthFromId
@@ -4868,6 +5252,20 @@ body.is-presenting #s4.section.is-present-slide {
       next.classList.toggle("is-dimmed", atEnd);
     };
 
+    const render = () => {
+      const chains = groupRetailChains(opts.channel);
+      track.innerHTML = chains
+        .map((c, i) => retailCardHtml(c, channelLabel, i === 0))
+        .join("");
+      viewport.scrollLeft = 0;
+      syncCardWidth();
+      updateArrows();
+      requestAnimationFrame(() => {
+        syncCardWidth();
+        updateArrows();
+      });
+    };
+
     const scrollByCard = (dir) => {
       const { gap, cardW } = syncCardWidth();
       viewport.scrollBy({ left: dir * (cardW + gap), behavior: "smooth" });
@@ -4875,26 +5273,33 @@ body.is-presenting #s4.section.is-present-slide {
 
     prev.onclick = () => scrollByCard(-1);
     next.onclick = () => scrollByCard(1);
-    viewport.addEventListener("scroll", updateArrows, { passive: true });
-
-    syncCardWidth();
-    updateArrows();
-    requestAnimationFrame(() => {
-      syncCardWidth();
-      updateArrows();
-    });
-
-    if ("ResizeObserver" in window) {
-      const ro = new ResizeObserver(() => {
-        syncCardWidth();
-        updateArrows();
-      });
-      ro.observe(viewport);
-      if (opts.widthFromId) {
-        const src = document.getElementById(opts.widthFromId);
-        if (src) ro.observe(src);
+    if (!viewport.getAttribute("data-s1-wired")) {
+      viewport.addEventListener("scroll", updateArrows, { passive: true });
+      viewport.setAttribute("data-s1-wired", "1");
+      if ("ResizeObserver" in window) {
+        const ro = new ResizeObserver(() => {
+          syncCardWidth();
+          updateArrows();
+        });
+        ro.observe(viewport);
+        if (opts.widthFromId) {
+          const src = document.getElementById(opts.widthFromId);
+          if (src) ro.observe(src);
+        }
       }
     }
+
+    render();
+    return { render: render, opts: opts };
+  }
+
+  function refreshS1Chains() {
+    if (!s1RetailRows.length) return;
+    s1RetailRows.forEach((row) => {
+      if (row && typeof row.render === "function") row.render();
+    });
+    updateS1Stats();
+    updateDataSourceNotes();
   }
 
   function initS1() {
@@ -4902,25 +5307,27 @@ body.is-presenting #s4.section.is-present-slide {
     if (!ACTIVE_STORES.length) useFallbackStores("initial paint");
     else updateS1Stats();
 
-    wireRetailRow({
-      channel: "MT",
-      visible: 6,
-      widthSlots: 6,
-      viewportId: "s1-mt-viewport",
-      trackId: "s1-mt-track",
-      prevId: "s1-mt-prev",
-      nextId: "s1-mt-next"
-    });
-    wireRetailRow({
-      channel: "GT",
-      visible: 3,
-      widthSlots: 6,
-      widthFromId: "s1-mt-viewport",
-      viewportId: "s1-gt-viewport",
-      trackId: "s1-gt-track",
-      prevId: "s1-gt-prev",
-      nextId: "s1-gt-next"
-    });
+    s1RetailRows = [
+      wireRetailRow({
+        channel: "MT",
+        visible: 6,
+        widthSlots: 6,
+        viewportId: "s1-mt-viewport",
+        trackId: "s1-mt-track",
+        prevId: "s1-mt-prev",
+        nextId: "s1-mt-next"
+      }),
+      wireRetailRow({
+        channel: "GT",
+        visible: 3,
+        widthSlots: 6,
+        widthFromId: "s1-mt-viewport",
+        viewportId: "s1-gt-viewport",
+        trackId: "s1-gt-track",
+        prevId: "s1-gt-prev",
+        nextId: "s1-gt-next"
+      })
+    ].filter(Boolean);
   }
 
   const SPACE_REALITY_LABEL = {
@@ -5374,55 +5781,21 @@ body.is-presenting #s4.section.is-present-slide {
     { key: "type5", label: "Hard POSM" }
   ];
 
-  // MOCK DATA — remove when live
-  const USE_S4_MOCK = true;
-  const MOCK_S4 = [
-    {
-      store_name: "Poorvika Appliances Mogappair",
-      store_code: "TND091001",
-      channel: "MT",
-      total_score: 10,
-      upgrades: {
-        type1: { possible: true, projectType: "x-zone-island", sqft: 80 },
-        type3: { possible: true, tableType: "single-side", size: "6ft", qty: 1 },
-        type5: { possible: true, litStandee: 2, mdfStandee: 1 }
-      },
-      am_costs: { type1: 350000, type3: 45000, type5: 12000 }
-    },
-    {
-      store_name: "Chennai Mobiles OMR",
-      store_code: "TND091002",
-      channel: "MT",
-      total_score: 14,
-      upgrades: {
-        type2: { possible: true, projectType: "shop-upgrade", sqft: 160 },
-        type4: {
-          possible: true,
-          location: "both",
-          inshopType: "premium",
-          outshopType: "traditional",
-          qty: 1
-        }
-      },
-      am_costs: { type2: 280000, type4: 75000 }
-    },
-    {
-      store_name: "Mayur Mobiles",
-      store_code: "TND091003",
-      channel: "GT",
-      total_score: 22,
-      upgrades: {
-        type3: { possible: true, tableType: "island-table", size: "2.5x2.5", qty: 2 },
-        type4: { possible: true, location: "in-shop", inshopType: "traditional", qty: 1 }
-      },
-      am_costs: {}
-    }
-  ];
-
   let s4Stores = [];
   let s4Page = 1;
   let s4Loaded = false;
   let s4Loading = false;
+
+  function lookupStoreChannel(code, name) {
+    const list = ACTIVE_STORES.length ? ACTIVE_STORES : [];
+    const byCode = code ? list.find((s) => String(s.code || "") === String(code)) : null;
+    if (byCode && byCode.channel) return byCode.channel;
+    const byName = name
+      ? list.find((s) => String(s.name || "").toLowerCase() === String(name).toLowerCase())
+      : null;
+    if (byName && byName.channel) return byName.channel;
+    return "";
+  }
 
   function formatCost(val) {
     if (val == null || val === "" || Number(val) === 0 || Number.isNaN(Number(val))) return "—";
@@ -5465,10 +5838,10 @@ body.is-presenting #s4.section.is-present-slide {
     } else if (key === "type5") {
       const lit = type.litStandee != null ? type.litStandee : type.litQty;
       const mdf = type.mdfStandee != null ? type.mdfStandee : type.mdfQty;
-      const ped = type.pedestalQty;
-      if (lit != null && Number(lit) > 0) bits.push("Lit ×" + lit);
-      if (ped != null && Number(ped) > 0) bits.push("Pedestal ×" + ped);
-      if (mdf != null && Number(mdf) > 0) bits.push("MDF ×" + mdf);
+      const ped = type.pedestalProp != null ? type.pedestalProp : type.pedestalQty;
+      if (lit != null && Number(lit) > 0) bits.push("Lit Standee ×" + lit);
+      if (ped != null && Number(ped) > 0) bits.push("Pedestal Prop ×" + ped);
+      if (mdf != null && Number(mdf) > 0) bits.push("MDF Standee ×" + mdf);
       if (type.other) bits.push(String(type.other));
     }
     return bits.filter(Boolean).join(" · ");
@@ -5687,11 +6060,19 @@ body.is-presenting #s4.section.is-present-slide {
         } catch (e) {
           fd = {};
         }
+        const channelRaw = (
+          (fd.s1 && fd.s1.channel) ||
+          a.channel ||
+          lookupStoreChannel(a.store_code, a.store_name) ||
+          "MT"
+        ).toString().toUpperCase();
         return {
           store_name: a.store_name,
           store_code: a.store_code,
-          channel: (fd.s1 && fd.s1.channel) || a.channel || "",
+          channel: channelRaw === "GT" ? "GT" : "MT",
           total_score: a.total_score,
+          d1_score: a.d1_score,
+          d2_score: a.d2_score,
           upgrades: fd.s4 || {},
           am_costs: fd.am_costs || {}
         };
@@ -5705,11 +6086,6 @@ body.is-presenting #s4.section.is-present-slide {
     try {
       if (forceEmpty) {
         applyS4Stores([]);
-        return;
-      }
-      // MOCK DATA — remove when live
-      if (USE_S4_MOCK && !(opts && opts.forceLive)) {
-        applyS4Stores(MOCK_S4);
         s4Loaded = true;
         return;
       }
@@ -5719,11 +6095,59 @@ body.is-presenting #s4.section.is-present-slide {
       applyS4Stores(upgradeStores);
       s4Loaded = true;
     } catch (e) {
-      console.warn("[V5] loadS4Data", e);
+      console.error("S4 load error:", e);
       showS4EmptyState();
     } finally {
       s4Loading = false;
     }
+  }
+
+  function downloadCostsExcel(upgradeStores) {
+    const list = Array.isArray(upgradeStores) ? upgradeStores : s4Stores;
+    if (typeof XLSX === "undefined") {
+      console.error("SheetJS (XLSX) not loaded");
+      return;
+    }
+    const rows = list.map((s) => {
+      const costs = s.am_costs || {};
+      const total = Object.values(costs).reduce((acc, v) => acc + (Number(v) || 0), 0);
+      return {
+        Store: s.store_name,
+        Channel: s.channel,
+        "New Project (₹)": costs.type1 || "",
+        "Old Project Upgrade (₹)": costs.type2 || "",
+        "Experience Table (₹)": costs.type3 || "",
+        "New Branding (₹)": costs.type4 || "",
+        "Hard POSM (₹)": costs.type5 || "",
+        "Total (₹)": total || ""
+      };
+    });
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Projected Costs");
+    XLSX.writeFile(wb, "PBG_Projected_Costs.xlsx");
+  }
+
+  function downloadCostsPDF() {
+    const table = document.getElementById("costs-table") || document.getElementById("s4-cost-table");
+    if (!table) return;
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+    printWindow.document.write(
+      "<html><head><title>PBG Projected Costs</title><style>" +
+      "body{font-family:system-ui,sans-serif;background:#fff;color:#000;padding:16px}" +
+      "h2{font-size:18px;margin:0 0 12px}" +
+      "table{width:100%;border-collapse:collapse}" +
+      "th,td{border:1px solid #ccc;padding:8px;font-size:12px;text-align:left}" +
+      "th{background:#1a1a2e;color:#C9A84C}" +
+      "</style></head><body>" +
+      "<h2>PBG Store Upgrade — Projected Costs</h2>" +
+      table.outerHTML +
+      "</body></html>"
+    );
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
   }
 
   function syncS4PanelOverflow(panel) {
@@ -5818,15 +6242,13 @@ body.is-presenting #s4.section.is-present-slide {
         renderUpgradeAssessment(s4Stores);
       }
     });
-    /* Gate 4 test helpers — remove with mock */
+    /* Gate 4 empty-state helper */
     window.__s4ShowEmpty = function () {
       s4Loaded = true;
       applyS4Stores([]);
     };
-    window.__s4ShowMock = function () {
-      s4Loaded = true;
-      applyS4Stores(MOCK_S4);
-    };
+    document.getElementById("s4-dl-excel")?.addEventListener("click", () => downloadCostsExcel(s4Stores));
+    document.getElementById("s4-dl-pdf")?.addEventListener("click", downloadCostsPDF);
   }
 
   /* ========== Presentation mode (Teams-safe, no fullscreen API) ========== */
@@ -6048,7 +6470,6 @@ body.is-presenting #s4.section.is-present-slide {
       openStoreModal: openStoreModal,
       applyS4Stores: applyS4Stores,
       loadS4Data: loadS4Data,
-      MOCK_S4: MOCK_S4,
       enterPresent: enterPresent,
       exitPresent: exitPresent,
       presentNext: presentNext,
