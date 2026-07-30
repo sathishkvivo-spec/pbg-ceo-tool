@@ -364,6 +364,9 @@ body.is-presenting .present-exit { display: none !important; }
 .present-arrow.prev { left: 0.75rem; }
 .present-arrow.next { right: 0.75rem; }
 .present-arrow:hover { background: rgba(201,168,76,0.32); }
+body.is-presenting:has(#s4.is-present-slide) .present-arrow {
+  display: none !important;
+}
 
 body.is-presenting .main { margin-left: 0; }
 body.is-presenting .section {
@@ -2727,8 +2730,13 @@ body.is-presenting #s3.section.is-present-slide {
 
 /* ========== S4 — Upgrade & Costing ========== */
 #s4.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
   height: 100vh;
   max-height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
   padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
@@ -2874,8 +2882,10 @@ body.is-presenting #s3.section.is-present-slide {
   min-height: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 0.55rem;
+  grid-template-rows: repeat(3, auto);
+  align-items: start;
+  align-content: start;
+  gap: 1.5rem;
   overflow: hidden;
 }
 #s4 .s4-card {
@@ -2889,7 +2899,8 @@ body.is-presenting #s3.section.is-present-slide {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  min-height: 0;
+  height: auto;
+  align-self: start;
 }
 #s4 .s4-card::before {
   content: '';
@@ -2974,8 +2985,7 @@ body.is-presenting #s3.section.is-present-slide {
   white-space: nowrap;
 }
 #s4 .s4-upgrade-list {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 0 0 auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -3100,11 +3110,20 @@ body.is-presenting #s3.section.is-present-slide {
 #s4 .s4-table-wrap {
   flex: 1 1 auto;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid rgba(201,168,76,0.15);
   background: rgba(255,255,255,0.03);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+#s4 .s4-table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
 }
 #s4 .s4-table {
   width: 100%;
@@ -3125,12 +3144,16 @@ body.is-presenting #s3.section.is-present-slide {
   white-space: nowrap;
 }
 #s4 .s4-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   font-size: 9px;
   font-weight: 650;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.42);
-  background: rgba(0,0,0,0.25);
+  background: #0c0c12;
+  box-shadow: 0 1px 0 rgba(201,168,76,0.12);
 }
 #s4 .s4-table th:first-child,
 #s4 .s4-table td:first-child {
@@ -3160,26 +3183,56 @@ body.is-presenting #s3.section.is-present-slide {
   color: #C9A84C !important;
   font-weight: 700;
 }
-#s4 .s4-table__grand td {
-  border-bottom: none;
-  padding-top: 0.65rem;
-  padding-bottom: 0.65rem;
-  background: rgba(201,168,76,0.06);
-  font-size: 13px;
+#s4 .s4-costs-fade {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3.25rem;
+  background: linear-gradient(
+    to top,
+    #050508 0%,
+    rgba(5, 5, 8, 0.95) 25%,
+    rgba(5, 5, 8, 0.55) 60%,
+    transparent 100%
+  );
+  z-index: 3;
 }
-#s4 .s4-table__grand-label {
-  text-align: left !important;
+#s4 .s4-costs-fade::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.45rem;
+  width: 2.5rem;
+  height: 2px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: rgba(201, 168, 76, 0.45);
+}
+#s4 .s4-grand {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-top: 1px solid rgba(201,168,76,0.22);
+  background: rgba(201,168,76,0.06);
+}
+#s4 .s4-grand__label {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.78) !important;
+  color: rgba(255,255,255,0.78);
   font-size: 12px;
 }
-#s4 .s4-table__grand-value {
-  color: #C9A84C !important;
+#s4 .s4-grand__value {
+  color: #C9A84C;
   font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
 }
 #s4 .s4-collapse {
   flex: 0 0 auto;
@@ -3228,17 +3281,20 @@ body.is-presenting #s3.section.is-present-slide {
 }
 body.is-presenting #s4.section {
   display: none;
-  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 4.25rem;
 }
 body.is-presenting #s4.section.is-present-slide {
   display: flex;
+  padding-bottom: 4.25rem;
 }
 @media (max-height: 800px) {
   #s4.section { padding: 1rem clamp(1rem, 2vw, 1.75rem) 0.85rem; }
   #s4 .s4-heading { font-size: 1.35rem; }
   #s4 .s4-tab { padding: 0.4rem 0.9rem; font-size: 10px; }
-  #s4 .s4-card { padding: 0.5rem 0.6rem; }
+  #s4 .s4-grid { gap: 1.5rem; }
+  #s4 .s4-card { padding: 0.45rem 0.55rem; gap: 0.3rem; }
   #s4 .s4-card__name { font-size: 0.85rem; }
+  #s4 .s4-upgrade-row { font-size: 10px; }
   #s4 .s4-table th,
   #s4 .s4-table td { padding: 0.35rem 0.4rem; }
 }
@@ -3766,21 +3822,28 @@ body.is-presenting #s4.section.is-present-slide {
                 <button type="button" class="s4-dl-btn" id="s4-dl-pdf">↓ Download PDF</button>
               </div>
               <div class="s4-table-wrap">
-                <table class="s4-table" id="costs-table" aria-label="Projected upgrade costs">
-                  <thead>
-                    <tr>
-                      <th scope="col">Store</th>
-                      <th scope="col">Channel</th>
-                      <th scope="col">New Project</th>
-                      <th scope="col">Old Project Upgrade</th>
-                      <th scope="col">Experience Table</th>
-                      <th scope="col">New Branding</th>
-                      <th scope="col">Hard POSM</th>
-                      <th scope="col">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="s4-cost-tbody"></tbody>
-                </table>
+                <div class="s4-table-scroll" id="s4-table-scroll">
+                  <table class="s4-table" id="costs-table" aria-label="Projected upgrade costs">
+                    <thead>
+                      <tr>
+                        <th scope="col">Store</th>
+                        <th scope="col">Channel</th>
+                        <th scope="col">New Project</th>
+                        <th scope="col">Old Project Upgrade</th>
+                        <th scope="col">Experience Table</th>
+                        <th scope="col">New Branding</th>
+                        <th scope="col">Hard POSM</th>
+                        <th scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="s4-cost-tbody"></tbody>
+                  </table>
+                  <div class="s4-costs-fade" aria-hidden="true"></div>
+                </div>
+                <div class="s4-grand" id="s4-grand-total">
+                  <span class="s4-grand__label">Grand Total</span>
+                  <span class="s4-grand__value" id="s4-grand-value">—</span>
+                </div>
               </div>
               <div class="s4-collapse" data-s4-collapse>
                 <button type="button" class="s4-collapse__btn" aria-expanded="false">
@@ -4247,8 +4310,8 @@ body.is-presenting #s4.section.is-present-slide {
     D2_MAX: 40,
     TOTAL_MAX: 100,
     BENCHMARK: 75,
-    API_STORES: "http://72.61.172.149/pbg-api/stores",
-    API_AUDITS: "http://72.61.172.149/pbg-api/audits",
+    API_STORES: "https://quarters-william-important-residence.trycloudflare.com/pbg-api/stores",
+    API_AUDITS: "https://quarters-william-important-residence.trycloudflare.com/pbg-api/audits",
     TIERS: [
       { min: 75, max: 100, grade: "A", label: "Dominant", color: "#22c55e" },
       { min: 50, max: 74, grade: "B", label: "Competitive", color: "#eab308" },
@@ -5751,7 +5814,7 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   /* ========== S4 — Upgrade & Costing ========== */
-  const S4_PAGE_SIZE = 4;
+  const S4_PAGE_SIZE = 6;
   const S4_UPGRADE_META = [
     { key: "type1", label: "New Project" },
     { key: "type2", label: "Old Project Upgrade" },
@@ -5957,6 +6020,7 @@ body.is-presenting #s4.section.is-present-slide {
     const empty = document.getElementById("s4-empty-costs");
     const wrap = document.getElementById("s4-costs-wrap");
     const tbody = document.getElementById("s4-cost-tbody");
+    const grandEl = document.getElementById("s4-grand-value");
     if (!list.length) {
       if (empty) empty.hidden = false;
       if (wrap) wrap.hidden = true;
@@ -6001,13 +6065,8 @@ body.is-presenting #s4.section.is-present-slide {
       })
       .join("");
 
-    tbody.innerHTML =
-      rows +
-      '<tr class="s4-table__grand">' +
-      '<td class="s4-table__grand-label" colspan="7">Grand Total</td>' +
-      '<td class="s4-table__grand-value">' +
-      formatCost(grand || null) +
-      "</td></tr>";
+    tbody.innerHTML = rows;
+    if (grandEl) grandEl.textContent = formatCost(grand || null);
   }
 
   function applyS4Stores(stores) {
@@ -6068,7 +6127,7 @@ body.is-presenting #s4.section.is-present-slide {
         s4Loaded = true;
         return;
       }
-      const res = await fetch("http://72.61.172.149/pbg-api/audits?status=approved");
+      const res = await fetch("https://quarters-william-important-residence.trycloudflare.com/pbg-api/audits?status=approved");
       const audits = await res.json();
       const upgradeStores = parseS4Audits(audits);
       applyS4Stores(upgradeStores);
@@ -6110,6 +6169,7 @@ body.is-presenting #s4.section.is-present-slide {
   function downloadCostsPDF() {
     const table = document.getElementById("costs-table") || document.getElementById("s4-cost-table");
     if (!table) return;
+    const grandVal = document.getElementById("s4-grand-value")?.textContent || "—";
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
     printWindow.document.write(
@@ -6119,9 +6179,13 @@ body.is-presenting #s4.section.is-present-slide {
       "table{width:100%;border-collapse:collapse}" +
       "th,td{border:1px solid #ccc;padding:8px;font-size:12px;text-align:left}" +
       "th{background:#1a1a2e;color:#C9A84C}" +
+      ".grand{margin-top:12px;padding:10px 12px;border:1px solid #ccc;font-weight:700;display:flex;justify-content:space-between}" +
       "</style></head><body>" +
       "<h2>PBG Store Upgrade — Projected Costs</h2>" +
       table.outerHTML +
+      '<div class="grand"><span>Grand Total</span><span>' +
+      grandVal +
+      "</span></div>" +
       "</body></html>"
     );
     printWindow.document.close();
