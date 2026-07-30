@@ -1682,24 +1682,33 @@ body.is-presenting #s1.section.is-present-slide {
   margin-bottom: 0;
 }
 #s2 .s2-blocks {
-  flex: 1 1 auto;
+  /* Content-hug equal row: match tallest card, do not fill leftover viewport */
+  flex: 0 1 auto;
   min-height: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.65rem;
+  display: flex;
   align-items: stretch;
+  gap: 0.65rem;
 }
 #s2 .s2-block {
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   min-height: 0;
   min-width: 0;
+  height: auto;
+  align-self: stretch;
   padding: 0.55rem 0.65rem 0.6rem;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,168,76,0.15);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+  background: rgba(18, 18, 20, 0.72);
+  border: 1px solid rgba(201,168,76,0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 6px 22px rgba(0,0,0,0.35);
   overflow: hidden;
+}
+#s2 .s2-block.glass {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 #s2 .s2-block__label {
   flex: 0 0 auto;
@@ -1767,6 +1776,23 @@ body.is-presenting #s1.section.is-present-slide {
   display: grid;
   gap: 0.2rem;
 }
+#s2 .s2-vis-grid {
+  flex: 0 1 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 0.55rem 0.65rem;
+  align-items: start;
+  min-height: 0;
+}
+#s2 .s2-vis-grid .s2-subparams {
+  margin: 0;
+}
+#s2 .s2-vis-scale {
+  min-width: 0;
+}
+#s2 .s2-vis-scale .s2-ref-label {
+  margin-top: 0;
+}
 #s2 .s2-subparams li {
   display: flex;
   justify-content: space-between;
@@ -1800,7 +1826,9 @@ body.is-presenting #s1.section.is-present-slide {
 }
 #s2 .s2-block .s2-collapse {
   margin-top: auto;
-  padding-top: 0.4rem;
+  flex: 0 0 auto;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(201,168,76,0.14);
 }
 #s2 .s2-d2-layout {
   flex: 1 1 auto;
@@ -1917,6 +1945,11 @@ body.is-presenting #s2.section.is-present-slide {
   #s2 .s2-table th, #s2 .s2-table td { padding: 0.2rem 0.28rem; }
   #s2 .s2-block { padding: 0.45rem 0.55rem 0.5rem; }
   #s2 .s2-rules li { font-size: 11px; padding: 0.32rem 0.45rem 0.32rem 0.75rem; }
+}
+@media (max-width: 1100px) {
+  #s2 .s2-vis-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ========== S3 — Store Results ========== */
@@ -3189,27 +3222,31 @@ body.is-presenting #s4.section.is-present-slide {
 
               <article class="s2-block glass">
                 <h3 class="s2-block__label">Visibility Branding · 20 Pts</h3>
-                <ul class="s2-subparams">
-                  <li><span>In-shop presence</span><strong>5 pts</strong></li>
-                  <li><span>Out-shop presence</span><strong>5 pts</strong></li>
-                  <li><span>In-shop sq.ft range</span><strong>5 pts</strong></li>
-                  <li><span>Out-shop sq.ft range</span><strong>5 pts</strong></li>
-                </ul>
-                <p class="s2-ref-label">Sq.ft scale</p>
-                <table class="s2-table s2-table--sqft">
-                  <thead>
-                    <tr><th>Range</th><th>Points</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>None</td><td>0</td></tr>
-                    <tr><td>1–20 sq.ft</td><td>1 pt</td></tr>
-                    <tr><td>21–50 sq.ft</td><td>2 pts</td></tr>
-                    <tr><td>51–75 sq.ft</td><td>3 pts</td></tr>
-                    <tr><td>76–100 sq.ft</td><td>4 pts</td></tr>
-                    <tr><td>101–120 sq.ft</td><td>4.5 pts</td></tr>
-                    <tr><td>121+ sq.ft</td><td>5 pts</td></tr>
-                  </tbody>
-                </table>
+                <div class="s2-vis-grid">
+                  <ul class="s2-subparams">
+                    <li><span>In-shop presence</span><strong>5 pts</strong></li>
+                    <li><span>Out-shop presence</span><strong>5 pts</strong></li>
+                    <li><span>In-shop sq.ft range</span><strong>5 pts</strong></li>
+                    <li><span>Out-shop sq.ft range</span><strong>5 pts</strong></li>
+                  </ul>
+                  <div class="s2-vis-scale">
+                    <p class="s2-ref-label">Sq.ft scale</p>
+                    <table class="s2-table s2-table--sqft">
+                      <thead>
+                        <tr><th>Range</th><th>Points</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr><td>None</td><td>0</td></tr>
+                        <tr><td>1–20 sq.ft</td><td>1 pt</td></tr>
+                        <tr><td>21–50 sq.ft</td><td>2 pts</td></tr>
+                        <tr><td>51–75 sq.ft</td><td>3 pts</td></tr>
+                        <tr><td>76–100 sq.ft</td><td>4 pts</td></tr>
+                        <tr><td>101–120 sq.ft</td><td>4.5 pts</td></tr>
+                        <tr><td>121+ sq.ft</td><td>5 pts</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
                 <div class="s2-collapse" data-s2-collapse>
                   <button type="button" class="s2-collapse__btn" aria-expanded="false">
                     <span class="s2-collapse__chevron" aria-hidden="true">▾</span> Why visibility branding matters?
