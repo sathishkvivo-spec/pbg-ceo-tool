@@ -2543,13 +2543,504 @@ body.is-presenting #s3.section.is-present-slide {
   #s3 .s3-priority-fade { height: 1.85rem; }
 }
 
+/* ========== S4 — Upgrade & Costing ========== */
+#s4.section {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+}
+#s4 .section__frame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+#s4 .s4-head {
+  flex: 0 0 auto;
+  margin: 0 0 0.45rem;
+}
+#s4 .section__eyebrow.section-label {
+  position: static;
+  margin: 0 0 0.2rem;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #C9A84C;
+  text-transform: uppercase;
+  opacity: 1;
+}
+#s4 .s4-heading {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #fff;
+}
+#s4 .s4-tabs {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0;
+  flex: 0 0 auto;
+  margin: 0 0 0.55rem;
+  border-bottom: 1px solid rgba(201,168,76,0.18);
+}
+#s4 .s4-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: rgba(255,255,255,0.45);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.15rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+#s4 .s4-tab:hover,
+#s4 .s4-tab:focus-visible {
+  color: #C9A84C;
+  outline: none;
+}
+#s4 .s4-tab.is-active,
+#s4 .s4-tab[aria-selected="true"] {
+  color: #C9A84C;
+  border-bottom-color: #C9A84C;
+}
+#s4 .s4-panels {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+#s4 .s4-panel {
+  display: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.4rem;
+}
+#s4 .s4-panel.is-active {
+  display: flex;
+}
+#s4 .s4-panel.is-active.has-open-collapse {
+  overflow-y: auto;
+}
+#s4 .s4-empty {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.55rem;
+  padding: 1rem;
+}
+#s4 .s4-empty[hidden] { display: none !important; }
+#s4 .s4-empty__icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: rgba(201,168,76,0.7);
+  margin-bottom: 0.15rem;
+}
+#s4 .s4-empty__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#s4 .s4-empty__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.78);
+  letter-spacing: -0.01em;
+}
+#s4 .s4-empty__sub {
+  margin: 0;
+  max-width: 26rem;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.42);
+}
+#s4 .s4-assess-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.4rem;
+}
+#s4 .s4-assess-wrap[hidden] { display: none !important; }
+#s4 .s4-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  overflow: hidden;
+}
+#s4 .s4-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem 0.6rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 0;
+}
+#s4 .s4-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+}
+#s4 .s4-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+#s4 .s4-card__name {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 650;
+  color: #fff;
+  line-height: 1.25;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#s4 .s4-card__badges {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+#s4 .s4-channel {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+#s4 .s4-channel[data-channel="MT"] {
+  color: #C9A84C;
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.35);
+}
+#s4 .s4-channel[data-channel="GT"] {
+  color: #60a5fa;
+  background: rgba(96,165,250,0.12);
+  border-color: rgba(96,165,250,0.35);
+}
+#s4 .s4-tier-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  opacity: 0.9;
+}
+#s4 .s4-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  flex: 0 0 auto;
+}
+#s4 .s4-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: #C9A84C;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  white-space: nowrap;
+}
+#s4 .s4-upgrade-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+#s4 .s4-upgrade-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 0.65rem;
+  align-items: baseline;
+  font-size: 11px;
+  line-height: 1.3;
+}
+#s4 .s4-upgrade-detail {
+  color: rgba(255,255,255,0.55);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#s4 .s4-upgrade-detail strong {
+  color: rgba(255,255,255,0.78);
+  font-weight: 600;
+}
+#s4 .s4-upgrade-cost {
+  color: rgba(255,255,255,0.72);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#s4 .s4-card__foot {
+  flex: 0 0 auto;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(201,168,76,0.14);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+#s4 .s4-card__total {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #C9A84C;
+  letter-spacing: -0.01em;
+}
+#s4 .s4-card__no-cost {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(255,255,255,0.42);
+  font-style: italic;
+}
+#s4 .s4-pager {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+#s4 .s4-pager[hidden] { display: none !important; }
+#s4 .s4-pager__btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.28);
+  color: rgba(255,255,255,0.65);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#s4 .s4-pager__btn:hover:not(:disabled),
+#s4 .s4-pager__btn:focus-visible:not(:disabled) {
+  color: #C9A84C;
+  border-color: rgba(201,168,76,0.55);
+  outline: none;
+}
+#s4 .s4-pager__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+#s4 .s4-pager__label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+}
+#s4 .s4-costs-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.4rem;
+}
+#s4 .s4-costs-wrap[hidden] { display: none !important; }
+#s4 .s4-table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(201,168,76,0.15);
+  background: rgba(255,255,255,0.03);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+#s4 .s4-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 11px;
+}
+#s4 .s4-table th,
+#s4 .s4-table td {
+  padding: 0.45rem 0.5rem;
+  text-align: right;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  vertical-align: middle;
+  color: rgba(255,255,255,0.72);
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#s4 .s4-table th {
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.42);
+  background: rgba(0,0,0,0.25);
+}
+#s4 .s4-table th:first-child,
+#s4 .s4-table td:first-child {
+  text-align: left;
+  width: 22%;
+}
+#s4 .s4-table th:nth-child(2),
+#s4 .s4-table td:nth-child(2) {
+  text-align: center;
+  width: 7%;
+}
+#s4 .s4-table__store {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+#s4 .s4-table__store-name {
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+#s4 .s4-table__row-total {
+  color: #C9A84C !important;
+  font-weight: 700;
+}
+#s4 .s4-table__grand td {
+  border-bottom: none;
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  background: rgba(201,168,76,0.06);
+  font-size: 13px;
+}
+#s4 .s4-table__grand-label {
+  text-align: left !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78) !important;
+  font-size: 12px;
+}
+#s4 .s4-table__grand-value {
+  color: #C9A84C !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+#s4 .s4-collapse {
+  flex: 0 0 auto;
+}
+#s4 .s4-collapse__btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: rgba(201,168,76,0.85);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+#s4 .s4-collapse__btn:hover,
+#s4 .s4-collapse__btn:focus-visible {
+  color: #C9A84C;
+  outline: none;
+}
+#s4 .s4-collapse__chevron {
+  display: inline-block;
+  transition: transform 0.2s var(--ease);
+  font-size: 10px;
+}
+#s4 .s4-collapse.is-open .s4-collapse__chevron {
+  transform: rotate(-180deg);
+}
+#s4 .s4-collapse__body {
+  margin-top: 0.35rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(201,168,76,0.14);
+  font-size: 11px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.68);
+  max-height: 22vh;
+  overflow-y: auto;
+}
+#s4 .s4-collapse__body p {
+  margin: 0;
+}
+body.is-presenting #s4.section {
+  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+}
+body.is-presenting #s4.section.is-present-slide {
+  display: flex;
+}
+@media (max-height: 800px) {
+  #s4.section { padding: 1rem clamp(1rem, 2vw, 1.75rem) 0.85rem; }
+  #s4 .s4-heading { font-size: 1.35rem; }
+  #s4 .s4-tab { padding: 0.4rem 0.9rem; font-size: 10px; }
+  #s4 .s4-card { padding: 0.5rem 0.6rem; }
+  #s4 .s4-card__name { font-size: 0.85rem; }
+  #s4 .s4-table th,
+  #s4 .s4-table td { padding: 0.35rem 0.4rem; }
+}
+
 </style>
 </head>
 <body>
   <button type="button" class="present-btn" id="present-btn">Present</button>
 
   <div class="present-chrome" aria-hidden="true">
-    <div class="present-counter" id="present-counter">1 / 3</div>
+    <div class="present-counter" id="present-counter">1 / 4</div>
     <button type="button" class="present-exit" id="present-exit">Exit</button>
     <button type="button" class="present-arrow prev" id="present-prev" aria-label="Previous">‹</button>
     <button type="button" class="present-arrow next" id="present-next" aria-label="Next">›</button>
@@ -2559,6 +3050,7 @@ body.is-presenting #s3.section.is-present-slide {
     <a href="#s1" class="nav-dot-active" data-label="WODs Overview" aria-label="WODs Overview" aria-current="true"></a>
     <a href="#s2" class="nav-dot-inactive" data-label="Scoring Logic" aria-label="Scoring Logic"></a>
     <a href="#s3" class="nav-dot-inactive" data-label="Store Results" aria-label="Store Results"></a>
+    <a href="#s4" class="nav-dot-inactive" data-label="Upgrade & Costing" aria-label="Upgrade & Costing"></a>
   </nav>
 
   <main class="main">
@@ -2872,6 +3364,87 @@ body.is-presenting #s3.section.is-present-slide {
           </div>
 
           <p class="s3-fallback-note" id="s3-fallback-note" hidden>Scores pending re-audit · Displaying previous framework data</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="s4" aria-labelledby="s4-title">
+      <div class="section__frame reveal">
+        <div class="s4-head">
+          <p class="section__eyebrow section-label">Section 04</p>
+          <h2 class="s4-heading" id="s4-title">Upgrade &amp; Costing</h2>
+        </div>
+
+        <div class="s4-tabs" role="tablist" aria-label="Upgrade and costing views">
+          <button type="button" class="s4-tab is-active" role="tab" id="s4-tab-assessment" aria-selected="true" aria-controls="s4-panel-assessment" data-s4-tab="assessment">Upgrade Assessment</button>
+          <button type="button" class="s4-tab" role="tab" id="s4-tab-costs" aria-selected="false" aria-controls="s4-panel-costs" data-s4-tab="costs">Projected Costs</button>
+        </div>
+
+        <div class="s4-panels">
+          <div class="s4-panel is-active" role="tabpanel" id="s4-panel-assessment" aria-labelledby="s4-tab-assessment">
+            <div class="s4-empty" id="s4-empty-assessment" hidden>
+              <div class="s4-empty__icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 38V14l16-8 16 8v24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M18 38V26h12v12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M14 20h6M28 20h6M24 10v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M34 30l4-4 4 4M38 26v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <p class="s4-empty__title">Re-audit in progress</p>
+              <p class="s4-empty__sub">Upgrade assessments will appear here once AM approves field submissions.</p>
+            </div>
+            <div class="s4-assess-wrap" id="s4-assess-wrap" hidden>
+              <div class="s4-grid" id="s4-upgrade-grid" role="list" aria-label="Store upgrade assessments"></div>
+              <nav class="s4-pager" id="s4-pager" aria-label="Upgrade assessment pages" hidden>
+                <button type="button" class="s4-pager__btn" id="s4-page-prev" aria-label="Previous page" disabled>← Previous</button>
+                <span class="s4-pager__label" id="s4-page-label">Page 1 of 1</span>
+                <button type="button" class="s4-pager__btn" id="s4-page-next" aria-label="Next page" disabled>Next →</button>
+              </nav>
+            </div>
+          </div>
+
+          <div class="s4-panel" role="tabpanel" id="s4-panel-costs" aria-labelledby="s4-tab-costs" hidden>
+            <div class="s4-empty" id="s4-empty-costs" hidden>
+              <div class="s4-empty__icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 38V14l16-8 16 8v24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M18 38V26h12v12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M14 20h6M28 20h6M24 10v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M34 30l4-4 4 4M38 26v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <p class="s4-empty__title">Re-audit in progress</p>
+              <p class="s4-empty__sub">Upgrade assessments will appear here once AM approves field submissions.</p>
+            </div>
+            <div class="s4-costs-wrap" id="s4-costs-wrap" hidden>
+              <div class="s4-table-wrap">
+                <table class="s4-table" id="s4-cost-table" aria-label="Projected upgrade costs">
+                  <thead>
+                    <tr>
+                      <th scope="col">Store</th>
+                      <th scope="col">Channel</th>
+                      <th scope="col">New Project</th>
+                      <th scope="col">Old Project Upgrade</th>
+                      <th scope="col">Experience Table</th>
+                      <th scope="col">New Branding</th>
+                      <th scope="col">Hard POSM</th>
+                      <th scope="col">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="s4-cost-tbody"></tbody>
+                </table>
+              </div>
+              <div class="s4-collapse" data-s4-collapse>
+                <button type="button" class="s4-collapse__btn" aria-expanded="false">
+                  <span class="s4-collapse__chevron" aria-hidden="true">▾</span> How are costs determined?
+                </button>
+                <div class="s4-collapse__body" hidden>
+                  <p>Projected costs are filled by the HO AM during audit submission review — not estimated by the tool. Each cost reflects the specific upgrade possibility identified in that store's physical audit. Grand total = total investment required to address all identified upgrade opportunities across priority stores.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -4716,8 +5289,470 @@ body.is-presenting #s3.section.is-present-slide {
     });
   }
 
+  /* ========== S4 — Upgrade & Costing ========== */
+  const S4_PAGE_SIZE = 4;
+  const S4_UPGRADE_META = [
+    { key: "type1", label: "New Project" },
+    { key: "type2", label: "Old Project Upgrade" },
+    { key: "type3", label: "Experience Table" },
+    { key: "type4", label: "New Branding" },
+    { key: "type5", label: "Hard POSM" }
+  ];
+
+  // MOCK DATA — remove when live
+  const USE_S4_MOCK = true;
+  const MOCK_S4 = [
+    {
+      store_name: "Poorvika Appliances Mogappair",
+      store_code: "TND091001",
+      channel: "MT",
+      total_score: 10,
+      upgrades: {
+        type1: { possible: true, projectType: "x-zone-island", sqft: 80 },
+        type3: { possible: true, tableType: "single-side", size: "6ft", qty: 1 },
+        type5: { possible: true, litStandee: 2, mdfStandee: 1 }
+      },
+      am_costs: { type1: 350000, type3: 45000, type5: 12000 }
+    },
+    {
+      store_name: "Chennai Mobiles OMR",
+      store_code: "TND091002",
+      channel: "MT",
+      total_score: 14,
+      upgrades: {
+        type2: { possible: true, projectType: "shop-upgrade", sqft: 160 },
+        type4: {
+          possible: true,
+          location: "both",
+          inshopType: "premium",
+          outshopType: "traditional",
+          qty: 1
+        }
+      },
+      am_costs: { type2: 280000, type4: 75000 }
+    },
+    {
+      store_name: "Mayur Mobiles",
+      store_code: "TND091003",
+      channel: "GT",
+      total_score: 22,
+      upgrades: {
+        type3: { possible: true, tableType: "island-table", size: "2.5x2.5", qty: 2 },
+        type4: { possible: true, location: "in-shop", inshopType: "traditional", qty: 1 }
+      },
+      am_costs: {}
+    }
+  ];
+
+  let s4Stores = [];
+  let s4Page = 1;
+  let s4Loaded = false;
+  let s4Loading = false;
+
+  function formatCost(val) {
+    if (val == null || val === "" || Number(val) === 0 || Number.isNaN(Number(val))) return "—";
+    return "₹" + Number(val).toLocaleString("en-IN");
+  }
+
+  function s4UpgradeOn(type) {
+    if (!type || typeof type !== "object") return false;
+    return !!(type.possible || type.yes);
+  }
+
+  function s4Humanize(val) {
+    if (val == null || val === "") return "";
+    return String(val)
+      .replace(/[_-]+/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+      .trim();
+  }
+
+  function s4SpaceDetail(key, type) {
+    if (!type) return "";
+    const bits = [];
+    if (key === "type1" || key === "type2") {
+      if (type.projectType) bits.push(s4Humanize(type.projectType));
+      if (type.xzoneSubtype) bits.push(s4Humanize(type.xzoneSubtype));
+      if (type.sqft != null && type.sqft !== "") bits.push(type.sqft + " sq.ft");
+    } else if (key === "type3") {
+      if (type.tableType) bits.push(s4Humanize(type.tableType));
+      if (type.size) bits.push(String(type.size));
+      if (type.qty != null && type.qty !== "") bits.push("Qty " + type.qty);
+    } else if (key === "type4") {
+      if (type.location) bits.push(s4Humanize(type.location));
+      if (type.inshopType) bits.push("In: " + s4Humanize(type.inshopType));
+      const inQty = type.inshopQty != null ? type.inshopQty : type.qty;
+      if (inQty != null && inQty !== "" && String(type.location || "").toLowerCase() !== "out-shop") {
+        bits.push("×" + inQty);
+      }
+      if (type.outshopType) bits.push("Out: " + s4Humanize(type.outshopType));
+      if (type.outshopQty != null && type.outshopQty !== "") bits.push("Out ×" + type.outshopQty);
+    } else if (key === "type5") {
+      const lit = type.litStandee != null ? type.litStandee : type.litQty;
+      const mdf = type.mdfStandee != null ? type.mdfStandee : type.mdfQty;
+      const ped = type.pedestalQty;
+      if (lit != null && Number(lit) > 0) bits.push("Lit ×" + lit);
+      if (ped != null && Number(ped) > 0) bits.push("Pedestal ×" + ped);
+      if (mdf != null && Number(mdf) > 0) bits.push("MDF ×" + mdf);
+      if (type.other) bits.push(String(type.other));
+    }
+    return bits.filter(Boolean).join(" · ");
+  }
+
+  function s4StoreTotal(store) {
+    const costs = store.am_costs || {};
+    let sum = 0;
+    let any = false;
+    S4_UPGRADE_META.forEach((u) => {
+      const t = (store.upgrades || {})[u.key];
+      if (!s4UpgradeOn(t)) return;
+      const n = Number(costs[u.key]);
+      if (Number.isFinite(n) && n > 0) {
+        sum += n;
+        any = true;
+      }
+    });
+    return { sum: sum, any: any };
+  }
+
+  function s4ActiveUpgrades(store) {
+    return S4_UPGRADE_META.filter((u) => s4UpgradeOn((store.upgrades || {})[u.key]));
+  }
+
+  function showS4EmptyState() {
+    s4Stores = [];
+    const emptyA = document.getElementById("s4-empty-assessment");
+    const emptyC = document.getElementById("s4-empty-costs");
+    const wrapA = document.getElementById("s4-assess-wrap");
+    const wrapC = document.getElementById("s4-costs-wrap");
+    if (emptyA) emptyA.hidden = false;
+    if (emptyC) emptyC.hidden = false;
+    if (wrapA) wrapA.hidden = true;
+    if (wrapC) wrapC.hidden = true;
+  }
+
+  function renderUpgradeAssessment(stores) {
+    s4Stores = Array.isArray(stores) ? stores : [];
+    const empty = document.getElementById("s4-empty-assessment");
+    const wrap = document.getElementById("s4-assess-wrap");
+    const grid = document.getElementById("s4-upgrade-grid");
+    const pager = document.getElementById("s4-pager");
+    if (!s4Stores.length) {
+      if (empty) empty.hidden = false;
+      if (wrap) wrap.hidden = true;
+      return;
+    }
+    if (empty) empty.hidden = true;
+    if (wrap) wrap.hidden = false;
+
+    const pages = Math.max(1, Math.ceil(s4Stores.length / S4_PAGE_SIZE));
+    s4Page = clamp(s4Page, 1, pages);
+    const start = (s4Page - 1) * S4_PAGE_SIZE;
+    const pageStores = s4Stores.slice(start, start + S4_PAGE_SIZE);
+
+    if (grid) {
+      grid.innerHTML = pageStores
+        .map((store) => {
+          const channel = String(store.channel || "MT").toUpperCase() === "GT" ? "GT" : "MT";
+          const tier = getTier(store.total_score);
+          const active = s4ActiveUpgrades(store);
+          const chips = active
+            .map((u) => '<span class="s4-chip">' + escapeHtml(u.label) + "</span>")
+            .join("");
+          const rows = active
+            .map((u) => {
+              const t = store.upgrades[u.key] || {};
+              const detail = s4SpaceDetail(u.key, t);
+              const cost = formatCost((store.am_costs || {})[u.key]);
+              return (
+                '<div class="s4-upgrade-row">' +
+                '<span class="s4-upgrade-detail"><strong>' +
+                escapeHtml(u.label) +
+                "</strong>" +
+                (detail ? " · " + escapeHtml(detail) : "") +
+                "</span>" +
+                '<span class="s4-upgrade-cost">' +
+                cost +
+                "</span></div>"
+              );
+            })
+            .join("");
+          const tot = s4StoreTotal(store);
+          const foot = tot.any
+            ? '<p class="s4-card__total">Total · ' + formatCost(tot.sum) + "</p>"
+            : '<p class="s4-card__no-cost">No upgrade cost assessed yet</p>';
+          return (
+            '<article class="s4-card glass" role="listitem">' +
+            '<div class="s4-card__top">' +
+            '<h3 class="s4-card__name" title="' +
+            escapeHtml(store.store_name || "") +
+            '">' +
+            escapeHtml(store.store_name || "") +
+            "</h3>" +
+            '<div class="s4-card__badges">' +
+            '<span class="s4-channel" data-channel="' +
+            channel +
+            '">' +
+            channel +
+            '</span><span class="s4-tier-pill" style="color:' +
+            tier.color +
+            '">Tier ' +
+            tier.grade +
+            "</span></div></div>" +
+            '<div class="s4-chips">' +
+            chips +
+            "</div>" +
+            '<div class="s4-upgrade-list">' +
+            rows +
+            "</div>" +
+            '<div class="s4-card__foot">' +
+            foot +
+            "</div></article>"
+          );
+        })
+        .join("");
+    }
+
+    if (pager) {
+      const showPager = s4Stores.length > S4_PAGE_SIZE;
+      pager.hidden = !showPager;
+      const label = document.getElementById("s4-page-label");
+      const prev = document.getElementById("s4-page-prev");
+      const next = document.getElementById("s4-page-next");
+      if (label) label.textContent = "Page " + s4Page + " of " + pages;
+      if (prev) prev.disabled = s4Page <= 1;
+      if (next) next.disabled = s4Page >= pages;
+    }
+  }
+
+  function renderProjectedCosts(stores) {
+    const list = Array.isArray(stores) ? stores : [];
+    const empty = document.getElementById("s4-empty-costs");
+    const wrap = document.getElementById("s4-costs-wrap");
+    const tbody = document.getElementById("s4-cost-tbody");
+    if (!list.length) {
+      if (empty) empty.hidden = false;
+      if (wrap) wrap.hidden = true;
+      return;
+    }
+    if (empty) empty.hidden = true;
+    if (wrap) wrap.hidden = false;
+    if (!tbody) return;
+
+    let grand = 0;
+    const rows = list
+      .map((store) => {
+        const channel = String(store.channel || "MT").toUpperCase() === "GT" ? "GT" : "MT";
+        const costs = store.am_costs || {};
+        const upgrades = store.upgrades || {};
+        const cells = S4_UPGRADE_META.map((u) => {
+          if (!s4UpgradeOn(upgrades[u.key])) return "<td>—</td>";
+          return "<td>" + formatCost(costs[u.key]) + "</td>";
+        }).join("");
+        const tot = s4StoreTotal(store);
+        if (tot.any) grand += tot.sum;
+        return (
+          "<tr>" +
+          '<td><div class="s4-table__store">' +
+          '<span class="s4-table__store-name" title="' +
+          escapeHtml(store.store_name || "") +
+          '">' +
+          escapeHtml(store.store_name || "") +
+          '</span><span class="s4-channel" data-channel="' +
+          channel +
+          '">' +
+          channel +
+          "</span></div></td>" +
+          "<td>" +
+          channel +
+          "</td>" +
+          cells +
+          '<td class="s4-table__row-total">' +
+          (tot.any ? formatCost(tot.sum) : "—") +
+          "</td></tr>"
+        );
+      })
+      .join("");
+
+    tbody.innerHTML =
+      rows +
+      '<tr class="s4-table__grand">' +
+      '<td class="s4-table__grand-label" colspan="7">Grand Total</td>' +
+      '<td class="s4-table__grand-value">' +
+      formatCost(grand || null) +
+      "</td></tr>";
+  }
+
+  function applyS4Stores(stores) {
+    s4Page = 1;
+    if (!stores || !stores.length) {
+      showS4EmptyState();
+      return;
+    }
+    renderUpgradeAssessment(stores);
+    renderProjectedCosts(stores);
+  }
+
+  function parseS4Audits(audits) {
+    if (!Array.isArray(audits)) return [];
+    return audits
+      .filter((a) => {
+        try {
+          const fd = typeof a.form_data === "string" ? JSON.parse(a.form_data || "{}") : a.form_data || {};
+          const s4 = fd.s4 || {};
+          return S4_UPGRADE_META.some((u) => s4UpgradeOn(s4[u.key]));
+        } catch (e) {
+          return false;
+        }
+      })
+      .map((a) => {
+        let fd = {};
+        try {
+          fd = typeof a.form_data === "string" ? JSON.parse(a.form_data || "{}") : a.form_data || {};
+        } catch (e) {
+          fd = {};
+        }
+        return {
+          store_name: a.store_name,
+          store_code: a.store_code,
+          channel: (fd.s1 && fd.s1.channel) || a.channel || "",
+          total_score: a.total_score,
+          upgrades: fd.s4 || {},
+          am_costs: fd.am_costs || {}
+        };
+      });
+  }
+
+  async function loadS4Data(opts) {
+    const forceEmpty = !!(opts && opts.forceEmpty);
+    if (s4Loading) return;
+    s4Loading = true;
+    try {
+      if (forceEmpty) {
+        applyS4Stores([]);
+        return;
+      }
+      // MOCK DATA — remove when live
+      if (USE_S4_MOCK && !(opts && opts.forceLive)) {
+        applyS4Stores(MOCK_S4);
+        s4Loaded = true;
+        return;
+      }
+      const res = await fetch("http://72.61.172.149/pbg-api/audits?status=approved");
+      const audits = await res.json();
+      const upgradeStores = parseS4Audits(audits);
+      applyS4Stores(upgradeStores);
+      s4Loaded = true;
+    } catch (e) {
+      console.warn("[V5] loadS4Data", e);
+      showS4EmptyState();
+    } finally {
+      s4Loading = false;
+    }
+  }
+
+  function syncS4PanelOverflow(panel) {
+    if (!panel) return;
+    panel.classList.toggle("has-open-collapse", !!panel.querySelector(".s4-collapse.is-open"));
+  }
+
+  function initS4Tabs() {
+    const tabs = [...document.querySelectorAll("#s4 .s4-tab")];
+    const panels = {
+      assessment: document.getElementById("s4-panel-assessment"),
+      costs: document.getElementById("s4-panel-costs")
+    };
+    if (!tabs.length) return;
+    const activate = (key) => {
+      tabs.forEach((tab) => {
+        const on = tab.getAttribute("data-s4-tab") === key;
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      Object.entries(panels).forEach(([id, panel]) => {
+        if (!panel) return;
+        const on = id === key;
+        panel.classList.toggle("is-active", on);
+        if (on) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
+      });
+    };
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activate(tab.getAttribute("data-s4-tab")));
+    });
+  }
+
+  function initS4Collapses() {
+    document.querySelectorAll("#s4 [data-s4-collapse]").forEach((wrap) => {
+      const btn = wrap.querySelector(".s4-collapse__btn");
+      const body = wrap.querySelector(".s4-collapse__body");
+      if (!btn || !body) return;
+      btn.addEventListener("click", () => {
+        const open = !wrap.classList.contains("is-open");
+        wrap.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) body.removeAttribute("hidden");
+        else body.setAttribute("hidden", "");
+        syncS4PanelOverflow(wrap.closest(".s4-panel"));
+      });
+    });
+  }
+
+  function ensureS4Loaded() {
+    if (!s4Loaded && !s4Loading) loadS4Data();
+  }
+
+  function initS4LazyLoad() {
+    const section = document.getElementById("s4");
+    if (!section) return;
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            ensureS4Loaded();
+            io.disconnect();
+          }
+        },
+        { threshold: 0.15 }
+      );
+      io.observe(section);
+    }
+    if (location.hash === "#s4") ensureS4Loaded();
+    window.addEventListener("hashchange", () => {
+      if (location.hash === "#s4") ensureS4Loaded();
+    });
+  }
+
+  function initS4() {
+    initS4Tabs();
+    initS4Collapses();
+    initS4LazyLoad();
+    document.getElementById("s4-page-prev")?.addEventListener("click", () => {
+      if (s4Page > 1) {
+        s4Page -= 1;
+        renderUpgradeAssessment(s4Stores);
+      }
+    });
+    document.getElementById("s4-page-next")?.addEventListener("click", () => {
+      const pages = Math.max(1, Math.ceil(s4Stores.length / S4_PAGE_SIZE));
+      if (s4Page < pages) {
+        s4Page += 1;
+        renderUpgradeAssessment(s4Stores);
+      }
+    });
+    /* Gate 4 test helpers — remove with mock */
+    window.__s4ShowEmpty = function () {
+      s4Loaded = true;
+      applyS4Stores([]);
+    };
+    window.__s4ShowMock = function () {
+      s4Loaded = true;
+      applyS4Stores(MOCK_S4);
+    };
+  }
+
   /* ========== Presentation mode (Teams-safe, no fullscreen API) ========== */
-  const SLIDE_IDS = ["s1", "s2", "s3"];
+  const SLIDE_IDS = ["s1", "s2", "s3", "s4"];
   let presentIndex = 0;
 
   function updatePresentCounter() {
@@ -4731,6 +5766,7 @@ body.is-presenting #s3.section.is-present-slide {
     });
     updatePresentCounter();
     const id = SLIDE_IDS[presentIndex];
+    if (id === "s4") ensureS4Loaded();
     document.querySelectorAll(".nav a").forEach((a) => {
       const on = a.getAttribute("href") === "#" + id;
       a.classList.remove("nav-dot-active", "nav-dot-inactive", "dot-pulse");
@@ -4790,6 +5826,7 @@ body.is-presenting #s3.section.is-present-slide {
     initS2Collapses();
     initS1();
     initS3();
+    initS4();
     loadLiveData().catch((err) => console.warn("[V5] loadLiveData", err));
 
     document.querySelectorAll("[data-excel]").forEach((btn) => {
