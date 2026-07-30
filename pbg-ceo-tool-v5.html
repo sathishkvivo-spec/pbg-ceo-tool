@@ -320,22 +320,32 @@ body::after {
 
 /* Present controls */
 .present-btn {
-  position: fixed; top: 1rem; right: 1rem; z-index: 120;
+  position: fixed; top: 1rem; right: 1rem; z-index: 10060;
   background: transparent; border: 1px solid var(--gold); color: var(--gold);
   font: inherit; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
   padding: 0.55rem 0.9rem; cursor: pointer;
 }
 .present-btn:hover, .present-btn:focus-visible { background: var(--gold); color: #0a0a0a; outline: none; }
 
+/* Teams-safe CSS fullscreen — do not use requestFullscreen() */
+.present-mode {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 9999;
+  background: #0a0a0f;
+}
+
 .present-chrome { display: none; }
 body.is-presenting .present-chrome { display: block; }
 body.is-presenting .nav,
-body.is-presenting .present-btn,
 body.is-presenting .s4-downloads { display: none !important; }
+body.is-presenting .present-exit { display: none !important; }
 
 .present-counter {
-  position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 10050;
+  position: fixed; bottom: 1.1rem; left: 50%; transform: translateX(-50%); z-index: 10050;
   color: var(--gold); font-size: 12px; letter-spacing: 0.14em; pointer-events: none;
+  text-transform: uppercase;
 }
 .present-exit {
   position: fixed; top: 1rem; right: 1rem; z-index: 10050;
@@ -1893,6 +1903,7 @@ body.is-presenting #s1.section.is-present-slide {
   overflow-y: auto;
 }
 body.is-presenting #s2.section {
+  display: none;
   padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
 }
 body.is-presenting #s2.section.is-present-slide {
@@ -2524,6 +2535,7 @@ body.is-presenting #s2.section.is-present-slide {
   border-color: rgba(96,165,250,0.35);
 }
 body.is-presenting #s3.section {
+  display: none;
   padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
 }
 body.is-presenting #s3.section.is-present-slide {
@@ -3019,6 +3031,7 @@ body.is-presenting #s3.section.is-present-slide {
   margin: 0;
 }
 body.is-presenting #s4.section {
+  display: none;
   padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
 }
 body.is-presenting #s4.section.is-present-slide {
@@ -3037,11 +3050,11 @@ body.is-presenting #s4.section.is-present-slide {
 </style>
 </head>
 <body>
-  <button type="button" class="present-btn" id="present-btn">Present</button>
+  <button type="button" class="present-btn" id="present-btn">PRESENT</button>
 
   <div class="present-chrome" aria-hidden="true">
-    <div class="present-counter" id="present-counter">1 / 4</div>
-    <button type="button" class="present-exit" id="present-exit">Exit</button>
+    <div class="present-counter" id="present-counter">SECTION 1 OF 4</div>
+    <button type="button" class="present-exit" id="present-exit">EXIT</button>
     <button type="button" class="present-arrow prev" id="present-prev" aria-label="Previous">‹</button>
     <button type="button" class="present-arrow next" id="present-next" aria-label="Next">›</button>
   </div>
@@ -4066,6 +4079,15 @@ body.is-presenting #s4.section.is-present-slide {
     }
   }
 
+  function isLiveReauditReady(list) {
+    if (!list || !list.length) return false;
+    const scored = list.filter((s) => Number(s.total) > 0);
+    /* Hybrid: keep embedded pilot until VPS has a real scored set (not master list with placeholders). */
+    if (scored.length < Math.min(20, STORES.length)) return false;
+    const avg = scored.reduce((sum, s) => sum + (Number(s.total) || 0), 0) / scored.length;
+    return avg >= 10;
+  }
+
   async function loadLiveData() {
     try {
       const storesPayload = await fetchJson(FRAMEWORK.API_STORES);
@@ -4075,8 +4097,14 @@ body.is-presenting #s4.section.is-present-slide {
       if (!arr.length) {
         useFallbackStores("API returned 0 stores");
       } else {
-        applyStoreDataset(arr.map(normalizeApiStore), "live");
-        console.info("[V5] Live VPS stores loaded —", ACTIVE_STORES.length);
+        const normalized = arr.map(normalizeApiStore);
+        if (isLiveReauditReady(normalized)) {
+          applyStoreDataset(normalized, "live");
+          console.info("[V5] Live VPS stores loaded —", ACTIVE_STORES.length);
+        } else {
+          useFallbackStores("Live master present; scores pending re-audit");
+          console.info("[V5] Hybrid fallback — live scores not ready (", normalized.length, "stores)");
+        }
       }
     } catch (err) {
       console.warn("[V5] Stores API unreachable —", err && err.message ? err.message : err);
@@ -4093,7 +4121,11 @@ body.is-presenting #s4.section.is-present-slide {
         return !st || st === "approved" || st === "complete" || st === "reviewed";
       });
       enrichStoresFromAudits();
+      if (DATA_SOURCE === "live" && !isLiveReauditReady(ACTIVE_STORES)) {
+        useFallbackStores("Audits present; scored set still incomplete");
+      }
       if (typeof refreshS3 === "function") refreshS3();
+      updateDataSourceNotes();
     } catch (err) {
       console.warn("[V5] Audits API unreachable —", err && err.message ? err.message : err);
       AUDITS = [];
@@ -4118,7 +4150,9 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   function updateS1Stats() {
-    const list = ACTIVE_STORES.length ? ACTIVE_STORES : STORES.map(normalizeEmbeddedStore);
+    const list = (typeof getS3Stores === "function"
+      ? getS3Stores()
+      : (ACTIVE_STORES.length ? ACTIVE_STORES : STORES.map(normalizeEmbeddedStore)));
     const n = list.length;
     const tierA = list.filter((s) => Number(s.total) >= FRAMEWORK.BENCHMARK).length;
     const avg = n
@@ -4540,7 +4574,7 @@ body.is-presenting #s4.section.is-present-slide {
     panel.classList.toggle("has-open-collapse", !!panel.querySelector(".s3-collapse.is-open"));
   }
 
-  function initS3Tabs() {
+  function activateS3Tab(key) {
     const tabs = [...document.querySelectorAll("#s3 .s3-tab")];
     const panels = {
       overview: document.getElementById("s3-panel-overview"),
@@ -4548,23 +4582,26 @@ body.is-presenting #s4.section.is-present-slide {
       priority: document.getElementById("s3-panel-priority")
     };
     if (!tabs.length) return;
-    const activate = (key) => {
-      tabs.forEach((tab) => {
-        const on = tab.getAttribute("data-s3-tab") === key;
-        tab.classList.toggle("is-active", on);
-        tab.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      Object.entries(panels).forEach(([id, panel]) => {
-        if (!panel) return;
-        const on = id === key;
-        panel.classList.toggle("is-active", on);
-        if (on) panel.removeAttribute("hidden");
-        else panel.setAttribute("hidden", "");
-      });
-      if (key === "results") PhotoEngine.whenReady(hydrateS3CardThumbs);
-    };
     tabs.forEach((tab) => {
-      tab.addEventListener("click", () => activate(tab.getAttribute("data-s3-tab")));
+      const on = tab.getAttribute("data-s3-tab") === key;
+      tab.classList.toggle("is-active", on);
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    Object.entries(panels).forEach(([id, panel]) => {
+      if (!panel) return;
+      const on = id === key;
+      panel.classList.toggle("is-active", on);
+      if (on) panel.removeAttribute("hidden");
+      else panel.setAttribute("hidden", "");
+    });
+    if (key === "results") PhotoEngine.whenReady(hydrateS3CardThumbs);
+  }
+
+  function initS3Tabs() {
+    const tabs = [...document.querySelectorAll("#s3 .s3-tab")];
+    if (!tabs.length) return;
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateS3Tab(tab.getAttribute("data-s3-tab")));
     });
   }
 
@@ -5084,30 +5121,31 @@ body.is-presenting #s4.section.is-present-slide {
     panel.classList.toggle("has-open-collapse", !!panel.querySelector(".s2-collapse.is-open"));
   }
 
-  function initS2Tabs() {
+  function activateS2Tab(key) {
     const tabs = [...document.querySelectorAll("#s2 .s2-tab")];
     const panels = {
       d1: document.getElementById("s2-panel-d1"),
       d2: document.getElementById("s2-panel-d2"),
     };
     if (!tabs.length || !panels.d1 || !panels.d2) return;
-
-    const activate = (key) => {
-      tabs.forEach((tab) => {
-        const on = tab.getAttribute("data-s2-tab") === key;
-        tab.classList.toggle("is-active", on);
-        tab.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      Object.entries(panels).forEach(([id, panel]) => {
-        const on = id === key;
-        panel.classList.toggle("is-active", on);
-        if (on) panel.removeAttribute("hidden");
-        else panel.setAttribute("hidden", "");
-      });
-    };
-
     tabs.forEach((tab) => {
-      tab.addEventListener("click", () => activate(tab.getAttribute("data-s2-tab")));
+      const on = tab.getAttribute("data-s2-tab") === key;
+      tab.classList.toggle("is-active", on);
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    Object.entries(panels).forEach(([id, panel]) => {
+      const on = id === key;
+      panel.classList.toggle("is-active", on);
+      if (on) panel.removeAttribute("hidden");
+      else panel.setAttribute("hidden", "");
+    });
+  }
+
+  function initS2Tabs() {
+    const tabs = [...document.querySelectorAll("#s2 .s2-tab")];
+    if (!tabs.length) return;
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateS2Tab(tab.getAttribute("data-s2-tab")));
     });
   }
 
@@ -5656,29 +5694,32 @@ body.is-presenting #s4.section.is-present-slide {
     panel.classList.toggle("has-open-collapse", !!panel.querySelector(".s4-collapse.is-open"));
   }
 
-  function initS4Tabs() {
+  function activateS4Tab(key) {
     const tabs = [...document.querySelectorAll("#s4 .s4-tab")];
     const panels = {
       assessment: document.getElementById("s4-panel-assessment"),
       costs: document.getElementById("s4-panel-costs")
     };
     if (!tabs.length) return;
-    const activate = (key) => {
-      tabs.forEach((tab) => {
-        const on = tab.getAttribute("data-s4-tab") === key;
-        tab.classList.toggle("is-active", on);
-        tab.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      Object.entries(panels).forEach(([id, panel]) => {
-        if (!panel) return;
-        const on = id === key;
-        panel.classList.toggle("is-active", on);
-        if (on) panel.removeAttribute("hidden");
-        else panel.setAttribute("hidden", "");
-      });
-    };
     tabs.forEach((tab) => {
-      tab.addEventListener("click", () => activate(tab.getAttribute("data-s4-tab")));
+      const on = tab.getAttribute("data-s4-tab") === key;
+      tab.classList.toggle("is-active", on);
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    Object.entries(panels).forEach(([id, panel]) => {
+      if (!panel) return;
+      const on = id === key;
+      panel.classList.toggle("is-active", on);
+      if (on) panel.removeAttribute("hidden");
+      else panel.setAttribute("hidden", "");
+    });
+  }
+
+  function initS4Tabs() {
+    const tabs = [...document.querySelectorAll("#s4 .s4-tab")];
+    if (!tabs.length) return;
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateS4Tab(tab.getAttribute("data-s4-tab")));
     });
   }
 
@@ -5753,11 +5794,36 @@ body.is-presenting #s4.section.is-present-slide {
 
   /* ========== Presentation mode (Teams-safe, no fullscreen API) ========== */
   const SLIDE_IDS = ["s1", "s2", "s3", "s4"];
+  const SECTION_TABS = {
+    s1: [],
+    s2: ["d1", "d2"],
+    s3: ["overview", "results", "priority"],
+    s4: ["assessment", "costs"]
+  };
   let presentIndex = 0;
 
   function updatePresentCounter() {
     const el = document.getElementById("present-counter");
-    if (el) el.textContent = presentIndex + 1 + " / " + SLIDE_IDS.length;
+    if (el) el.textContent = "SECTION " + (presentIndex + 1) + " OF " + SLIDE_IDS.length;
+  }
+
+  function getActiveTabKey(sectionId) {
+    if (sectionId === "s2") {
+      return document.querySelector("#s2 .s2-tab.is-active")?.getAttribute("data-s2-tab") || "d1";
+    }
+    if (sectionId === "s3") {
+      return document.querySelector("#s3 .s3-tab.is-active")?.getAttribute("data-s3-tab") || "overview";
+    }
+    if (sectionId === "s4") {
+      return document.querySelector("#s4 .s4-tab.is-active")?.getAttribute("data-s4-tab") || "assessment";
+    }
+    return null;
+  }
+
+  function setSectionTab(sectionId, key) {
+    if (sectionId === "s2") activateS2Tab(key);
+    else if (sectionId === "s3") activateS3Tab(key);
+    else if (sectionId === "s4") activateS4Tab(key);
   }
 
   function showPresentSlide() {
@@ -5784,37 +5850,67 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   function enterPresent() {
-    document.body.classList.add("is-presenting");
-    document.body.style.position = "fixed";
-    document.body.style.width = "100vw";
-    document.body.style.height = "100vh";
+    document.body.classList.add("is-presenting", "present-mode");
     document.body.style.overflow = "hidden";
-    document.body.style.zIndex = "9999";
+    const btn = document.getElementById("present-btn");
+    if (btn) btn.textContent = "EXIT";
     presentIndex = 0;
+    activateS2Tab("d1");
+    activateS3Tab("overview");
+    activateS4Tab("assessment");
     showPresentSlide();
   }
 
   function exitPresent() {
-    document.body.classList.remove("is-presenting");
-    document.body.style.position = "";
-    document.body.style.width = "";
-    document.body.style.height = "";
+    document.body.classList.remove("is-presenting", "present-mode");
     document.body.style.overflow = "";
-    document.body.style.zIndex = "";
+    const btn = document.getElementById("present-btn");
+    if (btn) btn.textContent = "PRESENT";
     SLIDE_IDS.forEach((id) => document.getElementById(id)?.classList.remove("is-present-slide"));
   }
 
+  function togglePresent() {
+    if (document.body.classList.contains("is-presenting")) exitPresent();
+    else enterPresent();
+  }
+
   function presentNext() {
+    const id = SLIDE_IDS[presentIndex];
+    const tabs = SECTION_TABS[id] || [];
+    if (tabs.length) {
+      const cur = getActiveTabKey(id);
+      const idx = tabs.indexOf(cur);
+      if (idx >= 0 && idx < tabs.length - 1) {
+        setSectionTab(id, tabs[idx + 1]);
+        return;
+      }
+    }
     if (presentIndex < SLIDE_IDS.length - 1) {
       presentIndex += 1;
       showPresentSlide();
+      const nextId = SLIDE_IDS[presentIndex];
+      const nextTabs = SECTION_TABS[nextId] || [];
+      if (nextTabs.length) setSectionTab(nextId, nextTabs[0]);
     }
   }
 
   function presentPrev() {
+    const id = SLIDE_IDS[presentIndex];
+    const tabs = SECTION_TABS[id] || [];
+    if (tabs.length) {
+      const cur = getActiveTabKey(id);
+      const idx = tabs.indexOf(cur);
+      if (idx > 0) {
+        setSectionTab(id, tabs[idx - 1]);
+        return;
+      }
+    }
     if (presentIndex > 0) {
       presentIndex -= 1;
       showPresentSlide();
+      const prevId = SLIDE_IDS[presentIndex];
+      const prevTabs = SECTION_TABS[prevId] || [];
+      if (prevTabs.length) setSectionTab(prevId, prevTabs[prevTabs.length - 1]);
     }
   }
 
@@ -5856,7 +5952,7 @@ body.is-presenting #s4.section.is-present-slide {
       renderModalPhoto();
     });
 
-    document.getElementById("present-btn")?.addEventListener("click", enterPresent);
+    document.getElementById("present-btn")?.addEventListener("click", togglePresent);
     document.getElementById("present-exit")?.addEventListener("click", exitPresent);
     document.getElementById("present-prev")?.addEventListener("click", () => {
       if (document.body.classList.contains("is-presenting")) presentPrev();
@@ -5875,8 +5971,11 @@ body.is-presenting #s4.section.is-present-slide {
         return;
       }
       if (!document.body.classList.contains("is-presenting")) return;
-      const next = ["ArrowRight", "PageDown", " ", "Spacebar"].includes(e.key);
-      const prev = ["ArrowLeft", "PageUp"].includes(e.key);
+      if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT" || e.target.isContentEditable)) {
+        return;
+      }
+      const next = ["ArrowRight", "ArrowDown", "PageDown", " ", "Spacebar"].includes(e.key);
+      const prev = ["ArrowLeft", "ArrowUp", "PageUp"].includes(e.key);
       if (next) {
         e.preventDefault();
         presentNext();
@@ -5909,7 +6008,18 @@ body.is-presenting #s4.section.is-present-slide {
       useFallbackStores: useFallbackStores,
       refreshS3: function () { refreshS3(); },
       getS3Stores: getS3Stores,
-      openStoreModal: openStoreModal
+      openStoreModal: openStoreModal,
+      applyS4Stores: applyS4Stores,
+      loadS4Data: loadS4Data,
+      MOCK_S4: MOCK_S4,
+      enterPresent: enterPresent,
+      exitPresent: exitPresent,
+      presentNext: presentNext,
+      presentPrev: presentPrev,
+      activateS2Tab: activateS2Tab,
+      activateS3Tab: activateS3Tab,
+      activateS4Tab: activateS4Tab,
+      getPresentIndex: function () { return presentIndex; }
     };
   }
 
