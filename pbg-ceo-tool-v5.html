@@ -1908,13 +1908,648 @@ body.is-presenting #s2.section.is-present-slide {
   #s2 .s2-rules li { font-size: 11px; padding: 0.32rem 0.45rem 0.32rem 0.75rem; }
 }
 
+/* ========== S3 — Store Results ========== */
+#s3.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+}
+#s3 .section__frame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+#s3 .s3-head {
+  flex: 0 0 auto;
+  margin: 0 0 0.45rem;
+}
+#s3 .section__eyebrow.section-label {
+  position: static;
+  margin: 0 0 0.2rem;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #C9A84C;
+  text-transform: uppercase;
+  opacity: 1;
+}
+#s3 .s3-heading {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #fff;
+}
+#s3 .s3-tabs {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0;
+  flex: 0 0 auto;
+  margin: 0 0 0.55rem;
+  border-bottom: 1px solid rgba(201,168,76,0.18);
+}
+#s3 .s3-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: rgba(255,255,255,0.45);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.15rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+#s3 .s3-tab:hover,
+#s3 .s3-tab:focus-visible {
+  color: #C9A84C;
+  outline: none;
+}
+#s3 .s3-tab.is-active,
+#s3 .s3-tab[aria-selected="true"] {
+  color: #C9A84C;
+  border-bottom-color: #C9A84C;
+}
+#s3 .s3-panels {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+#s3 .s3-panel {
+  display: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 0.4rem;
+}
+#s3 .s3-panel.is-active {
+  display: flex;
+}
+#s3 .s3-panel.is-active.has-open-collapse {
+  overflow-y: auto;
+}
+#s3 .s3-panel--priority.is-active {
+  overflow: hidden;
+}
+#s3 .s3-panel--priority .s3-priority-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+#s3 .s3-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.45rem;
+  flex: 0 0 auto;
+}
+#s3 .s3-kpi {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem 0.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+  min-height: 0;
+}
+#s3 .s3-kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+}
+#s3 .s3-kpi__value {
+  display: block;
+  font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #C9A84C !important;
+  letter-spacing: -0.02em;
+}
+#s3 .s3-kpi[data-tier="A"] .s3-kpi__value { color: #22c55e !important; }
+#s3 .s3-kpi[data-tier="B"] .s3-kpi__value { color: #eab308 !important; }
+#s3 .s3-kpi[data-tier="C"] .s3-kpi__value { color: #f97316 !important; }
+#s3 .s3-kpi[data-tier="D"] .s3-kpi__value { color: #ef4444 !important; }
+#s3 .s3-kpi__label {
+  display: block;
+  margin-top: 0.28rem;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.25;
+}
+#s3 .s3-kpi__pct {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 10px;
+  color: rgba(255,255,255,0.38);
+}
+#s3 .s3-collapse {
+  flex: 0 0 auto;
+}
+#s3 .s3-collapse__btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: rgba(201,168,76,0.85);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+#s3 .s3-collapse__btn:hover,
+#s3 .s3-collapse__btn:focus-visible {
+  color: #C9A84C;
+  outline: none;
+}
+#s3 .s3-collapse__chevron {
+  display: inline-block;
+  transition: transform 0.2s var(--ease);
+  font-size: 10px;
+}
+#s3 .s3-collapse.is-open .s3-collapse__chevron {
+  transform: rotate(-180deg);
+}
+#s3 .s3-collapse__body {
+  margin-top: 0.35rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(201,168,76,0.14);
+  font-size: 11px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.68);
+  max-height: 28vh;
+  overflow-y: auto;
+}
+#s3 .s3-collapse__body p {
+  margin: 0 0 0.45rem;
+}
+#s3 .s3-collapse__body p:last-child {
+  margin-bottom: 0;
+}
+#s3 .s3-dist {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  padding: 0.35rem 0 0;
+}
+#s3 .s3-dist__pending {
+  margin: auto 0;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.02em;
+}
+#s3 .s3-dist__row {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr 4.5rem;
+  align-items: center;
+  gap: 0.55rem;
+}
+#s3 .s3-dist__label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#s3 .s3-dist__track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+#s3 .s3-dist__fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  transition: width 0.45s var(--ease);
+}
+#s3 .s3-dist__meta {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-align: right;
+  white-space: nowrap;
+}
+#s3 .s3-fallback-note {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: #C9A84C;
+  opacity: 0.85;
+  pointer-events: none;
+}
+#s3 .s3-fallback-note[hidden] { display: none !important; }
+#s3 .s3-controls {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+#s3 .s3-search,
+#s3 .s3-select {
+  appearance: none;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 8px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  padding: 0.42rem 0.7rem;
+  outline: none;
+}
+#s3 .s3-search {
+  flex: 1 1 14rem;
+  min-width: 10rem;
+}
+#s3 .s3-search::placeholder { color: rgba(255,255,255,0.35); }
+#s3 .s3-select {
+  flex: 0 0 auto;
+  min-width: 7.5rem;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+}
+#s3 .s3-select option { background: #121218; color: #fff; }
+#s3 .s3-search:focus,
+#s3 .s3-select:focus {
+  border-color: rgba(201,168,76,0.55);
+}
+#s3 .s3-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+  overflow: hidden;
+}
+#s3 .s3-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  padding: 0.4rem 0.55rem 0.45rem;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(201,168,76,0.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+#s3 .s3-card:hover,
+#s3 .s3-card:focus-visible {
+  border-color: rgba(201,168,76,0.4);
+  outline: none;
+}
+#s3 .s3-card[data-tier="A"] { border-left: 3px solid #22c55e; }
+#s3 .s3-card[data-tier="B"] { border-left: 3px solid #eab308; }
+#s3 .s3-card[data-tier="C"] { border-left: 3px solid #f97316; }
+#s3 .s3-card[data-tier="D"] { border-left: 3px solid #ef4444; }
+#s3 .s3-card__thumb {
+  width: 100%;
+  height: 36px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.35);
+  flex: 0 0 auto;
+}
+#s3 .s3-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#s3 .s3-card__thumb.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+}
+#s3 .s3-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.4rem;
+  min-width: 0;
+}
+#s3 .s3-card__name {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 650;
+  color: #fff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1;
+}
+#s3 .s3-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  align-items: center;
+  flex: 0 0 auto;
+}
+#s3 .s3-channel {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+#s3 .s3-channel[data-channel="MT"] {
+  color: #C9A84C;
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.35);
+}
+#s3 .s3-channel[data-channel="GT"] {
+  color: #60a5fa;
+  background: rgba(96,165,250,0.12);
+  border-color: rgba(96,165,250,0.35);
+}
+#s3 .s3-tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+#s3 .s3-card__scores {
+  margin: 0;
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.3;
+}
+#s3 .s3-card__scores strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+#s3 .s3-card__legacy {
+  margin: 0;
+  font-size: 9px;
+  font-style: italic;
+  color: rgba(201,168,76,0.7);
+}
+#s3 .s3-pager {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.15rem;
+}
+#s3 .s3-pager__btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #C9A84C;
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+}
+#s3 .s3-pager__btn:hover:not(:disabled),
+#s3 .s3-pager__btn:focus-visible:not(:disabled) {
+  outline: none;
+  text-decoration: underline;
+}
+#s3 .s3-pager__btn:disabled {
+  color: rgba(201,168,76,0.28);
+  cursor: default;
+}
+#s3 .s3-pager__label {
+  font-size: 12px;
+  color: #C9A84C;
+  letter-spacing: 0.04em;
+  min-width: 7rem;
+  text-align: center;
+}
+#s3 .s3-priority-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#s3 .s3-priority-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-right: 0.25rem;
+  padding-bottom: 2.75rem;
+}
+#s3 .s3-priority-fade {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4rem;
+  background: linear-gradient(
+    to top,
+    #050508 0%,
+    rgba(5, 5, 8, 0.95) 25%,
+    rgba(5, 5, 8, 0.55) 60%,
+    transparent 100%
+  );
+  z-index: 3;
+}
+#s3 .s3-priority-fade::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.55rem;
+  width: 2.5rem;
+  height: 2px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: rgba(201, 168, 76, 0.45);
+}
+#s3 .s3-priority-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) max-content minmax(7rem, 0.85fr) minmax(7rem, 0.85fr) minmax(9rem, 1.15fr) auto;
+  gap: 0.45rem 0.85rem;
+  align-items: center;
+  padding: 0.42rem 0.65rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(201,168,76,0.12);
+  min-width: 0;
+}
+#s3 .s3-priority-row__name {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 650;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  padding-right: 0.15rem;
+}
+#s3 .s3-priority-row__badges {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 0.3rem;
+  align-items: center;
+  flex-shrink: 0;
+  justify-self: start;
+}
+#s3 .s3-priority-row__badges .s3-channel,
+#s3 .s3-priority-row__badges .s3-tier-pill {
+  flex-shrink: 0;
+  background: rgba(12, 12, 18, 0.92);
+}
+#s3 .s3-priority-row__gap {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+#s3 .s3-priority-row__gap strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+#s3 .s3-priority-row__action {
+  font-size: 11px;
+  color: #C9A84C;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+#s3 .s3-upgrade-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: #22c55e;
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.4);
+  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  white-space: nowrap;
+}
+#s3 .s3-empty {
+  margin: auto;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  max-width: 28rem;
+  line-height: 1.45;
+}
+.store-modal .modal-breakdown {
+  margin: 0.35rem 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.4;
+}
+.store-modal .modal-tier-meaning {
+  margin: 0.65rem 0 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.62);
+  line-height: 1.4;
+}
+.store-modal .s3-channel {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  vertical-align: middle;
+}
+.store-modal .s3-channel[data-channel="MT"] {
+  color: #C9A84C;
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.35);
+}
+.store-modal .s3-channel[data-channel="GT"] {
+  color: #60a5fa;
+  background: rgba(96,165,250,0.12);
+  border-color: rgba(96,165,250,0.35);
+}
+body.is-presenting #s3.section {
+  padding: 1.35rem clamp(1.25rem, 2.5vw, 2.5rem) 1.1rem;
+}
+body.is-presenting #s3.section.is-present-slide {
+  display: flex;
+}
+@media (max-height: 800px) {
+  #s3.section { padding: 1rem clamp(1rem, 2vw, 1.75rem) 0.85rem; }
+  #s3 .s3-heading { font-size: 1.35rem; }
+  #s3 .s3-tab { padding: 0.4rem 0.9rem; font-size: 10px; }
+  #s3 .s3-kpi { padding: 0.4rem 0.5rem; }
+  #s3 .s3-kpi__value { font-size: 1.45rem; }
+  #s3 .s3-card__thumb { height: 28px; }
+  #s3 .s3-priority-row {
+    grid-template-columns: minmax(0, 1.4fr) auto minmax(6.5rem, 0.8fr) minmax(6.5rem, 0.8fr) minmax(8rem, 1.1fr) auto;
+    padding: 0.35rem 0.55rem;
+  }
+  #s3 .s3-priority-fade { height: 1.85rem; }
+}
+
 </style>
 </head>
 <body>
   <button type="button" class="present-btn" id="present-btn">Present</button>
 
   <div class="present-chrome" aria-hidden="true">
-    <div class="present-counter" id="present-counter">1 / 2</div>
+    <div class="present-counter" id="present-counter">1 / 3</div>
     <button type="button" class="present-exit" id="present-exit">Exit</button>
     <button type="button" class="present-arrow prev" id="present-prev" aria-label="Previous">‹</button>
     <button type="button" class="present-arrow next" id="present-next" aria-label="Next">›</button>
@@ -1923,6 +2558,7 @@ body.is-presenting #s2.section.is-present-slide {
   <nav class="nav" aria-label="Section navigation">
     <a href="#s1" class="nav-dot-active" data-label="WODs Overview" aria-label="WODs Overview" aria-current="true"></a>
     <a href="#s2" class="nav-dot-inactive" data-label="Scoring Logic" aria-label="Scoring Logic"></a>
+    <a href="#s3" class="nav-dot-inactive" data-label="Store Results" aria-label="Store Results"></a>
   </nav>
 
   <main class="main">
@@ -2137,6 +2773,105 @@ body.is-presenting #s2.section.is-present-slide {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 — Store Results -->
+    <section class="section" id="s3" aria-labelledby="s3-title">
+      <div class="section__frame reveal">
+        <div class="s3-head">
+          <p class="section__eyebrow section-label">Section 03</p>
+          <h2 class="s3-heading" id="s3-title">Store Results</h2>
+        </div>
+
+        <div class="s3-tabs" role="tablist" aria-label="Store results views">
+          <button type="button" class="s3-tab is-active" role="tab" id="s3-tab-overview" aria-selected="true" aria-controls="s3-panel-overview" data-s3-tab="overview">Overview</button>
+          <button type="button" class="s3-tab" role="tab" id="s3-tab-results" aria-selected="false" aria-controls="s3-panel-results" data-s3-tab="results">Store Results</button>
+          <button type="button" class="s3-tab" role="tab" id="s3-tab-priority" aria-selected="false" aria-controls="s3-panel-priority" data-s3-tab="priority">Priority Action</button>
+        </div>
+
+        <div class="s3-panels">
+          <!-- Overview -->
+          <div class="s3-panel is-active" role="tabpanel" id="s3-panel-overview" aria-labelledby="s3-tab-overview">
+            <div class="s3-kpis" role="list" id="s3-kpis">
+              <div class="s3-kpi glass" role="listitem" data-kpi="total">
+                <span class="s3-kpi__value" id="s3-kpi-total">—</span>
+                <span class="s3-kpi__label">Total WODs</span>
+                <span class="s3-kpi__pct" id="s3-kpi-total-pct"></span>
+              </div>
+              <div class="s3-kpi glass" role="listitem" data-tier="A" data-kpi="A">
+                <span class="s3-kpi__value" id="s3-kpi-a">—</span>
+                <span class="s3-kpi__label">Tier A — Dominant</span>
+                <span class="s3-kpi__pct" id="s3-kpi-a-pct">—</span>
+              </div>
+              <div class="s3-kpi glass" role="listitem" data-tier="B" data-kpi="B">
+                <span class="s3-kpi__value" id="s3-kpi-b">—</span>
+                <span class="s3-kpi__label">Tier B — Competitive</span>
+                <span class="s3-kpi__pct" id="s3-kpi-b-pct">—</span>
+              </div>
+              <div class="s3-kpi glass" role="listitem" data-tier="C" data-kpi="C">
+                <span class="s3-kpi__value" id="s3-kpi-c">—</span>
+                <span class="s3-kpi__label">Tier C — Low Visibility</span>
+                <span class="s3-kpi__pct" id="s3-kpi-c-pct">—</span>
+              </div>
+              <div class="s3-kpi glass" role="listitem" data-tier="D" data-kpi="D">
+                <span class="s3-kpi__value" id="s3-kpi-d">—</span>
+                <span class="s3-kpi__label">Tier D — Poor Visibility</span>
+                <span class="s3-kpi__pct" id="s3-kpi-d-pct">—</span>
+              </div>
+            </div>
+
+            <div class="s3-collapse" data-s3-collapse>
+              <button type="button" class="s3-collapse__btn" aria-expanded="false">
+                <span class="s3-collapse__chevron" aria-hidden="true">▾</span> How are store tiers defined?
+              </button>
+              <div class="s3-collapse__body" hidden>
+                <p>Tiers are fixed score bands — not relative rankings. A store's tier reflects its actual performance, not how it compares to other stores this month.</p>
+                <p>Tier A · Dominant (75–100): Vivo leads on assets and visibility against both Samsung and Apple. Protect and showcase these stores.</p>
+                <p>Tier B · Competitive (50–74): Vivo is present and holding ground but not leading. Maintain investment and push for upgrade.</p>
+                <p>Tier C · Low Visibility (25–49): Vivo is physically present but outgunned. Competitor controls the store narrative. Urgent upgrade needed.</p>
+                <p>Tier D · Poor Visibility (0–24): Minimal Vivo presence. This store is effectively competitor territory. Critical intervention required.</p>
+              </div>
+            </div>
+
+            <div class="s3-dist" id="s3-dist" aria-label="Score distribution by tier"></div>
+          </div>
+
+          <!-- Store Results -->
+          <div class="s3-panel" role="tabpanel" id="s3-panel-results" aria-labelledby="s3-tab-results" hidden>
+            <div class="s3-controls">
+              <input class="s3-search" id="s3-search" type="search" placeholder="Search by store name" autocomplete="off" />
+              <select class="s3-select" id="s3-tier-filter" aria-label="Filter by tier">
+                <option value="ALL">All Tiers</option>
+                <option value="A">Tier A</option>
+                <option value="B">Tier B</option>
+                <option value="C">Tier C</option>
+                <option value="D">Tier D</option>
+              </select>
+              <select class="s3-select" id="s3-channel-filter" aria-label="Filter by channel">
+                <option value="ALL">All</option>
+                <option value="MT">MT</option>
+                <option value="GT">GT</option>
+              </select>
+            </div>
+            <div class="s3-grid" id="s3-store-grid" role="list" aria-label="Store results"></div>
+            <nav class="s3-pager" id="s3-pager" aria-label="Store results pages">
+              <button type="button" class="s3-pager__btn" id="s3-page-prev" aria-label="Previous page" disabled>← Previous</button>
+              <span class="s3-pager__label" id="s3-page-label">Page 1 of 1</span>
+              <button type="button" class="s3-pager__btn" id="s3-page-next" aria-label="Next page" disabled>Next →</button>
+            </nav>
+          </div>
+
+          <!-- Priority Action -->
+          <div class="s3-panel s3-panel--priority" role="tabpanel" id="s3-panel-priority" aria-labelledby="s3-tab-priority" hidden>
+            <div class="s3-priority-wrap">
+              <div class="s3-priority-list" id="s3-priority-list" role="list" aria-label="Priority action stores"></div>
+              <div class="s3-priority-fade" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <p class="s3-fallback-note" id="s3-fallback-note" hidden>Scores pending re-audit · Displaying previous framework data</p>
         </div>
       </div>
     </section>
@@ -2664,6 +3399,8 @@ body.is-presenting #s2.section.is-present-slide {
   let ACTIVE_STORES = [];
   let DATA_SOURCE = "fallback"; /* "live" | "fallback" */
   let AUDITS = [];
+  let S3_USING_FALLBACK = false;
+  let refreshS3 = function () {};
 
   function normalizeEmbeddedStore(s) {
     const total = Number(s.total);
@@ -2673,6 +3410,7 @@ body.is-presenting #s2.section.is-present-slide {
       name: s.name,
       code: s.code || "",
       channel: s.channel || CHANNEL_BY_STORE[s.name] || "MT",
+      chain: s.chain || "",
       d1: Number(s.d1) || 0,
       d2: Number(s.d2) || 0,
       d3: Number(s.d3) || 0,
@@ -2682,6 +3420,11 @@ body.is-presenting #s2.section.is-present-slide {
       tierColor: tierMeta.color,
       upgrade: s.upgrade || "",
       space: s.space || "",
+      lastAudited: s.lastAudited || null,
+      d1Breakdown: null,
+      d2Breakdown: null,
+      upgradeAssessed: false,
+      isLive: false,
       legacyFramework: true
     };
   }
@@ -2700,6 +3443,7 @@ body.is-presenting #s2.section.is-present-slide {
       name: name,
       code: raw.code || raw.store_code || "",
       channel: channelRaw === "GT" ? "GT" : "MT",
+      chain: raw.chain || "",
       d1: Number.isFinite(d1) ? d1 : 0,
       d2: Number.isFinite(d2) ? d2 : 0,
       d3: 0,
@@ -2709,6 +3453,11 @@ body.is-presenting #s2.section.is-present-slide {
       tierColor: tierMeta.color,
       upgrade: raw.upgrade || "",
       space: raw.space || raw.space_reality || "",
+      lastAudited: raw.last_audited || raw.lastAudited || null,
+      d1Breakdown: null,
+      d2Breakdown: null,
+      upgradeAssessed: false,
+      isLive: true,
       legacyFramework: false
     };
   }
@@ -2719,6 +3468,7 @@ body.is-presenting #s2.section.is-present-slide {
     DATA_SOURCE = source;
     updateS1Stats();
     updateDataSourceNotes();
+    if (typeof refreshS3 === "function") refreshS3();
   }
 
   function useFallbackStores(reason) {
@@ -2769,6 +3519,8 @@ body.is-presenting #s2.section.is-present-slide {
         const st = (a.status || a.review_status || "").toString().toLowerCase();
         return !st || st === "approved" || st === "complete" || st === "reviewed";
       });
+      enrichStoresFromAudits();
+      if (typeof refreshS3 === "function") refreshS3();
     } catch (err) {
       console.warn("[V5] Audits API unreachable —", err && err.message ? err.message : err);
       AUDITS = [];
@@ -2788,6 +3540,8 @@ body.is-presenting #s2.section.is-present-slide {
     document.querySelectorAll(".store-card__legacy-note").forEach((el) => {
       el.hidden = DATA_SOURCE !== "fallback";
     });
+    const s3Note = document.getElementById("s3-fallback-note");
+    if (s3Note) s3Note.hidden = !S3_USING_FALLBACK;
   }
 
   function updateS1Stats() {
@@ -2809,6 +3563,508 @@ body.is-presenting #s2.section.is-present-slide {
     if (avgEl) avgEl.textContent = String(avg);
     if (benchEl) benchEl.textContent = String(FRAMEWORK.BENCHMARK);
     if (pilot) pilot.textContent = String(n);
+  }
+
+  const TIER_MEANING = {
+    A: "Vivo leads on assets and visibility against both Samsung and Apple. Protect and showcase these stores.",
+    B: "Vivo is present and holding ground but not leading. Maintain investment and push for upgrade.",
+    C: "Vivo is physically present but outgunned. Competitor controls the store narrative. Urgent upgrade needed.",
+    D: "Minimal Vivo presence. This store is effectively competitor territory. Critical intervention required."
+  };
+
+  function parseAuditFormData(audit) {
+    if (!audit) return null;
+    let fd = audit.form_data;
+    if (typeof fd === "string") {
+      try { fd = JSON.parse(fd); } catch (e) { return null; }
+    }
+    return fd && typeof fd === "object" ? fd : null;
+  }
+
+  function assetTierPointsFromS2(s2) {
+    if (!s2) return 0;
+    if (s2.sis || s2.xZone || s2.su || s2.cz) return 30;
+    const ecQty = Array.isArray(s2.ecEntries)
+      ? s2.ecEntries.reduce((n, e) => n + (Number(e.qty) || 0), 0)
+      : (s2.ec ? 1 : 0);
+    if (ecQty >= 2) return 20;
+    if (ecQty >= 1 || s2.ec) return 12;
+    return 0;
+  }
+
+  function positionPointsFromS2(s2) {
+    if (!s2 || s2.position == null || s2.position === "") return 0;
+    const p = String(s2.position);
+    if (p === "1") return 10;
+    if (p === "2") return 7;
+    if (p === "3") return 4;
+    if (p === "4" || p === "4+") return 1;
+    return 0;
+  }
+
+  function visibilityPointsFromS2(s2) {
+    if (!s2) return 0;
+    const sq = s2.sqft || s2.brandingSqft || {};
+    const inPts = FRAMEWORK.sqftPts5(sq.inShop || "none");
+    const outPts = FRAMEWORK.sqftPts5(sq.outShop || "none");
+    const presence = (s2.inshop ? 5 : 0) + (s2.outshop ? 5 : 0);
+    /* Presence flags + sq.ft buckets — cap contribution inside D1 visibility (20) */
+    return Math.min(20, presence + inPts + outPts);
+  }
+
+  function competitorBattleInput(brand) {
+    if (!brand || !brand.present) return null;
+    const ecQty = Number(brand.ecQty) || (brand.ec ? 1 : 0);
+    let assetPresence = 0;
+    if (brand.sis || brand.xZone || brand.su || brand.cz) assetPresence = 30;
+    else if (ecQty >= 2) assetPresence = 20;
+    else if (ecQty >= 1) assetPresence = 12;
+    const posMap = { "1": 10, "2": 7, "3": 4, "4": 1, "4+": 1 };
+    const assetPosition = posMap[String(brand.position)] || 0;
+    const sq = brand.brandingSqft || {};
+    const visibilityBranding = FRAMEWORK.sqftPts5(sq.inShop || "none") + FRAMEWORK.sqftPts5(sq.outShop || "none");
+    return {
+      present: true,
+      assetPresence: assetPresence,
+      assetPosition: assetPosition,
+      visibilityBranding: visibilityBranding
+    };
+  }
+
+  function vivoBattleInputFromS2(s2) {
+    return {
+      assetPresence: assetTierPointsFromS2(s2),
+      assetPosition: positionPointsFromS2(s2),
+      visibilityBranding: (() => {
+        const sq = (s2 && (s2.sqft || s2.brandingSqft)) || {};
+        return FRAMEWORK.sqftPts5(sq.inShop || "none") + FRAMEWORK.sqftPts5(sq.outShop || "none");
+      })()
+    };
+  }
+
+  function auditHasUpgradeYes(fd) {
+    const s4 = fd && fd.s4;
+    if (!s4) return false;
+    return ["type1", "type2", "type3", "type4", "type5"].some((k) => s4[k] && s4[k].yes === true);
+  }
+
+  function enrichStoresFromAudits() {
+    if (!AUDITS.length) return;
+    const byCode = new Map();
+    const byName = new Map();
+    AUDITS.forEach((a) => {
+      if (a.store_code) byCode.set(String(a.store_code), a);
+      if (a.store_name) byName.set(String(a.store_name).toLowerCase(), a);
+    });
+    ACTIVE_STORES.forEach((store) => {
+      const audit = (store.code && byCode.get(String(store.code))) || byName.get(String(store.name || "").toLowerCase());
+      if (!audit) return;
+      const fd = parseAuditFormData(audit);
+      if (!fd) return;
+      const s2 = fd.s2 || null;
+      const s3 = fd.s3 || null;
+      if (s2) {
+        const asset = assetTierPointsFromS2(s2);
+        const position = positionPointsFromS2(s2);
+        const visibility = visibilityPointsFromS2(s2);
+        store.d1Breakdown = { asset: asset, position: position, visibility: visibility };
+      }
+      if (s2 || s3) {
+        const vivo = vivoBattleInputFromS2(s2 || {});
+        const samsung = competitorBattleInput(s3 && s3.samsung);
+        const apple = competitorBattleInput(s3 && s3.apple);
+        store.d2Breakdown = {
+          samsung: calcD2Battle(vivo, samsung || { present: false }),
+          apple: calcD2Battle(vivo, apple || { present: false })
+        };
+      }
+      store.upgradeAssessed = auditHasUpgradeYes(fd);
+    });
+  }
+
+  function getS3Stores() {
+    if (DATA_SOURCE === "live" && ACTIVE_STORES.length) {
+      const filtered = ACTIVE_STORES.filter((s) => {
+        const scored = Number(s.total) > 0;
+        const audited = !!(s.lastAudited || s.last_audited);
+        return scored || audited;
+      }).map((s) => Object.assign({}, s, { isLive: true, legacyFramework: false }));
+      if (filtered.length) {
+        S3_USING_FALLBACK = false;
+        return filtered;
+      }
+    }
+    S3_USING_FALLBACK = true;
+    return STORES.map(normalizeEmbeddedStore).map((s) =>
+      Object.assign({}, s, { isLive: false, legacyFramework: true })
+    );
+  }
+
+  /* ========== S3 — Store Results UI ========== */
+  const S3_PAGE_SIZE = 6;
+  let s3FilterTier = "ALL";
+  let s3FilterChannel = "ALL";
+  let s3SearchQ = "";
+  let s3Page = 1;
+
+  function s3TierCounts(list) {
+    const counts = { A: 0, B: 0, C: 0, D: 0 };
+    list.forEach((s) => {
+      const t = getTier(s.total);
+      counts[t.grade] = (counts[t.grade] || 0) + 1;
+    });
+    return counts;
+  }
+
+  function renderS3Overview() {
+    const list = getS3Stores();
+    const n = list.length;
+    const counts = s3TierCounts(list);
+    const setText = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+    const pct = (c) => (n ? Math.round((c / n) * 100) : 0) + "% of total";
+    setText("s3-kpi-total", String(n));
+    setText("s3-kpi-total-pct", n ? "100% of assessed" : "");
+    setText("s3-kpi-a", String(counts.A));
+    setText("s3-kpi-b", String(counts.B));
+    setText("s3-kpi-c", String(counts.C));
+    setText("s3-kpi-d", String(counts.D));
+    setText("s3-kpi-a-pct", pct(counts.A));
+    setText("s3-kpi-b-pct", pct(counts.B));
+    setText("s3-kpi-c-pct", pct(counts.C));
+    setText("s3-kpi-d-pct", pct(counts.D));
+
+    const dist = document.getElementById("s3-dist");
+    if (!dist) return;
+    const allZero = !n || (counts.A + counts.B + counts.C + counts.D) === 0;
+    if (allZero) {
+      dist.innerHTML = '<p class="s3-dist__pending">Re-audit in progress — scores pending approval</p>';
+      return;
+    }
+    const tiers = FRAMEWORK.TIERS;
+    const maxCount = Math.max(counts.A, counts.B, counts.C, counts.D, 1);
+    dist.innerHTML = tiers.map((t) => {
+      const c = counts[t.grade] || 0;
+      const p = n ? Math.round((c / n) * 100) : 0;
+      const w = Math.round((c / maxCount) * 100);
+      return (
+        '<div class="s3-dist__row">' +
+        '<span class="s3-dist__label" style="color:' + t.color + '">Tier ' + t.grade + " · " + t.label + "</span>" +
+        '<div class="s3-dist__track"><div class="s3-dist__fill" style="width:' + w + "%;background:" + t.color + '"></div></div>' +
+        '<span class="s3-dist__meta">' + c + " · " + p + "%</span>" +
+        "</div>"
+      );
+    }).join("");
+  }
+
+  function s3FilteredStores() {
+    let rows = getS3Stores().slice();
+    if (s3FilterTier !== "ALL") rows = rows.filter((s) => getTier(s.total).grade === s3FilterTier);
+    if (s3FilterChannel !== "ALL") {
+      rows = rows.filter((s) => String(s.channel || "").toUpperCase() === s3FilterChannel);
+    }
+    if (s3SearchQ) {
+      const q = s3SearchQ.toLowerCase();
+      rows = rows.filter((s) => String(s.name || "").toLowerCase().includes(q));
+    }
+    rows.sort((a, b) => (b.total - a.total) || String(a.name).localeCompare(String(b.name)));
+    return rows;
+  }
+
+  function s3PageCount(total) {
+    return Math.max(1, Math.ceil(total / S3_PAGE_SIZE));
+  }
+
+  function s3CardHtml(store) {
+    const tier = getTier(store.total);
+    const channel = String(store.channel || "MT").toUpperCase() === "GT" ? "GT" : "MT";
+    const legacy = store.legacyFramework || S3_USING_FALLBACK
+      ? '<p class="s3-card__legacy">Previous framework score</p>'
+      : "";
+    return (
+      '<article class="s3-card glass" role="listitem" tabindex="0" data-code="' +
+      escapeHtml(store.code || "") +
+      '" data-name="' +
+      escapeHtml(store.name || "") +
+      '" data-tier="' +
+      tier.grade +
+      '">' +
+      '<div class="s3-card__thumb is-empty" data-store="' +
+      escapeHtml(store.name || "") +
+      '"><span>…</span></div>' +
+      '<div class="s3-card__top">' +
+      '<h3 class="s3-card__name">' +
+      escapeHtml(store.name || "") +
+      "</h3>" +
+      '<div class="s3-card__badges">' +
+      '<span class="s3-channel" data-channel="' +
+      channel +
+      '">' +
+      channel +
+      "</span>" +
+      '<span class="s3-tier-pill" style="color:' +
+      tier.color +
+      '">Tier ' +
+      tier.grade +
+      " · " +
+      tier.label +
+      "</span>" +
+      "</div></div>" +
+      '<p class="s3-card__scores">D1: <strong>' +
+      store.d1 +
+      "</strong>/60 · D2: <strong>" +
+      store.d2 +
+      "</strong>/40 · Total: <strong>" +
+      store.total +
+      "</strong>/100</p>" +
+      legacy +
+      "</article>"
+    );
+  }
+
+  function hydrateS3CardThumbs() {
+    document.querySelectorAll("#s3-store-grid .s3-card__thumb").forEach((thumb) => {
+      if (thumb.getAttribute("data-hydrated") === "1") return;
+      const name = thumb.getAttribute("data-store");
+      const photo = PhotoEngine.entrance(name);
+      if (!photo) {
+        thumb.innerHTML = "<span>N/A</span>";
+        thumb.setAttribute("data-hydrated", "1");
+        return;
+      }
+      const img = document.createElement("img");
+      img.alt = name + " entrance";
+      thumb.classList.remove("is-empty");
+      thumb.innerHTML = "";
+      thumb.appendChild(img);
+      PhotoEngine.bindLazy(img, photo.src, name + ":entrance");
+      thumb.setAttribute("data-hydrated", "1");
+    });
+  }
+
+  function renderS3Results() {
+    const grid = document.getElementById("s3-store-grid");
+    if (!grid) return;
+    const rows = s3FilteredStores();
+    const pages = s3PageCount(rows.length);
+    s3Page = Math.min(Math.max(1, s3Page), pages);
+    const start = (s3Page - 1) * S3_PAGE_SIZE;
+    const pageRows = rows.slice(start, start + S3_PAGE_SIZE);
+    grid.innerHTML = pageRows.map(s3CardHtml).join("");
+    const label = document.getElementById("s3-page-label");
+    const prev = document.getElementById("s3-page-prev");
+    const next = document.getElementById("s3-page-next");
+    if (label) label.textContent = "Page " + s3Page + " of " + pages;
+    if (prev) prev.disabled = s3Page <= 1;
+    if (next) next.disabled = s3Page >= pages;
+    PhotoEngine.whenReady(hydrateS3CardThumbs);
+  }
+
+  function priorityActionLabel(store) {
+    const d1Gap = Math.max(0, FRAMEWORK.D1_MAX - (Number(store.d1) || 0));
+    const d2Gap = Math.max(0, FRAMEWORK.D2_MAX - (Number(store.d2) || 0));
+    if (d1Gap > d2Gap) return "Priority: Asset & Visibility Upgrade";
+    if (d2Gap > d1Gap) return "Priority: Competitive Repositioning";
+    return "Priority: Both Dimensions";
+  }
+
+  function s3PriorityStores() {
+    const all = getS3Stores();
+    const hasUrgent = all.some((s) => {
+      const g = getTier(s.total).grade;
+      return g === "D" || g === "C";
+    });
+    if (!hasUrgent) return [];
+    return all
+      .filter((s) => {
+        const g = getTier(s.total).grade;
+        return g === "D" || g === "C" || g === "B";
+      })
+      .sort((a, b) => {
+        const order = { D: 0, C: 1, B: 2 };
+        const ga = getTier(a.total).grade;
+        const gb = getTier(b.total).grade;
+        return (order[ga] - order[gb]) || (a.total - b.total) || String(a.name).localeCompare(String(b.name));
+      });
+  }
+
+  function renderS3Priority() {
+    const list = document.getElementById("s3-priority-list");
+    if (!list) return;
+    const rows = s3PriorityStores();
+    if (!rows.length) {
+      list.innerHTML =
+        '<p class="s3-empty">No priority action stores identified. All assessed stores are Tier A or B.</p>';
+      return;
+    }
+    list.innerHTML = rows.map((store) => {
+      const tier = getTier(store.total);
+      const channel = String(store.channel || "MT").toUpperCase() === "GT" ? "GT" : "MT";
+      const d1Gap = Math.max(0, FRAMEWORK.D1_MAX - (Number(store.d1) || 0));
+      const d2Gap = Math.max(0, FRAMEWORK.D2_MAX - (Number(store.d2) || 0));
+      const upgrade = store.upgradeAssessed
+        ? '<span class="s3-upgrade-badge">Upgrade Assessed</span>'
+        : "";
+      return (
+        '<div class="s3-priority-row" role="listitem">' +
+        '<p class="s3-priority-row__name" title="' +
+        escapeHtml(store.name || "") +
+        '">' +
+        escapeHtml(store.name || "") +
+        "</p>" +
+        '<div class="s3-priority-row__badges">' +
+        '<span class="s3-channel" data-channel="' +
+        channel +
+        '">' +
+        channel +
+        '</span><span class="s3-tier-pill" style="color:' +
+        tier.color +
+        '" title="Tier ' +
+        tier.grade +
+        " — " +
+        tier.label +
+        '">Tier ' +
+        tier.grade +
+        "</span></div>" +
+        '<div class="s3-priority-row__gap">D1 gap: <strong>' +
+        d1Gap +
+        "</strong> pts below max</div>" +
+        '<div class="s3-priority-row__gap">D2 gap: <strong>' +
+        d2Gap +
+        "</strong> pts below max</div>" +
+        '<div class="s3-priority-row__action">' +
+        priorityActionLabel(store) +
+        "</div>" +
+        (upgrade || "<span></span>") +
+        "</div>"
+      );
+    }).join("");
+  }
+
+  function findS3Store(code, name) {
+    const list = getS3Stores();
+    if (code) {
+      const byCode = list.find((s) => String(s.code) === String(code));
+      if (byCode) return byCode;
+    }
+    if (name) {
+      return list.find((s) => String(s.name) === String(name)) || null;
+    }
+    return null;
+  }
+
+  refreshS3 = function refreshS3Impl() {
+    renderS3Overview();
+    renderS3Results();
+    renderS3Priority();
+    updateDataSourceNotes();
+  };
+
+  function syncS3PanelOverflow(panel) {
+    if (!panel) return;
+    panel.classList.toggle("has-open-collapse", !!panel.querySelector(".s3-collapse.is-open"));
+  }
+
+  function initS3Tabs() {
+    const tabs = [...document.querySelectorAll("#s3 .s3-tab")];
+    const panels = {
+      overview: document.getElementById("s3-panel-overview"),
+      results: document.getElementById("s3-panel-results"),
+      priority: document.getElementById("s3-panel-priority")
+    };
+    if (!tabs.length) return;
+    const activate = (key) => {
+      tabs.forEach((tab) => {
+        const on = tab.getAttribute("data-s3-tab") === key;
+        tab.classList.toggle("is-active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      Object.entries(panels).forEach(([id, panel]) => {
+        if (!panel) return;
+        const on = id === key;
+        panel.classList.toggle("is-active", on);
+        if (on) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
+      });
+      if (key === "results") PhotoEngine.whenReady(hydrateS3CardThumbs);
+    };
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activate(tab.getAttribute("data-s3-tab")));
+    });
+  }
+
+  function initS3Collapses() {
+    document.querySelectorAll("#s3 [data-s3-collapse]").forEach((wrap) => {
+      const btn = wrap.querySelector(".s3-collapse__btn");
+      const body = wrap.querySelector(".s3-collapse__body");
+      if (!btn || !body) return;
+      btn.addEventListener("click", () => {
+        const open = !wrap.classList.contains("is-open");
+        wrap.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) body.removeAttribute("hidden");
+        else body.setAttribute("hidden", "");
+        syncS3PanelOverflow(wrap.closest(".s3-panel"));
+      });
+    });
+  }
+
+  function initS3() {
+    initS3Tabs();
+    initS3Collapses();
+    refreshS3();
+
+    const search = document.getElementById("s3-search");
+    const tier = document.getElementById("s3-tier-filter");
+    const channel = document.getElementById("s3-channel-filter");
+    const prev = document.getElementById("s3-page-prev");
+    const next = document.getElementById("s3-page-next");
+    const grid = document.getElementById("s3-store-grid");
+
+    search?.addEventListener("input", () => {
+      s3SearchQ = (search.value || "").trim();
+      s3Page = 1;
+      renderS3Results();
+    });
+    tier?.addEventListener("change", () => {
+      s3FilterTier = tier.value || "ALL";
+      s3Page = 1;
+      renderS3Results();
+    });
+    channel?.addEventListener("change", () => {
+      s3FilterChannel = channel.value || "ALL";
+      s3Page = 1;
+      renderS3Results();
+    });
+    prev?.addEventListener("click", () => {
+      if (s3Page > 1) {
+        s3Page -= 1;
+        renderS3Results();
+      }
+    });
+    next?.addEventListener("click", () => {
+      const pages = s3PageCount(s3FilteredStores().length);
+      if (s3Page < pages) {
+        s3Page += 1;
+        renderS3Results();
+      }
+    });
+    grid?.addEventListener("click", (e) => {
+      const card = e.target.closest(".s3-card");
+      if (!card) return;
+      const store = findS3Store(card.getAttribute("data-code"), card.getAttribute("data-name"));
+      if (store) openStoreModal(store);
+    });
+    grid?.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const card = e.target.closest(".s3-card");
+      if (!card) return;
+      e.preventDefault();
+      const store = findS3Store(card.getAttribute("data-code"), card.getAttribute("data-name"));
+      if (store) openStoreModal(store);
+    });
   }
 
   const CHAIN_PREFIXES = [
@@ -3401,20 +4657,41 @@ body.is-presenting #s2.section.is-present-slide {
     modalStore = store;
     modalPhotoIdx = 0;
     const modal = document.getElementById("store-modal");
-    const tier = TIER_META[store.tier] || TIER_META.D;
+    const tier = getTier(store.total);
     const body = document.getElementById("store-modal-body");
+    const channel = String(store.channel || "MT").toUpperCase() === "GT" ? "GT" : "MT";
+    const d1b = store.d1Breakdown;
+    const d2b = store.d2Breakdown;
+    const d1Detail = d1b
+      ? " — Asset Tier " + d1b.asset + " pts + Position " + d1b.position + " pts + Visibility " + d1b.visibility + " pts"
+      : "";
+    const d2Detail = d2b
+      ? " — Samsung battle " + d2b.samsung + "/40 + Apple battle " + d2b.apple + "/40"
+      : "";
+    const meaning = TIER_MEANING[tier.grade] || "";
     if (body) {
       body.innerHTML =
         '<div class="modal-head">' +
-        '<h3 class="panel-name modal-store-name">' + store.name + "</h3>" +
-        '<span class="panel-tier" style="color:' + tier.color + '">Tier ' + store.tier + " — " + tier.label + "</span>" +
-        '<p class="panel-code">Store code: ' + (store.code || "—") + " · Channel: " + (store.channel || "—") + "</p>" +
+        '<h3 class="panel-name modal-store-name">' + escapeHtml(store.name || "") + "</h3>" +
+        '<span class="panel-tier" style="color:' + tier.color + '">Tier ' + tier.grade + " — " + tier.label + "</span>" +
+        '<p class="panel-code">Channel: <span class="s3-channel" data-channel="' + channel + '">' + channel +
+        "</span> · Store code: " + escapeHtml(store.code || "—") + "</p>" +
         "</div>" +
-        '<p class="panel-total modal-total-score-wrap"><span>Total score</span><span class="score-anim modal-total-score" data-score="total" data-target="' + store.total + '">0</span><span class="modal-score-denom"> / 100</span></p>' +
-        scoreBarHTML("D1 — Vivo Brand Strength", store.d1, 40, "d1") +
-        scoreBarHTML("D2 — Vivo vs Competitor Fighting Score", store.d2, 30, "d2") +
-        scoreBarHTML("D3 — Store Premium Potential", store.d3, 30, "d3") +
-        '<div class="panel-upgrade"><strong>Prescribed upgrade</strong>' + store.upgrade + "</div>";
+        '<p class="panel-total modal-total-score-wrap"><span>Total score</span><span class="score-anim modal-total-score" data-score="total" data-target="' +
+        store.total +
+        '">0</span><span class="modal-score-denom"> / ' +
+        FRAMEWORK.TOTAL_MAX +
+        "</span></p>" +
+        scoreBarHTML("D1 — Vivo Brand Strength", store.d1, FRAMEWORK.D1_MAX, "d1") +
+        '<p class="modal-breakdown">D1: ' + store.d1 + "/" + FRAMEWORK.D1_MAX + d1Detail + "</p>" +
+        scoreBarHTML("D2 — Vivo vs Competitor Fighting Score", store.d2, FRAMEWORK.D2_MAX, "d2") +
+        '<p class="modal-breakdown">D2: ' + store.d2 + "/" + FRAMEWORK.D2_MAX + d2Detail + "</p>" +
+        '<p class="modal-tier-meaning"><strong>Tier ' + tier.grade + " · " + tier.label + ":</strong> " +
+        escapeHtml(meaning) +
+        "</p>" +
+        (store.legacyFramework || S3_USING_FALLBACK
+          ? '<p class="store-card__legacy-note" style="margin-top:0.75rem">Previous framework score</p>'
+          : "");
     }
     if (modal) {
       modal.hidden = false;
@@ -3440,7 +4717,7 @@ body.is-presenting #s2.section.is-present-slide {
   }
 
   /* ========== Presentation mode (Teams-safe, no fullscreen API) ========== */
-  const SLIDE_IDS = ["s1", "s2"];
+  const SLIDE_IDS = ["s1", "s2", "s3"];
   let presentIndex = 0;
 
   function updatePresentCounter() {
@@ -3512,6 +4789,7 @@ body.is-presenting #s2.section.is-present-slide {
     initS2Tabs();
     initS2Collapses();
     initS1();
+    initS3();
     loadLiveData().catch((err) => console.warn("[V5] loadLiveData", err));
 
     document.querySelectorAll("[data-excel]").forEach((btn) => {
@@ -3588,6 +4866,14 @@ body.is-presenting #s2.section.is-present-slide {
     console.assert(STORES.length === 30, "Expected 30 stores");
     console.assert(CRITICAL_STORE_NAMES.length === 12, "Expected 12 critical stores");
     console.assert(FRAMEWORK.D1_MAX + FRAMEWORK.D2_MAX === FRAMEWORK.TOTAL_MAX, "V5 max must sum 100");
+
+    /* Test/screenshot bridge (Gate QA) */
+    window.__pbgV5 = {
+      useFallbackStores: useFallbackStores,
+      refreshS3: function () { refreshS3(); },
+      getS3Stores: getS3Stores,
+      openStoreModal: openStoreModal
+    };
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
