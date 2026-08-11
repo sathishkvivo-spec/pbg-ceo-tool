@@ -3884,6 +3884,8 @@ body.is-presenting #s4.section.is-present-slide {
 
 
   <script src="excel_downloads.js" defer></script>
+  <!-- Photo map preloaded early — CEO presentation must never wait solely on late dynamic inject -->
+  <script src="store_photos_map_v2.js" defer></script>
   <script>
 /* Built into pbg-ceo-tool-v3.html — do not load standalone */
 (function () {
@@ -4310,6 +4312,8 @@ body.is-presenting #s4.section.is-present-slide {
     D2_MAX: 40,
     TOTAL_MAX: 100,
     BENCHMARK: 75,
+    /* CEO lock: never swap the photo-complete pilot 30 for API stores that lack photos */
+    CEO_PHOTO_LOCK: true,
     API_STORES: "https://quarters-william-important-residence.trycloudflare.com/pbg-api/stores",
     API_AUDITS: "https://quarters-william-important-residence.trycloudflare.com/pbg-api/audits",
     TIERS: [
@@ -4462,7 +4466,12 @@ body.is-presenting #s4.section.is-present-slide {
 
   function useFallbackStores(reason) {
     console.info("[V5] Using embedded fallback stores —", reason || "VPS empty/unreachable");
-    applyStoreDataset(STORES.map(normalizeEmbeddedStore), "fallback");
+    applyStoreDataset(
+      STORES.map(normalizeEmbeddedStore).map((s) =>
+        Object.assign({}, s, { photoKey: s.name, rawName: s.name })
+      ),
+      "fallback"
+    );
   }
 
   async function fetchJson(url) {
@@ -4491,6 +4500,59 @@ body.is-presenting #s4.section.is-present-slide {
     return avg >= 10;
   }
 
+  /**
+   * CEO-safe merge: keep the photo-complete pilot 30 as the display set forever.
+   * Overlay live D1/D2/total only when the same store_code / name is scored in VPS.
+   * This is why photos kept "breaking" — live API replaced the list with shops that have no photos.
+   */
+  function mergeLiveScoresOntoPilot(apiStores) {
+    const byCode = new Map();
+    const byNorm = new Map();
+    (apiStores || []).forEach((s) => {
+      if (!s) return;
+      if (s.code) byCode.set(String(s.code), s);
+      const n1 = normalizePhotoKey(s.name);
+      const n2 = normalizePhotoKey(s.rawName || "");
+      if (n1) byNorm.set(n1, s);
+      if (n2) byNorm.set(n2, s);
+    });
+
+    let liveHits = 0;
+    const merged = STORES.map(normalizeEmbeddedStore).map((pilot) => {
+      const live =
+        (pilot.code && byCode.get(String(pilot.code))) ||
+        byNorm.get(normalizePhotoKey(pilot.name)) ||
+        null;
+      const base = Object.assign({}, pilot, {
+        photoKey: pilot.name,
+        rawName: pilot.name
+      });
+      if (!live || !(Number(live.total) > 0)) {
+        return Object.assign(base, { isLive: false, legacyFramework: true });
+      }
+      liveHits++;
+      const tierMeta = getTier(live.total);
+      return Object.assign(base, {
+        d1: Number(live.d1) || 0,
+        d2: Number(live.d2) || 0,
+        d3: 0,
+        total: Number(live.total) || 0,
+        tier: live.tier || tierMeta.grade,
+        tierLabel: live.tierLabel || tierMeta.label,
+        tierColor: live.tierColor || tierMeta.color,
+        channel: live.channel || pilot.channel,
+        lastAudited: live.lastAudited || null,
+        isLive: true,
+        legacyFramework: false,
+        rawName: live.rawName || live.name || pilot.name
+      });
+    });
+
+    applyStoreDataset(merged, liveHits > 0 ? "live" : "fallback");
+    console.info("[V5] CEO photo-lock merge — pilot", merged.length, "· live score hits", liveHits);
+    return liveHits;
+  }
+
   async function loadLiveData() {
     try {
       const storesPayload = await fetchJson(FRAMEWORK.API_STORES);
@@ -4501,7 +4563,15 @@ body.is-presenting #s4.section.is-present-slide {
         useFallbackStores("API returned 0 stores");
       } else {
         const normalized = arr.map(normalizeApiStore);
-        if (isLiveReauditReady(normalized)) {
+        if (FRAMEWORK.CEO_PHOTO_LOCK) {
+          /* Never replace photo-complete pilot list with photo-less API shops */
+          if (isLiveReauditReady(normalized)) {
+            mergeLiveScoresOntoPilot(normalized);
+          } else {
+            useFallbackStores("Live master present; scores pending re-audit");
+            console.info("[V5] Hybrid fallback — live scores not ready (", normalized.length, "stores)");
+          }
+        } else if (isLiveReauditReady(normalized)) {
           applyStoreDataset(normalized, "live");
           console.info("[V5] Live VPS stores loaded —", ACTIVE_STORES.length);
         } else {
@@ -4524,7 +4594,9 @@ body.is-presenting #s4.section.is-present-slide {
         return !st || st === "approved" || st === "complete" || st === "reviewed";
       });
       enrichStoresFromAudits();
-      if (DATA_SOURCE === "live" && !isLiveReauditReady(ACTIVE_STORES)) {
+      if (DATA_SOURCE === "live" && FRAMEWORK.CEO_PHOTO_LOCK) {
+        /* Keep photo-lock set; audits only enrich breakdowns */
+      } else if (DATA_SOURCE === "live" && !isLiveReauditReady(ACTIVE_STORES)) {
         useFallbackStores("Audits present; scored set still incomplete");
       }
       if (typeof refreshS3 === "function") refreshS3();
@@ -4540,8 +4612,11 @@ body.is-presenting #s4.section.is-present-slide {
     if (note) {
       if (DATA_SOURCE === "live") {
         const n = getS1SourceStores().length;
+        const liveN = (ACTIVE_STORES || []).filter((s) => s && s.isLive).length;
         note.hidden = false;
-        note.textContent = "Showing " + n + " approved audits";
+        note.textContent = FRAMEWORK.CEO_PHOTO_LOCK
+          ? ("Top " + n + " stores · " + liveN + " live scores merged")
+          : ("Showing " + n + " approved audits");
         note.classList.add("is-live");
       } else if (DATA_SOURCE === "fallback") {
         note.hidden = false;
@@ -4700,6 +4775,21 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   function getS3Stores() {
+    /* CEO photo-lock: always render the photo-complete pilot 30 (never API shops without photos) */
+    if (FRAMEWORK.CEO_PHOTO_LOCK) {
+      const list = (ACTIVE_STORES.length
+        ? ACTIVE_STORES
+        : STORES.map(normalizeEmbeddedStore)
+      ).map((s) =>
+        Object.assign({}, s, {
+          photoKey: s.photoKey || s.name,
+          isLive: !!s.isLive,
+          legacyFramework: !s.isLive
+        })
+      );
+      S3_USING_FALLBACK = DATA_SOURCE !== "live";
+      return list;
+    }
     if (DATA_SOURCE === "live" && ACTIVE_STORES.length) {
       const filtered = ACTIVE_STORES.filter((s) => {
         const scored = Number(s.total) > 0;
@@ -4713,7 +4803,7 @@ body.is-presenting #s4.section.is-present-slide {
     }
     S3_USING_FALLBACK = true;
     return STORES.map(normalizeEmbeddedStore).map((s) =>
-      Object.assign({}, s, { isLive: false, legacyFramework: true })
+      Object.assign({}, s, { isLive: false, legacyFramework: true, photoKey: s.name })
     );
   }
 
@@ -5020,29 +5110,45 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   function hydrateS3CardThumbs() {
+    const map = getStorePhotosMap();
+    if (!map) {
+      /* Do not mark thumbs hydrated — retry as soon as photo map arrives */
+      PhotoEngine.whenReady(hydrateS3CardThumbs);
+      return;
+    }
     document.querySelectorAll("#s3-store-grid .s3-card__thumb").forEach((thumb) => {
       if (thumb.getAttribute("data-hydrated") === "1") return;
       const name = thumb.getAttribute("data-store") || "";
       const code = thumb.getAttribute("data-code") || "";
-      const photoKey = thumb.getAttribute("data-photo-key") || "";
+      const photoKey = thumb.getAttribute("data-photo-key") || name;
       const mapped =
-        (photoKey && typeof STORE_PHOTOS !== "undefined" && STORE_PHOTOS[photoKey]) ||
-        getStorePhoto(code, photoKey || name) ||
-        getStorePhoto(code, name);
+        (photoKey && map[photoKey]) ||
+        getStorePhoto(code, photoKey) ||
+        getStorePhoto(code, name) ||
+        map[name] ||
+        null;
       const photo = photoEntryFromMap(mapped) || PhotoEngine.entrance(photoKey || name);
+      if (!photo || !photo.src) {
+        /* Pilot stores must have photos — leave pending for a later retry, no permanent blank */
+        thumb.classList.add("is-empty");
+        thumb.innerHTML = "<span>" + escapeHtml(storeInitials(name)) + "</span>";
+        thumb.setAttribute("data-hydrated", "pending");
+        return;
+      }
       const img = document.createElement("img");
       img.alt = (cleanStoreDisplayName(name) || name) + " entrance";
       thumb.classList.remove("is-empty");
       thumb.innerHTML = "";
       thumb.appendChild(img);
-      if (photo && photo.src) {
-        PhotoEngine.bindNow(img, photo.src, (code || name) + ":entrance");
-      } else {
-        /* Always show a storefront visual — never leave blank during CEO presentation */
-        PhotoEngine.bindNow(img, storefrontPlaceholderSrc(name), (code || name) + ":placeholder");
-      }
+      PhotoEngine.bindNow(img, photo.src, (code || name) + ":entrance");
       thumb.setAttribute("data-hydrated", "1");
     });
+    /* One retry pass for any still-pending thumbs after index rebuild */
+    const pending = document.querySelectorAll('#s3-store-grid .s3-card__thumb[data-hydrated="pending"]');
+    if (pending.length) {
+      pending.forEach((t) => t.removeAttribute("data-hydrated"));
+      setTimeout(hydrateS3CardThumbs, 400);
+    }
   }
 
   function renderS3Results() {
@@ -5338,6 +5444,9 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   function getS1SourceStores() {
+    if (FRAMEWORK.CEO_PHOTO_LOCK) {
+      return ACTIVE_STORES.length ? ACTIVE_STORES.slice() : STORES.map(normalizeEmbeddedStore);
+    }
     if (DATA_SOURCE === "live" && ACTIVE_STORES.length) {
       const scored = ACTIVE_STORES.filter((s) => Number(s.total) > 0);
       if (scored.length) return scored;
@@ -6628,7 +6737,7 @@ body.is-presenting #s4.section.is-present-slide {
     initS1();
     initS3();
     initS4();
-    loadLiveData().catch((err) => console.warn("[V5] loadLiveData", err));
+    /* Live data loads ONLY after photo map is ready (see startPhotos) — prevents photo-less API swap */
 
     document.querySelectorAll("[data-excel]").forEach((btn) => {
       btn.addEventListener("click", () => downloadExcel(btn.getAttribute("data-excel")));
@@ -6640,13 +6749,13 @@ body.is-presenting #s4.section.is-present-slide {
     });
     document.getElementById("modal-photo-prev")?.addEventListener("click", () => {
       if (!modalStore) return;
-      const n = PhotoEngine.list(modalStore.name).length || 1;
+      const n = PhotoEngine.list(modalStore.photoKey || modalStore.name).length || 1;
       modalPhotoIdx = (modalPhotoIdx - 1 + n) % n;
       renderModalPhoto();
     });
     document.getElementById("modal-photo-next")?.addEventListener("click", () => {
       if (!modalStore) return;
-      const n = PhotoEngine.list(modalStore.name).length || 1;
+      const n = PhotoEngine.list(modalStore.photoKey || modalStore.name).length || 1;
       modalPhotoIdx = (modalPhotoIdx + 1) % n;
       renderModalPhoto();
     });
