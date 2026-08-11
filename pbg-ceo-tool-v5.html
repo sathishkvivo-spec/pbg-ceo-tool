@@ -4839,6 +4839,12 @@ body.is-presenting #s4.section.is-present-slide {
     return cleaned;
   }
 
+  function getStorePhotosMap() {
+    if (typeof STORE_PHOTOS !== "undefined" && STORE_PHOTOS) return STORE_PHOTOS;
+    if (typeof window !== "undefined" && window.STORE_PHOTOS) return window.STORE_PHOTOS;
+    return null;
+  }
+
   const PhotoIndex = {
     ready: false,
     byCode: Object.create(null),
@@ -4852,7 +4858,8 @@ body.is-presenting #s4.section.is-present-slide {
       this.byExact = Object.create(null);
       this.byNorm = Object.create(null);
       this.byTokens = Object.create(null);
-      this.keys = typeof STORE_PHOTOS !== "undefined" && STORE_PHOTOS ? Object.keys(STORE_PHOTOS) : [];
+      const map = getStorePhotosMap();
+      this.keys = map ? Object.keys(map) : [];
       this.keys.forEach((k) => {
         this.byExact[k] = k;
         this.byExact[String(k).toLowerCase()] = k;
@@ -4864,7 +4871,7 @@ body.is-presenting #s4.section.is-present-slide {
       /* Map pilot store codes → photo map keys so live VPS rows still resolve */
       (STORES || []).forEach((s) => {
         if (!s || !s.code || !s.name) return;
-        if (STORE_PHOTOS && STORE_PHOTOS[s.name]) this.byCode[String(s.code)] = s.name;
+        if (map && map[s.name]) this.byCode[String(s.code)] = s.name;
         else {
           const n = normalizePhotoKey(s.name);
           if (n && this.byNorm[n]) this.byCode[String(s.code)] = this.byNorm[n];
@@ -4876,8 +4883,9 @@ body.is-presenting #s4.section.is-present-slide {
     resolveKey(store_code, store_name) {
       if (!this.ready) this.rebuild();
       if (!this.ready) return null;
+      const map = getStorePhotosMap();
       if (store_code && this.byCode[String(store_code)]) return this.byCode[String(store_code)];
-      if (store_code && STORE_PHOTOS[store_code]) return store_code;
+      if (store_code && map && map[store_code]) return store_code;
       if (store_name && this.byExact[store_name]) return this.byExact[store_name];
       if (store_name && this.byExact[String(store_name).toLowerCase()]) {
         return this.byExact[String(store_name).toLowerCase()];
@@ -4913,9 +4921,10 @@ body.is-presenting #s4.section.is-present-slide {
   };
 
   function getStorePhoto(store_code, store_name) {
-    if (typeof STORE_PHOTOS === "undefined" || !STORE_PHOTOS) return null;
+    const map = getStorePhotosMap();
+    if (!map) return null;
     const key = PhotoIndex.resolveKey(store_code, store_name);
-    return key && STORE_PHOTOS[key] ? STORE_PHOTOS[key] : null;
+    return key && map[key] ? map[key] : null;
   }
 
   function storefrontPlaceholderSrc(storeName) {
@@ -5574,9 +5583,10 @@ body.is-presenting #s4.section.is-present-slide {
     },
 
     list(storeName) {
-      if (typeof STORE_PHOTOS === "undefined") return [];
+      const map = getStorePhotosMap();
+      if (!map) return [];
       const key = PhotoIndex.resolveKey(null, storeName) || storeName;
-      const raw = (key && STORE_PHOTOS[key]) || getStorePhoto(null, storeName) || STORE_PHOTOS[storeName];
+      const raw = (key && map[key]) || getStorePhoto(null, storeName) || map[storeName];
       if (!raw) return [];
       if (Array.isArray(raw)) {
         return raw.filter((p) => p && typeof p.src === "string" && p.src.length > 32);
@@ -6679,7 +6689,7 @@ body.is-presenting #s4.section.is-present-slide {
     const startPhotos = () => {
       loadPhotosMapDeferred()
         .then(() => {
-          console.info("[Photos] map ready —", Object.keys(STORE_PHOTOS || {}).length, "stores");
+          console.info("[Photos] map ready —", Object.keys((getStorePhotosMap() || {})).length, "stores");
           try { PhotoIndex.rebuild(); } catch (e) { /* ignore */ }
           try {
             (ACTIVE_STORES || []).forEach((s) => {
@@ -6687,6 +6697,10 @@ body.is-presenting #s4.section.is-present-slide {
               s.photoKey = PhotoIndex.resolveKey(s.code, s.rawName || s.name) || s.photoKey || "";
             });
           } catch (e) { /* ignore */ }
+          /* Re-try live data after photos — earlier fetch can race before map exists */
+          return loadLiveData().catch((err) => console.warn("[V5] post-photo loadLiveData", err));
+        })
+        .then(() => {
           try { if (typeof hydrateS3CardThumbs === "function") hydrateS3CardThumbs(); } catch (e) { /* ignore */ }
           try { if (typeof refreshS3 === "function") refreshS3(); } catch (e) { /* ignore */ }
         })
