@@ -4390,7 +4390,11 @@ body.is-presenting #s4.section.is-present-slide {
   let refreshS3 = function () {};
 
   function normalizeEmbeddedStore(s) {
-    const total = Number(s.total);
+    /* V5 total is D1+D2 only (max 100). Legacy pilot rows still carry old D3 — never add it into Total. */
+    const d1 = Number(s.d1) || 0;
+    const d2 = Number(s.d2) || 0;
+    const d3 = Number(s.d3) || 0;
+    const total = d1 + d2;
     const tierMeta = getTier(total);
     return {
       rank: s.rank,
@@ -4398,10 +4402,10 @@ body.is-presenting #s4.section.is-present-slide {
       code: s.code || "",
       channel: s.channel || CHANNEL_BY_STORE[s.name] || "MT",
       chain: s.chain || "",
-      d1: Number(s.d1) || 0,
-      d2: Number(s.d2) || 0,
-      d3: Number(s.d3) || 0,
-      total: Number.isFinite(total) ? total : 0,
+      d1: d1,
+      d2: d2,
+      d3: d3,
+      total: total,
       tier: tierMeta.grade,
       tierLabel: tierMeta.label,
       tierColor: tierMeta.color,
