@@ -5711,7 +5711,13 @@ body.is-presenting #s4.section.is-present-slide {
 
   function loadPhotosMapDeferred() {
     return new Promise(async (resolve, reject) => {
+      const expose = () => {
+        try {
+          if (typeof STORE_PHOTOS !== "undefined") window.STORE_PHOTOS = STORE_PHOTOS;
+        } catch (e) { /* ignore */ }
+      };
       if (typeof STORE_PHOTOS !== "undefined") {
+        expose();
         PhotoEngine.markReady();
         resolve();
         return;
@@ -5722,6 +5728,7 @@ body.is-presenting #s4.section.is-present-slide {
         try {
           await loadScriptOnce(urls[i]);
           if (typeof STORE_PHOTOS !== "undefined") {
+            expose();
             PhotoEngine.markReady();
             console.info("[Photos] loaded from", urls[i]);
             resolve();

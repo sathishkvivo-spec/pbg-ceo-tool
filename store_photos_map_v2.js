@@ -1134,3 +1134,4 @@ const STORE_PHOTOS = {
   }
  ]
 };
+try { if (typeof window !== "undefined") window.STORE_PHOTOS = STORE_PHOTOS; } catch (e) {}
