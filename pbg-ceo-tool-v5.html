@@ -4811,10 +4811,28 @@ body.is-presenting #s4.section.is-present-slide {
     return (parts[0][0] + parts[1][0]).toUpperCase();
   }
 
+  function normalizePhotoKey(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/\(.*?\)/g, " ")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  }
+
   function getStorePhoto(store_code, store_name) {
     if (typeof STORE_PHOTOS === "undefined" || !STORE_PHOTOS) return null;
     if (store_code && STORE_PHOTOS[store_code]) return STORE_PHOTOS[store_code];
     if (store_name && STORE_PHOTOS[store_name]) return STORE_PHOTOS[store_name];
+    const wanted = normalizePhotoKey(store_name || store_code);
+    if (!wanted) return null;
+    const keys = Object.keys(STORE_PHOTOS);
+    for (let i = 0; i < keys.length; i++) {
+      if (normalizePhotoKey(keys[i]) === wanted) return STORE_PHOTOS[keys[i]];
+    }
+    for (let i = 0; i < keys.length; i++) {
+      const nk = normalizePhotoKey(keys[i]);
+      if (nk && (nk.includes(wanted) || wanted.includes(nk))) return STORE_PHOTOS[keys[i]];
+    }
     return null;
   }
 
@@ -4901,7 +4919,8 @@ body.is-presenting #s4.section.is-present-slide {
       thumb.classList.remove("is-empty");
       thumb.innerHTML = "";
       thumb.appendChild(img);
-      PhotoEngine.bindLazy(img, photo.src, (code || name) + ":entrance");
+      /* bindNow — presentation / overflow layouts can starve IntersectionObserver */
+      PhotoEngine.bindNow(img, photo.src, (code || name) + ":entrance");
       thumb.setAttribute("data-hydrated", "1");
     });
   }
@@ -5448,7 +5467,7 @@ body.is-presenting #s4.section.is-present-slide {
 
     list(storeName) {
       if (typeof STORE_PHOTOS === "undefined") return [];
-      const raw = STORE_PHOTOS[storeName];
+      const raw = getStorePhoto(null, storeName) || STORE_PHOTOS[storeName];
       if (!raw) return [];
       if (Array.isArray(raw)) {
         return raw.filter((p) => p && typeof p.src === "string" && p.src.length > 32);
@@ -5507,12 +5526,16 @@ body.is-presenting #s4.section.is-present-slide {
                 this._io.unobserve(el);
               });
             },
-            { rootMargin: "80px", threshold: 0.01 }
+            { rootMargin: "240px", threshold: 0.01 }
           );
         }
         img.setAttribute("data-lazy-src", src);
         if (key) img.setAttribute("data-lazy-key", key);
         this._io.observe(img);
+        /* Hard fallback — IO can miss in presentation / transformed layouts */
+        setTimeout(() => {
+          if (!img.getAttribute("src") && img.getAttribute("data-lazy-src")) apply();
+        }, 600);
       } else {
         apply();
       }
@@ -5538,22 +5561,69 @@ body.is-presenting #s4.section.is-present-slide {
     }
   };
 
-  function loadPhotosMapDeferred() {
+  function photoMapCandidateUrls() {
+    const file = "store_photos_map_v2.js";
+    const bust = "v=" + encodeURIComponent(String(Date.now()).slice(0, 8));
+    const out = [];
+    const push = (u) => {
+      if (!u || out.indexOf(u) >= 0) return;
+      out.push(u);
+    };
+    try {
+      push(new URL(file, document.baseURI || window.location.href).href);
+    } catch (e) {
+      push(file);
+    }
+    push(file);
+    push("./" + file);
+    /* VPS static path when page is opened under /pbg/ or via API-only tunnel HTML mirrors */
+    try {
+      const origin = window.location.origin;
+      if (origin && origin.indexOf("http") === 0) {
+        push(origin.replace(/\/$/, "") + "/pbg/" + file);
+        push(origin.replace(/\/$/, "") + "/" + file);
+      }
+    } catch (e) { /* ignore */ }
+    /* Permanent public fallback — keeps photos alive even if local/VPS copy is missing */
+    push("https://sathishkvivo-spec.github.io/pbg-ceo-tool/" + file + "?" + bust);
+    return out;
+  }
+
+  function loadScriptOnce(src) {
     return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = src;
+      s.async = true;
+      s.onload = () => resolve(src);
+      s.onerror = () => reject(new Error("Failed: " + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  function loadPhotosMapDeferred() {
+    return new Promise(async (resolve, reject) => {
       if (typeof STORE_PHOTOS !== "undefined") {
         PhotoEngine.markReady();
         resolve();
         return;
       }
-      const s = document.createElement("script");
-      s.src = "store_photos_map_v2.js";
-      s.async = true;
-      s.onload = () => {
-        PhotoEngine.markReady();
-        resolve();
-      };
-      s.onerror = () => reject(new Error("store_photos_map_v2.js failed to load"));
-      document.head.appendChild(s);
+      const urls = photoMapCandidateUrls();
+      let lastErr = null;
+      for (let i = 0; i < urls.length; i++) {
+        try {
+          await loadScriptOnce(urls[i]);
+          if (typeof STORE_PHOTOS !== "undefined") {
+            PhotoEngine.markReady();
+            console.info("[Photos] loaded from", urls[i]);
+            resolve();
+            return;
+          }
+          lastErr = new Error("Script loaded but STORE_PHOTOS missing: " + urls[i]);
+        } catch (err) {
+          lastErr = err;
+        }
+      }
+      reject(lastErr || new Error("store_photos_map_v2.js failed to load"));
     });
   }
 
@@ -6490,14 +6560,23 @@ body.is-presenting #s4.section.is-present-slide {
       loadPhotosMapDeferred()
         .then(() => {
           console.info("[Photos] map ready —", Object.keys(STORE_PHOTOS || {}).length, "stores");
+          try { if (typeof hydrateS3CardThumbs === "function") hydrateS3CardThumbs(); } catch (e) { /* ignore */ }
+          try { if (typeof refreshS3 === "function") refreshS3(); } catch (e) { /* ignore */ }
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          /* one delayed retry — covers transient CDN / tunnel blips mid-presentation */
+          setTimeout(() => {
+            loadPhotosMapDeferred()
+              .then(() => {
+                try { if (typeof hydrateS3CardThumbs === "function") hydrateS3CardThumbs(); } catch (e2) { /* ignore */ }
+              })
+              .catch((e2) => console.error("[Photos] retry failed", e2));
+          }, 2500);
+        });
     };
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(startPhotos, { timeout: 1200 });
-    } else {
-      setTimeout(startPhotos, 200);
-    }
+    /* Start immediately — never wait on idle during live CEO presentations */
+    startPhotos();
 
     console.assert(STORE_PHOTO_KEYS.length === 30, "Expected 30 store photo keys");
     console.assert(STORES.length === 30, "Expected 30 stores");
