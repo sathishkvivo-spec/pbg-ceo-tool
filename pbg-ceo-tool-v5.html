@@ -4891,32 +4891,36 @@ body.is-presenting #s4.section.is-present-slide {
         return this.byExact[String(store_name).toLowerCase()];
       }
       const wanted = normalizePhotoKey(store_name || "");
-      if (wanted && this.byNorm[wanted]) return this.byNorm[wanted];
+      if (!wanted) return null;
+      if (this.byNorm[wanted]) return this.byNorm[wanted];
       const tok = wanted.split(" ").filter(Boolean).sort().join(" ");
       if (tok && this.byTokens[tok]) return this.byTokens[tok];
-      if (wanted) {
-        let best = null;
-        let bestScore = 0;
-        const wantParts = wanted.split(" ").filter((t) => t.length > 2);
+
+      const wantParts = wanted.split(" ").filter(Boolean);
+      const brand = wantParts[0] || "";
+      if (!brand) return null;
+
+      /* Fuzzy only when brand/chain token matches — never steal another chain's photo */
+      let best = null;
+      let bestScore = 0;
+      for (let i = 0; i < this.keys.length; i++) {
+        const k = this.keys[i];
+        const nk = normalizePhotoKey(k);
+        if (!nk) continue;
+        const haveParts = nk.split(" ").filter(Boolean);
+        if (!haveParts.length || haveParts[0] !== brand) continue;
+        if (nk === wanted) return k;
         const wantSet = {};
         wantParts.forEach((t) => { wantSet[t] = true; });
-        for (let i = 0; i < this.keys.length; i++) {
-          const k = this.keys[i];
-          const nk = normalizePhotoKey(k);
-          if (!nk) continue;
-          if (nk === wanted || nk.includes(wanted) || wanted.includes(nk)) return k;
-          const have = nk.split(" ").filter((t) => t.length > 2);
-          let hit = 0;
-          for (let j = 0; j < have.length; j++) if (wantSet[have[j]]) hit++;
-          const score = hit / Math.max(have.length, wantParts.length, 1);
-          if (hit >= 2 && score > bestScore) {
-            bestScore = score;
-            best = k;
-          }
+        let hit = 0;
+        for (let j = 0; j < haveParts.length; j++) if (wantSet[haveParts[j]]) hit++;
+        const score = hit / Math.max(haveParts.length, wantParts.length, 1);
+        if (hit >= 3 && score >= 0.75 && score > bestScore) {
+          bestScore = score;
+          best = k;
         }
-        if (best && bestScore >= 0.5) return best;
       }
-      return null;
+      return best;
     }
   };
 
