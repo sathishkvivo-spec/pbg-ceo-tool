@@ -4427,9 +4427,10 @@ body.is-presenting #s4.section.is-present-slide {
     const photoKey = PhotoIndex.resolveKey(code, rawName) || PhotoIndex.resolveKey(code, name);
     const d1 = Number(raw.d1_score != null ? raw.d1_score : raw.d1);
     const d2 = Number(raw.d2_score != null ? raw.d2_score : raw.d2);
-    const total = Number(
-      raw.total_score != null ? raw.total_score : raw.total != null ? raw.total : (d1 || 0) + (d2 || 0)
-    );
+    const d1n = Number.isFinite(d1) ? d1 : 0;
+    const d2n = Number.isFinite(d2) ? d2 : 0;
+    /* V5 invariant: Total must always equal D1+D2 (ignore divergent server total_score) */
+    const total = d1n + d2n;
     const tierMeta = getTier(total);
     const channelRaw = (raw.channel || raw.channel_type || CHANNEL_BY_STORE[name] || CHANNEL_BY_STORE[rawName] || "MT").toString().toUpperCase();
     return {
@@ -4440,10 +4441,10 @@ body.is-presenting #s4.section.is-present-slide {
       code: code,
       channel: channelRaw === "GT" ? "GT" : "MT",
       chain: raw.chain || "",
-      d1: Number.isFinite(d1) ? d1 : 0,
-      d2: Number.isFinite(d2) ? d2 : 0,
+      d1: d1n,
+      d2: d2n,
       d3: 0,
-      total: Number.isFinite(total) ? total : 0,
+      total: total,
       tier: (raw.tier && String(raw.tier).toUpperCase()) || tierMeta.grade,
       tierLabel: tierMeta.label,
       tierColor: tierMeta.color,
@@ -4535,15 +4536,18 @@ body.is-presenting #s4.section.is-present-slide {
         return Object.assign(base, { isLive: false, legacyFramework: true });
       }
       liveHits++;
-      const tierMeta = getTier(live.total);
+      const d1 = Number(live.d1) || 0;
+      const d2 = Number(live.d2) || 0;
+      const total = d1 + d2;
+      const tierMeta = getTier(total);
       return Object.assign(base, {
-        d1: Number(live.d1) || 0,
-        d2: Number(live.d2) || 0,
+        d1: d1,
+        d2: d2,
         d3: 0,
-        total: Number(live.total) || 0,
-        tier: live.tier || tierMeta.grade,
-        tierLabel: live.tierLabel || tierMeta.label,
-        tierColor: live.tierColor || tierMeta.color,
+        total: total,
+        tier: tierMeta.grade,
+        tierLabel: tierMeta.label,
+        tierColor: tierMeta.color,
         channel: live.channel || pilot.channel,
         lastAudited: live.lastAudited || null,
         isLive: true,
