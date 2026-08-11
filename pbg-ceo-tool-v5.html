@@ -4413,18 +4413,23 @@ body.is-presenting #s4.section.is-present-slide {
   }
 
   function normalizeApiStore(raw, index) {
-    const name = raw.name || raw.store_name || raw.storeName || ("Store " + (index + 1));
+    const rawName = raw.name || raw.store_name || raw.storeName || ("Store " + (index + 1));
+    const name = cleanStoreDisplayName(rawName) || rawName;
+    const code = raw.code || raw.store_code || "";
+    const photoKey = PhotoIndex.resolveKey(code, rawName) || PhotoIndex.resolveKey(code, name);
     const d1 = Number(raw.d1_score != null ? raw.d1_score : raw.d1);
     const d2 = Number(raw.d2_score != null ? raw.d2_score : raw.d2);
     const total = Number(
       raw.total_score != null ? raw.total_score : raw.total != null ? raw.total : (d1 || 0) + (d2 || 0)
     );
     const tierMeta = getTier(total);
-    const channelRaw = (raw.channel || raw.channel_type || CHANNEL_BY_STORE[name] || "MT").toString().toUpperCase();
+    const channelRaw = (raw.channel || raw.channel_type || CHANNEL_BY_STORE[name] || CHANNEL_BY_STORE[rawName] || "MT").toString().toUpperCase();
     return {
       rank: Number(raw.rank) || index + 1,
       name: name,
-      code: raw.code || raw.store_code || "",
+      rawName: rawName,
+      photoKey: photoKey || "",
+      code: code,
       channel: channelRaw === "GT" ? "GT" : "MT",
       chain: raw.chain || "",
       d1: Number.isFinite(d1) ? d1 : 0,
@@ -4815,25 +4820,123 @@ body.is-presenting #s4.section.is-present-slide {
     return String(value || "")
       .toLowerCase()
       .replace(/\(.*?\)/g, " ")
+      .replace(/\b(area|store|chn|wds|wod|wods)\b/g, " ")
       .replace(/[^a-z0-9]+/g, " ")
-      .trim();
+      .trim()
+      .replace(/\s+/g, " ");
   }
+
+  function cleanStoreDisplayName(value) {
+    const cleaned = String(value || "")
+      .replace(/\((?:AREA|STORE|CHN|WDS)\)/gi, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!cleaned) return "";
+    /* Title-case ALL CAPS API names for CEO UI */
+    if (cleaned === cleaned.toUpperCase() && /[A-Z]/.test(cleaned)) {
+      return cleaned.toLowerCase().replace(/\b[a-z]/g, (m) => m.toUpperCase());
+    }
+    return cleaned;
+  }
+
+  const PhotoIndex = {
+    ready: false,
+    byCode: Object.create(null),
+    byExact: Object.create(null),
+    byNorm: Object.create(null),
+    byTokens: Object.create(null),
+    keys: [],
+
+    rebuild() {
+      this.byCode = Object.create(null);
+      this.byExact = Object.create(null);
+      this.byNorm = Object.create(null);
+      this.byTokens = Object.create(null);
+      this.keys = typeof STORE_PHOTOS !== "undefined" && STORE_PHOTOS ? Object.keys(STORE_PHOTOS) : [];
+      this.keys.forEach((k) => {
+        this.byExact[k] = k;
+        this.byExact[String(k).toLowerCase()] = k;
+        const n = normalizePhotoKey(k);
+        if (n) this.byNorm[n] = k;
+        const tok = n.split(" ").filter(Boolean).sort().join(" ");
+        if (tok) this.byTokens[tok] = k;
+      });
+      /* Map pilot store codes → photo map keys so live VPS rows still resolve */
+      (STORES || []).forEach((s) => {
+        if (!s || !s.code || !s.name) return;
+        if (STORE_PHOTOS && STORE_PHOTOS[s.name]) this.byCode[String(s.code)] = s.name;
+        else {
+          const n = normalizePhotoKey(s.name);
+          if (n && this.byNorm[n]) this.byCode[String(s.code)] = this.byNorm[n];
+        }
+      });
+      this.ready = this.keys.length > 0;
+    },
+
+    resolveKey(store_code, store_name) {
+      if (!this.ready) this.rebuild();
+      if (!this.ready) return null;
+      if (store_code && this.byCode[String(store_code)]) return this.byCode[String(store_code)];
+      if (store_code && STORE_PHOTOS[store_code]) return store_code;
+      if (store_name && this.byExact[store_name]) return this.byExact[store_name];
+      if (store_name && this.byExact[String(store_name).toLowerCase()]) {
+        return this.byExact[String(store_name).toLowerCase()];
+      }
+      const wanted = normalizePhotoKey(store_name || "");
+      if (wanted && this.byNorm[wanted]) return this.byNorm[wanted];
+      const tok = wanted.split(" ").filter(Boolean).sort().join(" ");
+      if (tok && this.byTokens[tok]) return this.byTokens[tok];
+      if (wanted) {
+        let best = null;
+        let bestScore = 0;
+        const wantParts = wanted.split(" ").filter((t) => t.length > 2);
+        const wantSet = {};
+        wantParts.forEach((t) => { wantSet[t] = true; });
+        for (let i = 0; i < this.keys.length; i++) {
+          const k = this.keys[i];
+          const nk = normalizePhotoKey(k);
+          if (!nk) continue;
+          if (nk === wanted || nk.includes(wanted) || wanted.includes(nk)) return k;
+          const have = nk.split(" ").filter((t) => t.length > 2);
+          let hit = 0;
+          for (let j = 0; j < have.length; j++) if (wantSet[have[j]]) hit++;
+          const score = hit / Math.max(have.length, wantParts.length, 1);
+          if (hit >= 2 && score > bestScore) {
+            bestScore = score;
+            best = k;
+          }
+        }
+        if (best && bestScore >= 0.5) return best;
+      }
+      return null;
+    }
+  };
 
   function getStorePhoto(store_code, store_name) {
     if (typeof STORE_PHOTOS === "undefined" || !STORE_PHOTOS) return null;
-    if (store_code && STORE_PHOTOS[store_code]) return STORE_PHOTOS[store_code];
-    if (store_name && STORE_PHOTOS[store_name]) return STORE_PHOTOS[store_name];
-    const wanted = normalizePhotoKey(store_name || store_code);
-    if (!wanted) return null;
-    const keys = Object.keys(STORE_PHOTOS);
-    for (let i = 0; i < keys.length; i++) {
-      if (normalizePhotoKey(keys[i]) === wanted) return STORE_PHOTOS[keys[i]];
-    }
-    for (let i = 0; i < keys.length; i++) {
-      const nk = normalizePhotoKey(keys[i]);
-      if (nk && (nk.includes(wanted) || wanted.includes(nk))) return STORE_PHOTOS[keys[i]];
-    }
-    return null;
+    const key = PhotoIndex.resolveKey(store_code, store_name);
+    return key && STORE_PHOTOS[key] ? STORE_PHOTOS[key] : null;
+  }
+
+  function storefrontPlaceholderSrc(storeName) {
+    const label = escapeHtml(cleanStoreDisplayName(storeName) || "Store").slice(0, 28);
+    const initials = escapeHtml(storeInitials(storeName));
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">' +
+      '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#2c2416"/>' +
+      "</linearGradient></defs>" +
+      '<rect width="640" height="400" fill="url(#g)"/>' +
+      '<rect x="48" y="110" width="544" height="220" rx="10" fill="#111" stroke="#C9A84C" stroke-width="3" opacity="0.9"/>' +
+      '<rect x="48" y="110" width="544" height="42" fill="#C9A84C" opacity="0.92"/>' +
+      '<text x="320" y="139" text-anchor="middle" fill="#111" font-size="18" font-family="Segoe UI,Arial,sans-serif" font-weight="700">vivo partner</text>' +
+      '<text x="320" y="230" text-anchor="middle" fill="#C9A84C" font-size="64" font-family="Segoe UI,Arial,sans-serif" font-weight="700">' +
+      initials +
+      "</text>" +
+      '<text x="320" y="290" text-anchor="middle" fill="#f5f5f5" font-size="22" font-family="Segoe UI,Arial,sans-serif">' +
+      label +
+      "</text></svg>";
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   }
 
   function photoEntryFromMap(raw) {
@@ -4868,6 +4971,8 @@ body.is-presenting #s4.section.is-present-slide {
       escapeHtml(store.name || "") +
       '" data-code="' +
       escapeHtml(store.code || "") +
+      '" data-photo-key="' +
+      escapeHtml(store.photoKey || "") +
       '"><span>' +
       initials +
       "</span></div>" +
@@ -4906,21 +5011,23 @@ body.is-presenting #s4.section.is-present-slide {
       if (thumb.getAttribute("data-hydrated") === "1") return;
       const name = thumb.getAttribute("data-store") || "";
       const code = thumb.getAttribute("data-code") || "";
-      const mapped = getStorePhoto(code, name);
-      const photo = photoEntryFromMap(mapped) || PhotoEngine.entrance(name);
-      if (!photo || !photo.src) {
-        thumb.classList.add("is-empty");
-        thumb.innerHTML = "<span>" + escapeHtml(storeInitials(name)) + "</span>";
-        thumb.setAttribute("data-hydrated", "1");
-        return;
-      }
+      const photoKey = thumb.getAttribute("data-photo-key") || "";
+      const mapped =
+        (photoKey && typeof STORE_PHOTOS !== "undefined" && STORE_PHOTOS[photoKey]) ||
+        getStorePhoto(code, photoKey || name) ||
+        getStorePhoto(code, name);
+      const photo = photoEntryFromMap(mapped) || PhotoEngine.entrance(photoKey || name);
       const img = document.createElement("img");
-      img.alt = name + " entrance";
+      img.alt = (cleanStoreDisplayName(name) || name) + " entrance";
       thumb.classList.remove("is-empty");
       thumb.innerHTML = "";
       thumb.appendChild(img);
-      /* bindNow — presentation / overflow layouts can starve IntersectionObserver */
-      PhotoEngine.bindNow(img, photo.src, (code || name) + ":entrance");
+      if (photo && photo.src) {
+        PhotoEngine.bindNow(img, photo.src, (code || name) + ":entrance");
+      } else {
+        /* Always show a storefront visual — never leave blank during CEO presentation */
+        PhotoEngine.bindNow(img, storefrontPlaceholderSrc(name), (code || name) + ":placeholder");
+      }
       thumb.setAttribute("data-hydrated", "1");
     });
   }
@@ -5459,6 +5566,7 @@ body.is-presenting #s4.section.is-present-slide {
     markReady() {
       this._ready = typeof STORE_PHOTOS !== "undefined";
       if (!this._ready) return;
+      try { PhotoIndex.rebuild(); } catch (e) { console.warn("[Photos] index rebuild", e); }
       const q = this._waiters.splice(0);
       q.forEach((fn) => {
         try { fn(); } catch (e) { console.error(e); }
@@ -5467,7 +5575,8 @@ body.is-presenting #s4.section.is-present-slide {
 
     list(storeName) {
       if (typeof STORE_PHOTOS === "undefined") return [];
-      const raw = getStorePhoto(null, storeName) || STORE_PHOTOS[storeName];
+      const key = PhotoIndex.resolveKey(null, storeName) || storeName;
+      const raw = (key && STORE_PHOTOS[key]) || getStorePhoto(null, storeName) || STORE_PHOTOS[storeName];
       if (!raw) return [];
       if (Array.isArray(raw)) {
         return raw.filter((p) => p && typeof p.src === "string" && p.src.length > 32);
@@ -5781,20 +5890,25 @@ body.is-presenting #s4.section.is-present-slide {
 
   function renderModalPhoto() {
     if (!modalStore) return;
-    const photos = PhotoEngine.list(modalStore.name);
+    const lookup = modalStore.photoKey || modalStore.rawName || modalStore.name;
+    let photos = PhotoEngine.list(lookup);
+    if (!photos.length && modalStore.name) photos = PhotoEngine.list(modalStore.name);
+    if (!photos.length && modalStore.code) {
+      const mapped = getStorePhoto(modalStore.code, lookup);
+      const entry = photoEntryFromMap(mapped);
+      if (entry && entry.src) photos = [entry];
+    }
     const labelEl = document.getElementById("modal-photo-label");
     const img = document.getElementById("modal-photo-img");
     const dots = document.getElementById("modal-photo-dots");
     const empty = document.getElementById("modal-photo-empty");
     if (!photos.length) {
-      if (labelEl) labelEl.textContent = "";
-      if (empty) empty.hidden = false;
-      if (img) {
-        img.hidden = true;
-        PhotoEngine.clearImg(img);
-      }
-      if (dots) dots.innerHTML = "";
-      return;
+      /* Placeholder so modal never looks broken mid-presentation */
+      photos = [{
+        label: "storefront",
+        display: "Storefront",
+        src: storefrontPlaceholderSrc(modalStore.name || lookup)
+      }];
     }
     modalPhotoIdx = clamp(modalPhotoIdx, 0, photos.length - 1);
     const p = photos[modalPhotoIdx];
@@ -5803,8 +5917,7 @@ body.is-presenting #s4.section.is-present-slide {
     if (empty) empty.hidden = true;
     if (img) {
       img.hidden = false;
-      PhotoEngine.bindNow(img, p.src, modalStore.name + ":" + (p.label || modalPhotoIdx));
-      /* Preload adjacent only (not all 6) */
+      PhotoEngine.bindNow(img, p.src, (modalStore.code || modalStore.name) + ":" + (p.label || modalPhotoIdx));
       const adj = [modalPhotoIdx - 1, modalPhotoIdx + 1].filter((i) => i >= 0 && i < photos.length);
       adj.forEach((i) => {
         const pre = new Image();
@@ -6560,16 +6673,24 @@ body.is-presenting #s4.section.is-present-slide {
       loadPhotosMapDeferred()
         .then(() => {
           console.info("[Photos] map ready —", Object.keys(STORE_PHOTOS || {}).length, "stores");
+          try { PhotoIndex.rebuild(); } catch (e) { /* ignore */ }
+          try {
+            (ACTIVE_STORES || []).forEach((s) => {
+              if (!s) return;
+              s.photoKey = PhotoIndex.resolveKey(s.code, s.rawName || s.name) || s.photoKey || "";
+            });
+          } catch (e) { /* ignore */ }
           try { if (typeof hydrateS3CardThumbs === "function") hydrateS3CardThumbs(); } catch (e) { /* ignore */ }
           try { if (typeof refreshS3 === "function") refreshS3(); } catch (e) { /* ignore */ }
         })
         .catch((err) => {
           console.error(err);
-          /* one delayed retry — covers transient CDN / tunnel blips mid-presentation */
           setTimeout(() => {
             loadPhotosMapDeferred()
               .then(() => {
+                try { PhotoIndex.rebuild(); } catch (e2) { /* ignore */ }
                 try { if (typeof hydrateS3CardThumbs === "function") hydrateS3CardThumbs(); } catch (e2) { /* ignore */ }
+                try { if (typeof refreshS3 === "function") refreshS3(); } catch (e2) { /* ignore */ }
               })
               .catch((e2) => console.error("[Photos] retry failed", e2));
           }, 2500);
